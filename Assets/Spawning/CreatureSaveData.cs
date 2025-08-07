@@ -4,6 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public class CreatureSaveData
 {
+    public CreatureType creatureType;
     public string className;
     public int ac;
     public int speed;

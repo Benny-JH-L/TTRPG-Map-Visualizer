@@ -1,9 +1,10 @@
+using UnityEngine;
 
 [System.Serializable]
 
 public class Player : Creature
 {
-    public Player() : base(CreatureType.Player)
+    public Player(Vector3 pos) : base(CreatureType.Player, pos)
     {
     }
 }
