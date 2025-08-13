@@ -4,37 +4,27 @@ using UnityEngine;
 // A wrapper for GameObjects
 public class Player : Creature
 {
-    //public Player(Vector3 pos) : base(CreatureType.Player, pos)
-    //{
-    //    //disk.AddComponent<Player>();
-    //}
-
-    //public static Player Create(Vector3 pos)
-    //{
-    //    Debug.Log("Creating player");
-    //    return new Player(pos);
-    //}
-
-    //public static Player Create(Vector3 pos)
-    //{
-    //    Debug.Log("Creating player");
-    //    return gameObject.AddComponent<Player>().disk;
-    //}
-
-    public static Player Create(Vector3 pos)
+    public static new Player Create(Vector3 pos)
     {
-        return Create(pos, new CreatureSaveData());
+        CreatureSaveData saveData = new()
+        {
+            // set default values -> from a json file prolly
+            creatureType = CreatureType.Player,
+            ac = 10
+            // ...
+        };
+
+        return Create(pos, saveData);
     }
 
-    public static Player Create(Vector3 pos, CreatureSaveData saveData)
+    public static new Player Create(Vector3 pos, CreatureSaveData saveData)
     {
         Debug.Log("Creating player obj...");
-        GameObject obj = Creature.CreateGameObject(CreatureType.Player, pos);
+        GameObject obj = Creature.CreateGameObject(pos);
         Player player = obj.AddComponent<Player>();
-        player.Init(obj);
+        player.Init(obj, saveData); // set values
 
         Creature.gameData.playerList.Add(player);
-
 
         //CreatureSaveData s = new CreatureSaveData();
         //s.ac = 1000;
@@ -46,11 +36,4 @@ public class Player : Creature
 
         return player;
     }
-
-    public void Init(GameObject playerObj)
-    {
-        Debug.Log("Player init");
-        base.Init(playerObj, saveData);
-    }
-
 }

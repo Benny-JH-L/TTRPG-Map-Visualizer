@@ -2,6 +2,7 @@
 using System;
 using UnityEditor.Overlays;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public enum CreatureType
 {
@@ -30,16 +31,44 @@ public class Creature : MonoBehaviour
     // ALL GAME EVENT LISTENERS WILL BE ON A GAME OBJECT
     //public GameEventListener onMovement;
     //public GameEventListener onMouseRightClick;
-    //public GameEventListener onSelectedObject;
+    //public GameEventListener onSelectedObject\
 
-    protected static GameObject CreateGameObject(CreatureType type, Vector3 position)
+    public static Creature Create(Vector3 pos)
     {
-        return CreateGameObject(type, position, Quaternion.identity);
+        CreatureSaveData saveData = new()
+        {
+            // set default values -> from a json file prolly
+            creatureType = CreatureType.Other,
+            ac = 10
+            // ...
+        };
+
+        return Create(pos, saveData);
     }
 
-    protected static GameObject CreateGameObject(CreatureType creatureType, Vector3 position, Quaternion rotation)
+    public static Creature Create(Vector3 pos, CreatureSaveData saveData)
     {
-        GameObject obj = Instantiate(diskPrefab, position, rotation);
+        Debug.Log("Creating pure creature obj...");
+        GameObject obj = Creature.CreateGameObject(pos);
+        Creature creature = obj.AddComponent<Creature>();
+        creature.Init(obj, saveData); // set values
+
+        Debug.Log("Pure creature obj created...");
+
+        return creature;
+    }
+
+    //protected static GameObject CreateGameObject(CreatureType type, Vector3 position)
+    protected static GameObject CreateGameObject(Vector3 position)
+    {
+        return CreateGameObject(position, Quaternion.identity);
+    }
+
+    protected static GameObject CreateGameObject(Vector3 position, Quaternion rotation)
+    {
+        //Debug.Log("Creating Creature GameObject");
+        return Instantiate(diskPrefab, position, rotation);
+        //GameObject obj = Instantiate(diskPrefab, position, rotation);
 
         //object componentType = null;
         //switch (creatureType)
@@ -59,25 +88,17 @@ public class Creature : MonoBehaviour
         //}
         //gameData.creatureList.Add((Creature)componentType);
 
-        Debug.Log("Creating Creature GameObject");
-        return obj;
+        //return obj;
     }
 
-    //public static GameObject CreateCreature(Vector3 position, Quaternion rotation)
-    //{
-    //    GameObject obj = Creature.CreateGameObject(type,position, rotation);
-
-    //    return obj;
-    //}
-
-    protected void Init(GameObject obj, CreatureSaveData data)
+    protected void Init(GameObject diskBase, CreatureSaveData data)
     {
-        Debug.Log("Creature init");
+        //Debug.Log("Creature init");
 
-        creatureDisk = obj;
+        creatureDisk = diskBase;
         saveData = data;
 
-        gameData.creatureList.Add(obj.GetComponent<Creature>());
+        gameData.creatureList.Add(diskBase.GetComponent<Creature>());
 
         //creatureDisk = obj;
         //saveData = data;

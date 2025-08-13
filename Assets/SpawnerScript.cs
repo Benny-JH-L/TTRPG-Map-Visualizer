@@ -22,7 +22,18 @@ public class Spawner : MonoBehaviour
             Vector3 pos = tup.Item2;
             Player.Create(pos);
         }
-
+        else if (Keyboard.current.digit2Key.wasPressedThisFrame)
+        {
+            var tup = cameraManager.GetCurrMosePos();
+            Vector3 pos = tup.Item2;
+            Enemy.Create(pos);
+        }
+        else if (Keyboard.current.digit3Key.wasPressedThisFrame)
+        {
+            var tup = cameraManager.GetCurrMosePos();
+            Vector3 pos = tup.Item2;
+            Creature.Create(pos);
+        }
     }
 
 }

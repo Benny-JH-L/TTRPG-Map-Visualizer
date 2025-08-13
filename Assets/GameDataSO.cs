@@ -49,4 +49,26 @@ public class GameData : ScriptableObject
         }
         Debug.Log(output);
     }
+
+    public void PrintEnemies()
+    {
+        string output = "";
+
+        foreach (Enemy enemy in enemyList)
+        {
+            output += "Enemy | " + enemy.GetPosition() + "\n";
+        }
+        Debug.Log(output);
+    }
+
+    public void PrintCreatures()
+    {
+        string output = "";
+
+        foreach (Creature creature in creatureList)
+        {
+            output += "Creature | " + creature.GetPosition() + "\n";
+        }
+        Debug.Log(output);
+    }
 }
