@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Highlight : MonoBehaviour
 {
+    // GameEventListeners are in GameObjects in the scene
     // GameEventListener<SpawnedObject>
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

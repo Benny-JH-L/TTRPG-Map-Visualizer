@@ -49,7 +49,7 @@ public class Creature : MonoBehaviour
     public static Creature Create(Vector3 pos, CreatureSaveData saveData)
     {
         Debug.Log("Creating pure creature obj...");
-        GameObject obj = Creature.CreateGameObject(pos);
+        GameObject obj = CreateGameObject(pos);
         Creature creature = obj.AddComponent<Creature>();
         creature.Init(obj, saveData); // set values
 
