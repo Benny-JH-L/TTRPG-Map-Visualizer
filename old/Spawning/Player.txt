@@ -1,0 +1,26 @@
+using UnityEngine;
+
+[System.Serializable]
+
+public class Player : Creature
+{
+    public Player(Vector3 pos) : base(CreatureType.Player, pos)
+    {
+        //disk.AddComponent<Player>();
+    }
+
+    public static Player Create(Vector3 pos)
+    {
+        Debug.Log("Creating player");
+        return new Player(pos);
+    }
+
+    //public static Player Create(Vector3 pos)
+    //{
+    //    Debug.Log("Creating player");
+    //    return gameObject.AddComponent<Player>().disk;
+    //}
+
+
+
+}

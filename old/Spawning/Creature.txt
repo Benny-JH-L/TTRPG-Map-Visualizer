@@ -1,0 +1,131 @@
+
+using System;
+using UnityEngine;
+
+public enum CreatureType
+{
+    Player = 1,
+    Enemy = 2,
+    Other = 3 // will have more like horse, spirits, summons, etc.
+}
+
+[System.Serializable]
+//public class Creature : MonoBehaviour
+public class Creature : MonoBehaviour
+{
+    public static GameData gameData;
+    public static GameObject diskPrefab;
+    //public static Creature diskPrefab;
+
+    public static GameEvent spawnedObjectEvent;
+
+    public CreatureSaveData saveData;
+    //string diskPrefabName = "disk";
+    public int diskRadius = 1;  // NEED TO guess and check
+    public GameObject disk;
+    //public Creature disk;
+    //GameObject modelOnDisk; // for later version (child of disk)
+
+    // ALL GAME EVENT LISTENERS WILL BE ON A GAME OBJECT
+    //public GameEventListener onMovement;
+    //public GameEventListener onMouseRightClick;
+    //public GameEventListener onSelectedObject;
+
+
+    private string _debugbeginning = "Creature | ";
+
+    public Creature(CreatureType creatureType, Vector3 position)
+    {
+        if (_CheckSpawnCollision(position))
+        {
+            Debug.Log(_debugbeginning + $"Can't Spawn at <{position}> game object detected there!");
+            return;
+        }
+
+        saveData = new CreatureSaveData();
+        saveData.creatureType = creatureType;
+
+        Debug.Log("Creating disk game object");
+
+        //GameObject diskPrefab = Resources.Load<GameObject>("Prefabs/" + diskPrefabName);
+        disk = Instantiate(diskPrefab, position, Quaternion.identity);
+
+        // Set default creature values and other stuff
+        switch (creatureType)
+        {
+            case CreatureType.Player:
+                gameData.playerList.Add((Player)this);
+                break;
+            case CreatureType.Enemy:
+                gameData.enemyList.Add((Enemy)this);
+                break;
+            case CreatureType.Other:
+                //gameData.creatureList.Add(this);
+                break;
+        }
+
+        gameData.creatureList.Add(this);
+
+        Tuple<CreatureType, Creature> data = new Tuple<CreatureType, Creature>(creatureType, this);
+        spawnedObjectEvent.Raise(this, data);
+
+        Debug.Log("SpawnedObjectEvent raised");
+    }
+
+    public Vector3 GetPosition()
+    {
+        return disk.transform.position;
+    }
+
+    private bool _CheckSpawnCollision(Vector3 posToCheck)
+    {
+        Debug.Log("Checking spawn collision");
+
+        if (gameData == null)
+        {
+            Debug.Log("game data is null :(");
+            return true;
+        }
+
+        Debug.Log($"player list size: {gameData.playerList.Count}");
+        Debug.Log($"enemy list size: {gameData.enemyList.Count}");
+        Debug.Log($"all creatures list size: {gameData.creatureList.Count}");
+
+        foreach (Creature creature in gameData.creatureList)
+        {
+            float distance = (posToCheck - creature.disk.transform.position).magnitude;
+            if (distance <= diskRadius)
+                return true;
+        }
+
+        //for (int i = 0; i < gameData.playerList.Count; i++)
+        //{
+        //    float distance = (posToCheck - gameData.playerList[i].disk.transform.position).magnitude;
+        //    if (distance <= diskRadius)
+        //        return true;
+        //}
+
+        //for (int i = 0; i < gameData.enemyList.Count; i++)
+        //{
+        //    float distance = (posToCheck - gameData.enemyList[i].disk.transform.position).magnitude;
+        //    if (distance <= diskRadius)
+        //        return true;
+        //}
+
+        //for (int i = 0; i < gameData.creatureList.Count; i++)
+        //{
+        //    float distance = (posToCheck - gameData.creatureList[i].disk.transform.position).magnitude;
+        //    if (distance <= diskRadius)
+        //        return true;
+        //}
+
+        Debug.Log("No collision detected");
+
+        return false;   // no collision
+    }
+
+
+    // have static print methods to print list contents of player, enemies and creatures -> called from GameManager!
+
+
+ }

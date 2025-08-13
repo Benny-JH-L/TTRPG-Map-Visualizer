@@ -1,5 +1,6 @@
 
 using System;
+using UnityEditor.Overlays;
 using UnityEngine;
 
 public enum CreatureType
@@ -10,80 +11,83 @@ public enum CreatureType
 }
 
 [System.Serializable]
+
+// A wrapper for GameObjects
 public class Creature : MonoBehaviour
 {
-    public GameData gameData;
+    public static GameData gameData;
+    public static GameObject diskPrefab;
+
+    public static GameEvent spawnedObjectEvent;
+
     public CreatureSaveData saveData;
-    string diskPrefabName = "disk";
+    public GameObject creatureDisk;
+    //GameObject modelOnDisk; // for later version (child of disk)
+
     public int diskRadius = 1;  // NEED TO guess and check
 
-    public GameObject disk;
-    //GameObject modelOnDisk; // for later version (child of disk)
 
     // ALL GAME EVENT LISTENERS WILL BE ON A GAME OBJECT
     //public GameEventListener onMovement;
     //public GameEventListener onMouseRightClick;
     //public GameEventListener onSelectedObject;
 
-    public GameEvent spawnedObject;
-
-    private string _debugbeginning = "Creature | ";
-
-    public Creature(CreatureType creatureType, Vector3 position)
+    protected static GameObject CreateGameObject(CreatureType type, Vector3 position)
     {
-        if (_CheckSpawnCollision(position))
-        {
-            Debug.Log(_debugbeginning + $"Can't Spawn at <{position}> game object detected there!");
-            return;
-        }
-
-        saveData = new CreatureSaveData();
-        saveData.creatureType = creatureType;
-
-        // Set default creature values and other stuff
-        switch (creatureType)
-        {
-            case CreatureType.Player:
-                gameData.playerList.Add((Player)this);
-                break;
-            case CreatureType.Enemy:
-                gameData.enemyList.Add((Enemy)this);
-                break;
-            case CreatureType.Other:
-                gameData.creatureList.Add(this);
-                break;
-        }
-
-        GameObject prefab = Resources.Load<GameObject>("Prefabs/" + diskPrefabName);
-        disk = Instantiate(prefab, position, Quaternion.identity);
-        Tuple<CreatureType, Creature> data = new Tuple<CreatureType, Creature>(creatureType, this);
-        spawnedObject.Raise(this, data);
+        return CreateGameObject(type, position, Quaternion.identity);
     }
 
-    private bool _CheckSpawnCollision(Vector3 posToCheck)
+    protected static GameObject CreateGameObject(CreatureType creatureType, Vector3 position, Quaternion rotation)
     {
-        for (int i = 0; i < gameData.playerList.Count; i++)
-        {
-            float distance = (posToCheck - gameData.playerList[i].disk.transform.position).magnitude;
-            if (distance <= diskRadius)
-                return true;
-        }
+        GameObject obj = Instantiate(diskPrefab, position, rotation);
 
-        for (int i = 0; i < gameData.enemyList.Count; i++)
-        {
-            float distance = (posToCheck - gameData.enemyList[i].disk.transform.position).magnitude;
-            if (distance <= diskRadius)
-                return true;
-        }
+        //object componentType = null;
+        //switch (creatureType)
+        //{
+        //    case CreatureType.Player:
+        //        componentType = obj.AddComponent<Player>();
+        //        ((Player)componentType).Init(obj);
+        //        gameData.playerList.Add((Player)componentType);
+        //        break;
+        //    case CreatureType.Enemy:
+        //        componentType = obj.AddComponent<Enemy>();
+        //        gameData.enemyList.Add((Enemy)componentType);
+        //        break;
+        //    case CreatureType.Other:
+        //        componentType = obj.AddComponent<Creature>();
+        //        break;
+        //}
+        //gameData.creatureList.Add((Creature)componentType);
 
-        for (int i = 0; i < gameData.creatureList.Count; i++)
-        {
-            float distance = (posToCheck - gameData.creatureList[i].disk.transform.position).magnitude;
-            if (distance <= diskRadius)
-                return true;
-        }
-
-        return false;   // no collision
+        Debug.Log("Creating Creature GameObject");
+        return obj;
     }
 
-}
+    //public static GameObject CreateCreature(Vector3 position, Quaternion rotation)
+    //{
+    //    GameObject obj = Creature.CreateGameObject(type,position, rotation);
+
+    //    return obj;
+    //}
+
+    protected void Init(GameObject obj, CreatureSaveData data)
+    {
+        Debug.Log("Creature init");
+
+        creatureDisk = obj;
+        saveData = data;
+
+        gameData.creatureList.Add(obj.GetComponent<Creature>());
+
+        //creatureDisk = obj;
+        //saveData = data;
+        //gameData.creatureList.Add(obj.GetComponent<Creature>());
+        //Debug.Log("Player component to string: " + comp.ToString());
+    }
+
+    public Vector3 GetPosition()
+    {
+        return creatureDisk.transform.position;
+    }
+
+ }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Spawner : MonoBehaviour
 {
@@ -13,11 +14,15 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 pos = new Vector3(1f, 1f, 1f);
-        Player.Create(pos);
 
-        cameraManager.GetCurrMosePos();
+        // should i have this in GameManagerScript instead?
+        if (Keyboard.current.digit1Key.wasPressedThisFrame)
+        {
+            var tup = cameraManager.GetCurrMosePos();
+            Vector3 pos = tup.Item2;
+            Player.Create(pos);
+        }
+
     }
-
 
 }
