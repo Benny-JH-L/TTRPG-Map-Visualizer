@@ -4,13 +4,16 @@ public class Initializer : MonoBehaviour
 {
     public GameData gameData;           // is created during runtime
     public CameraData cameraData;       // is created during runtime
-    public GameObject diskPrefab;
+    public GameObject diskBasePrefab;
+    public GameObject highlightRingPrefab;
     public GameEvent spawnedObjectEvent;
     private void Awake()
     {
+        Highlight.Initialize(highlightRingPrefab);
+
         gameData = (GameData) ScriptableObject.CreateInstance("GameData");  // not recommended to use `new
         Creature.gameData = gameData;
-        Creature.diskPrefab = diskPrefab;
+        Creature.diskPrefab = diskBasePrefab;
         Creature.spawnedObjectEvent = spawnedObjectEvent;
 
         GameManagerScript.gameData = gameData;
@@ -18,6 +21,7 @@ public class Initializer : MonoBehaviour
 
         cameraData = (CameraData) ScriptableObject.CreateInstance<CameraData>();
         CameraManager.cameraData = cameraData;
+
     }
 
 

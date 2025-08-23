@@ -1,25 +1,71 @@
 using UnityEngine;
 
+[System.Serializable]
 public class Highlight : MonoBehaviour
 {
+
     // GameEventListeners are in GameObjects in the scene
-    // GameEventListener<SpawnedObject>
+    // GameEventListener<SpawnedObject> -??
+    // GameEventListener<selectedObjectEvent>
+
+    private static GameObject highlightRingPrefab;
+    private GameObject highlightRing;
+    private Creature selectedCreature;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    //void Start()
+    void Start()
+    {
+        highlightRing = Instantiate(highlightRingPrefab);
+        deactivateRing();
+    }
+
+    //private void Awake()  // causes error
     //{
-        
+    //    highlightRing = Instantiate(highlightRingPrefab);
+    //    deactivateRing();
     //}
 
-    //// Update is called once per frame
-    //void Update()
-    //{
-        
-    //}
+    // Update is called once per frame
+    void LateUpdate()   // used temp, will switch to an event based system, where if the selected creature moves, the highlight moves too, instead of wasting resources checking this
+    {
+        if (highlightRing.activeSelf && selectedCreature != null)
+            updatePosition();
+    }
+
+    public static void Initialize(GameObject prefab)
+    {
+        highlightRingPrefab = prefab;
+    }
 
     public void HighlightObject(Component comp, object data)
     {
+        if (data == null)
+        {
+            deactivateRing();
+        }
+        else if (data is Creature)   // creature for now, will need to allow other object like trees and what not if the user wants to move/replace those things. will also need to resize the highlight ring to encompass the object!
+        {
+            Debug.Log("Highlighting creature");
+            selectedCreature = (Creature)data;
+            highlightRing.SetActive(true);
+            updatePosition();
 
+            // TODO: Scale ring based on creature size
+            //float radius = selectedCreature.GetRadius();  // radius of the disk is 2.5ft or 0.762cm
+            //highlightRing.transform.localScale = Vector3.one * radius * 2f;
+        }
     }
+
+    private void updatePosition()
+    {
+        highlightRing.transform.position = selectedCreature.transform.position;
+    }
+
+    private void deactivateRing()
+    {
+        highlightRing.SetActive(false);
+        selectedCreature = null;
+    }
+
 
 }
