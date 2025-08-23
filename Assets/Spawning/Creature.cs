@@ -21,6 +21,8 @@ public class Creature : MonoBehaviour
 
     public static GameEvent spawnedObjectEvent;
 
+    public static Vector3 yOffsetDiskSpawn = new Vector3(0f, 0.5f, 0f);
+
     public CreatureSaveData saveData;
     public GameObject creatureDisk;
     //GameObject modelOnDisk; // for later version (child of disk)
@@ -61,13 +63,14 @@ public class Creature : MonoBehaviour
     //protected static GameObject CreateGameObject(CreatureType type, Vector3 position)
     protected static GameObject CreateGameObject(Vector3 position)
     {
-        return CreateGameObject(position, Quaternion.identity);
+        //return CreateGameObject(position, Quaternion.identity);
+        return CreateGameObject(position, diskPrefab.transform.rotation);
     }
 
     protected static GameObject CreateGameObject(Vector3 position, Quaternion rotation)
     {
         //Debug.Log("Creating Creature GameObject");
-        return Instantiate(diskPrefab, position, rotation);
+        return Instantiate(diskPrefab, position + yOffsetDiskSpawn, rotation); // need to add a y-offset to the position or else the object will sometimes launch into the air (collides with the ground)
         //GameObject obj = Instantiate(diskPrefab, position, rotation);
 
         //object componentType = null;
