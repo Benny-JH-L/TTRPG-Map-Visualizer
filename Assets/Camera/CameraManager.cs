@@ -135,7 +135,7 @@ public class CameraManager : MonoBehaviour
         else
             ZoomCurrentCamera();
 
-        // need logic to determine if a key is being held
+        // NEED TO UTILIZE THE MOVEMENT VALUE CLASS!!!
         //if (_currentCam == mapCam)
         if (mapCam.enabled)
         {
