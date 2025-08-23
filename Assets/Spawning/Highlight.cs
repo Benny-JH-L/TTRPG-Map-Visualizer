@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [System.Serializable]
@@ -19,18 +20,12 @@ public class Highlight : MonoBehaviour
         deactivateRing();
     }
 
-    //private void Awake()  // causes error
-    //{
-    //    highlightRing = Instantiate(highlightRingPrefab);
-    //    deactivateRing();
-    //}
-
     // Update is called once per frame
-    void LateUpdate()   // used temp, will switch to an event based system, where if the selected creature moves, the highlight moves too, instead of wasting resources checking this
-    {
-        if (highlightRing.activeSelf && selectedCreature != null)
-            updatePosition();
-    }
+    //void LateUpdate()   // used temp, will switch to an event based system, where if the selected creature moves, the highlight moves too, instead of wasting resources checking this
+    //{
+    //    if (highlightRing.activeSelf && selectedCreature != null)
+    //        updatePosition();
+    //}
 
     public static void Initialize(GameObject prefab)
     {
@@ -54,6 +49,15 @@ public class Highlight : MonoBehaviour
             //float radius = selectedCreature.GetRadius();  // radius of the disk is 2.5ft or 0.762cm
             //highlightRing.transform.localScale = Vector3.one * radius * 2f;
         }
+    }
+
+    public void OnObjectMove(Component comp, object data)
+    {
+        updatePosition();
+
+        // note: could update using the information in `data` it will contain Tuple<GameObject, Vector3>.
+        // // where Gameobject is the selected object (which we already know) and Vector3 is the moved amount
+        // // (which we can infer from selected object's transform.position)
     }
 
     private void updatePosition()

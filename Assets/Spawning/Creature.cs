@@ -24,7 +24,7 @@ public class Creature : MonoBehaviour
     public static Vector3 yOffsetDiskSpawn = new Vector3(0f, 0.5f, 0f);
 
     public CreatureSaveData saveData;
-    public GameObject creatureDisk;
+    public GameObject creatureDisk; // should also be the var `gameObject`
     //GameObject modelOnDisk; // for later version (child of disk)
 
     public int diskRadius = 1;  // NEED TO guess and check

@@ -12,8 +12,6 @@ public class GameManagerScript : MonoBehaviour
     public GameEvent mouseRightClickEvent;
     public GameEvent cameraChangedEvent;
     
-    private Creature selectedCreature = null; // tmp
-
     // old
     //public GameEvent spawnPlayerEvent;
     //public GameEvent spawnEnemyEvent;
@@ -39,39 +37,7 @@ public class GameManagerScript : MonoBehaviour
         }
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
-            selectedCreature = SelectCreature();
-
-
-        // TO TEST HIGHLIGHT IF IT MOVES, VERY TEMP MOVEMENT MANAGENENT
-        if (selectedCreature != null)
-        {
-            Debug.Log("Moving creatrue");
-            Vector3 moveBy = new(0f, 0f, 0f);
-
-            // use `wasd` or mouse input to move camera)
-            // Check if any of the movement keys are being held
-            if (Keyboard.current.wKey.isPressed)
-            {
-                moveBy.z = 0.1f;
-            }
-            else if (Keyboard.current.sKey.isPressed)
-            {
-                moveBy.z = -0.1f;
-            }
-
-            if (Keyboard.current.aKey.isPressed)
-            {
-                moveBy.x = -0.1f;
-            }
-            else if (Keyboard.current.dKey.isPressed)
-            {
-                moveBy.x = 0.1f;
-            }
-
-            moveBy = moveBy.normalized;
-            Vector3 newPos = selectedCreature.transform.position + moveBy;
-            selectedCreature.transform.position = newPos;
-        }
+            SelectCreature();
     }
 
     private Creature SelectCreature()
