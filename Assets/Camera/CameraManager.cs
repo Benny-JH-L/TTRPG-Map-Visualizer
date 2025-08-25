@@ -135,36 +135,32 @@ public class CameraManager : MonoBehaviour
         else
             ZoomCurrentCamera();
 
-        // NEED TO UTILIZE THE MOVEMENT VALUE CLASS!!!
         //if (_currentCam == mapCam)
         if (mapCam.enabled)
         {
-            Vector3 moveBy = new(0f, 0f, 0f);
+            MovementValue movementValue = new(cameraData.mapMoveSensitivity);
 
             // use `wasd` or mouse input to move camera)
             // Check if any of the movement keys are being held
             if (Keyboard.current.wKey.isPressed)
             {
-                moveBy.z = 1f;
+                movementValue.MoveNorth();
             }
             else if (Keyboard.current.sKey.isPressed)
             {
-                moveBy.z = -1f;
+                movementValue.MoveSouth();
             }
 
             if (Keyboard.current.aKey.isPressed)
             {
-                moveBy.x = -1f;
+                movementValue.MoveWest();
             }
             else if (Keyboard.current.dKey.isPressed)
             {
-                moveBy.x = 1f;
+                movementValue.MoveEast();
             }
 
-            moveBy.z *= cameraData.mapMoveSensitivity;
-            moveBy.x *= cameraData.mapMoveSensitivity;
-            //Debug.Log(moveBy);
-            MoveMapCamBy(moveBy.normalized);
+            MoveMapCamBy(movementValue);
         }
 
         //else if (_currentCam == objectCam)
@@ -198,12 +194,13 @@ public class CameraManager : MonoBehaviour
     }
 
     /// <summary>
-    /// only for the map camera, may create Camera classes to differentiate map cam, object cam and whatever cams i may make
+    /// only for the map camera, may create Camera classes to differentiate map cam, object cam and whatever cams i may make.
+    /// Takes in a `MovementValue` and uses it to move the map camera's position.
     /// </summary>
     /// <param name="moveBy"></param>
-    private void MoveMapCamBy(Vector3 moveBy)
+    private void MoveMapCamBy(MovementValue moveBy)
     {
-        mapCam.transform.position += moveBy.normalized;
+        mapCam.transform.position += moveBy.GetMovement();
     }
 
     /// <summary>

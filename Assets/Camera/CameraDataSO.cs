@@ -7,7 +7,7 @@ public class CameraData : ScriptableObject
     public float zoomSpeed = 200f;
 
     // map
-    public float mapMoveSensitivity = 0.01f; // range [0.01, 1], for moving the map camera
+    public float mapMoveSensitivity = 0.25f; // range [0.1, 2], for moving the map camera
     public float mapZoomInOutSensitivity = 200f;    // range [50, 300] -> tentative values
 
     // orbit camera
