@@ -11,7 +11,7 @@ public class Highlight : MonoBehaviour
 
     private static GameObject highlightRingPrefab;
     private GameObject highlightRing;
-    private Creature selectedCreature;
+    private Character selectedCreature;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -38,10 +38,10 @@ public class Highlight : MonoBehaviour
         {
             deactivateRing();
         }
-        else if (data is Creature)   // creature for now, will need to allow other object like trees and what not if the user wants to move/replace those things. will also need to resize the highlight ring to encompass the object!
+        else if (data is Character)   // creature for now, will need to allow other object like trees and what not if the user wants to move/replace those things. will also need to resize the highlight ring to encompass the object!
         {
             Debug.Log("Highlighting creature");
-            selectedCreature = (Creature)data;
+            selectedCreature = (Character)data;
             highlightRing.SetActive(true);
             updatePosition();
 

@@ -2,14 +2,14 @@ using UnityEngine;
 
 [System.Serializable]
 // A wrapper for GameObjects
-public class Player : Creature
+public class Player : Character
 {
     public static new Player Create(Vector3 pos)
     {
-        CreatureSaveData saveData = new()
+        CharacterSaveData saveData = new()
         {
             // set default values -> from a json file prolly
-            creatureType = CreatureType.Player,
+            //creatureType = CreatureType.Player,
             ac = 10
             // ...
         };
@@ -17,14 +17,14 @@ public class Player : Creature
         return Create(pos, saveData);
     }
 
-    public static new Player Create(Vector3 pos, CreatureSaveData saveData)
+    public static new Player Create(Vector3 pos, CharacterSaveData saveData)
     {
         Debug.Log("Creating player obj...");
-        GameObject obj = Creature.CreateGameObject(pos);
+        GameObject obj = Character.CreateGameObject(pos);
         Player player = obj.AddComponent<Player>();
         player.Init(obj, saveData); // set values
 
-        Creature.gameData.playerList.Add(player);
+        Character.gameData.playerList.Add(player);
 
         //CreatureSaveData s = new CreatureSaveData();
         //s.ac = 1000;

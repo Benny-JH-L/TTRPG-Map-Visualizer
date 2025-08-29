@@ -32,7 +32,7 @@ public class Spawner : MonoBehaviour
         {
             var tup = cameraManager.GetCurrMosePos();
             Vector3 pos = tup.Item2;
-            Creature.Create(pos);
+            Character.Create(pos);
         }
     }
 

@@ -1,64 +1,24 @@
-
-using System;
-using UnityEditor.Overlays;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
-
-public enum CreatureType
-{
-    Player = 1,
-    Enemy = 2,
-    Other = 3 // will have more like horse, spirits, summons, etc.
-}
-
-[System.Serializable]
 
 // A wrapper for GameObjects
-public class Creature : MonoBehaviour
-{
-    public static GameData gameData;
-    public static GameObject diskPrefab;
-
+[System.Serializable]
+public class Creature : SuperObject
+{    
     public static GameEvent spawnedObjectEvent;
 
-    public static Vector3 yOffsetDiskSpawn = new Vector3(0f, 0.5f, 0f);
+    public static Vector3 yOffsetDiskSpawn = new(0f, 0.5f, 0f);
 
-    public CreatureSaveData saveData;
-    public GameObject creatureDisk; // should also be the var `gameObject`
+    protected CreatureSaveData saveData;  // will make it protected, public is to test/debug [in Unity editor, it will show as Creature save data for all sub classes]
+    public GameObject creatureDisk; // should also be the var `gameObject` (they are the same)
     //GameObject modelOnDisk; // for later version (child of disk)
 
     public int diskRadius = 1;  // NEED TO guess and check
-
+    protected TeamTag teamTag;
 
     // ALL GAME EVENT LISTENERS WILL BE ON A GAME OBJECT
     //public GameEventListener onMovement;
     //public GameEventListener onMouseRightClick;
-    //public GameEventListener onSelectedObject\
-
-    public static Creature Create(Vector3 pos)
-    {
-        CreatureSaveData saveData = new()
-        {
-            // set default values -> from a json file prolly
-            creatureType = CreatureType.Other,
-            ac = 10
-            // ...
-        };
-
-        return Create(pos, saveData);
-    }
-
-    public static Creature Create(Vector3 pos, CreatureSaveData saveData)
-    {
-        Debug.Log("Creating pure creature obj...");
-        GameObject obj = CreateGameObject(pos);
-        Creature creature = obj.AddComponent<Creature>();
-        creature.Init(obj, saveData); // set values
-
-        Debug.Log("Pure creature obj created...");
-
-        return creature;
-    }
+    //public GameEventListener onSelectedObject;
 
     //protected static GameObject CreateGameObject(CreatureType type, Vector3 position)
     protected static GameObject CreateGameObject(Vector3 position)
@@ -94,15 +54,15 @@ public class Creature : MonoBehaviour
         //return obj;
     }
 
-    protected void Init(GameObject diskBase, CreatureSaveData data)
+    protected void Init(GameObject diskBase, CharacterSaveData data)
     {
         //Debug.Log("Creature init");
 
         creatureDisk = diskBase;
         saveData = data;
 
-        gameData.creatureList.Add(diskBase.GetComponent<Creature>());
-
+        gameData.creatureList.Add(diskBase.GetComponent<Character>());
+        
         //creatureDisk = obj;
         //saveData = data;
         //gameData.creatureList.Add(obj.GetComponent<Creature>());
@@ -114,4 +74,13 @@ public class Creature : MonoBehaviour
         return creatureDisk.transform.position;
     }
 
- }
+    public CreatureSaveData GetSaveData()
+    {
+        return saveData;
+    }
+
+    public TeamTag GetTeamTag()
+    {
+        return teamTag;
+    }
+}

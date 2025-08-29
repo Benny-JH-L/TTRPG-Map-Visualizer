@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Initializer : MonoBehaviour
 {
@@ -7,13 +8,15 @@ public class Initializer : MonoBehaviour
     public GameObject diskBasePrefab;
     public GameObject highlightRingPrefab;
     public GameEvent spawnedObjectEvent;
+
+
     private void Awake()
     {
         Highlight.Initialize(highlightRingPrefab);
 
         gameData = (GameData) ScriptableObject.CreateInstance("GameData");  // not recommended to use `new
-        Creature.gameData = gameData;
-        Creature.diskPrefab = diskBasePrefab;
+        SuperObject.gameData = gameData;
+        SuperObject.diskPrefab = diskBasePrefab;
         Creature.spawnedObjectEvent = spawnedObjectEvent;
 
         GameManagerScript.gameData = gameData;
@@ -22,6 +25,8 @@ public class Initializer : MonoBehaviour
         cameraData = (CameraData) ScriptableObject.CreateInstance<CameraData>();
         CameraManager.cameraData = cameraData;
 
+        Dictionary<string, TeamTag> tagList = new();
+        TeamTag.Initialize(tagList);
     }
 
 

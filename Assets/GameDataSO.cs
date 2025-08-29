@@ -7,7 +7,7 @@ using UnityEngine;
 public class GameData : ScriptableObject
 {
     //GameEventListener onSpawnedObject;
-    public List<Creature> creatureList = new(); // everything, players, enemies, etc
+    public List<Character> creatureList = new(); // everything, players, enemies, etc
     public List<Player> playerList = new(); // turn them into GameObject lists?
     public List<Enemy> enemyList = new();
 
@@ -39,6 +39,8 @@ public class GameData : ScriptableObject
     //    }
     //}
 
+    public List<Character> characterList = new(); 
+
     public void PrintPlayers()
     {
         string output = "";
@@ -65,7 +67,7 @@ public class GameData : ScriptableObject
     {
         string output = "";
 
-        foreach (Creature creature in creatureList)
+        foreach (Character creature in creatureList)
         {
             output += "Creature | " + creature.GetPosition() + "\n";
         }

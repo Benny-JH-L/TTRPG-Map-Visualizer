@@ -33,16 +33,17 @@ public class GameManagerScript : MonoBehaviour
         {
             count++;
             //gameData.playerList[0].saveData.className = $"woighowegwe + {count}";
-            gameData.playerList[0].GetComponent<Creature>().saveData.className = $"woighowegwe + {count}";
+            //gameData.playerList[0].GetComponent<Character>().saveData.className = ClassType.NONE;
+            gameData.playerList[0].GetComponent<Character>().GetSaveData().className = ClassType.NONE;
         }
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
             SelectCreature();
     }
 
-    private Creature SelectCreature()
+    private Character SelectCreature()
     {
-        Creature creature = GetCreatureAtMousePos();
+        Character creature = GetCreatureAtMousePos();
         Debug.Log("Raising SelectedObject Event");
         selectedObjectEvent.Raise(this, creature);
         return creature;
@@ -53,7 +54,7 @@ public class GameManagerScript : MonoBehaviour
     /// Returns `null` if there are no Creatures spawned, or the mouse is not directlt atop of a Creature.
     /// </summary>
     /// <returns></returns>
-    private Creature GetCreatureAtMousePos()
+    private Character GetCreatureAtMousePos()
     {
         if (gameData.creatureList.Count == 0)
         {
@@ -72,12 +73,12 @@ public class GameManagerScript : MonoBehaviour
             return null;
         }
 
-        Creature closestToMouse = null;
+        Character closestToMouse = null;
         float cloestDistanceSoFar = float.MaxValue;
         //Vector3 cloestDistanceSoFar = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
 
         // Find the game object closest to the mouses position
-        foreach (Creature gameObject in gameData.creatureList)
+        foreach (Character gameObject in gameData.creatureList)
         {
             //Vector3 center = gameObject.GetComponent<Collider>().bounds.center; // accounts for size shape and transformations (for more complex shapes)
             //Vector3 center2 = gameObject.transform.position; // for simpler shapes? or for those without a collider

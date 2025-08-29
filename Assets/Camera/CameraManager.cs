@@ -292,10 +292,10 @@ public class CameraManager : MonoBehaviour
 
     public void OnSelectedCreature(Component sender, object data)
     {
-        if (data is Creature)   // maybe have a condition to check whether or not we switch to player or go to map cam... (Eagel or creature view to moving..)
+        if (data is Character)   // maybe have a condition to check whether or not we switch to player or go to map cam... (Eagel or creature view to moving..)
         {
             Debug.Log("Switching to orbit cam");
-            Creature creature = (Creature)data;
+            Character creature = (Character)data;
             _EnableObjectCam();
             _orbitCam.Enable(creature.creatureDisk);
 
