@@ -2,7 +2,7 @@ using UnityEngine;
 
 // A wrapper for GameObjects
 [System.Serializable]
-public class Creature : SuperObject
+public class Creature : GeneralObject
 {    
     public static GameEvent spawnedObjectEvent;
 
@@ -13,6 +13,7 @@ public class Creature : SuperObject
     //GameObject modelOnDisk; // for later version (child of disk)
 
     public int diskRadius = 1;  // NEED TO guess and check
+    protected CreatureTag creatureTag;
     protected TeamTag teamTag;
 
     // ALL GAME EVENT LISTENERS WILL BE ON A GAME OBJECT
@@ -53,15 +54,43 @@ public class Creature : SuperObject
 
         //return obj;
     }
+    public static Creature Create(Vector3 pos)
+    {
+        CreatureSaveData saveData = new()
+        {
+            // set default values -> from a json file prolly
+            ac = 10
+            // ...
+        };
 
-    protected void Init(GameObject diskBase, CharacterSaveData data)
+        return Create(pos, saveData);
+    }
+
+    public static Creature Create(Vector3 pos, CreatureSaveData saveData)
+    {
+        Debug.Log("Creating pure creature obj...");
+        GameObject obj = CreateGameObject(pos);
+        Creature creature = obj.AddComponent<Character>();
+        creature.Init(obj, saveData); // set values
+
+        Debug.Log("Pure creature obj created...");
+
+        return creature;
+    }
+
+    /// <summary>
+    /// Sets values for Creature and derivatives, and adds itself to the list of Creatures 
+    /// </summary>
+    /// <param name="diskBase"></param>
+    /// <param name="data"></param>
+    protected void Init(GameObject diskBase, CreatureSaveData data)
     {
         //Debug.Log("Creature init");
 
         creatureDisk = diskBase;
         saveData = data;
 
-        gameData.creatureList.Add(diskBase.GetComponent<Character>());
+        gameData.creatureList.Add(diskBase.GetComponent<Creature>());
         
         //creatureDisk = obj;
         //saveData = data;
@@ -79,8 +108,8 @@ public class Creature : SuperObject
         return saveData;
     }
 
-    public TeamTag GetTeamTag()
+    public CreatureTag GetCreatureTag()
     {
-        return teamTag;
+        return creatureTag;
     }
 }

@@ -7,6 +7,8 @@ using UnityEngine;
 [System.Serializable]
 public class Character : Creature
 {
+    private static string _debugStart = "Character Class | ";
+
     //public static GameData gameData;
     //public static GameObject diskPrefab;
 
@@ -28,7 +30,7 @@ public class Character : Creature
 
     // a way to associate a pet/owner relationship? (using a list)
 
-    public static Character Create(Vector3 pos)
+    public static new Character Create(Vector3 pos)
     {
         CharacterSaveData saveData = new()
         {
@@ -42,14 +44,14 @@ public class Character : Creature
 
     public static Character Create(Vector3 pos, CharacterSaveData saveData)
     {
-        Debug.Log("Creating pure creature obj...");
+        Debug.Log(_debugStart + "Creating character...");
         GameObject obj = CreateGameObject(pos);
-        Character creature = obj.AddComponent<Character>();
-        creature.Init(obj, saveData); // set values
+        Character character = obj.AddComponent<Character>();
+        character.Init(obj, saveData); // set values
 
-        Debug.Log("Pure creature obj created...");
+        gameData.characterList.Add(character);
 
-        return creature;
+        return character;
     }
 
     /// <summary>
