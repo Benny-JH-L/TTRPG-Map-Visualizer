@@ -3,12 +3,12 @@
 using System.Collections.Generic;
 
 [System.Serializable]
-public class TeamTracker
+public class CreatureTagManager
 {
     //private string _noTag = "No Tag";
     //private TeamTag _noTag = new TeamTag("No Tag");
-    private TeamTag _noTag = TeamTag.Create("No Tag");
-    private TeamTag _NeutralTag = TeamTag.Create("Neutral");
+    private CreatureTag _noTag = CreatureTag.Create("No Tag");
+    private CreatureTag _NeutralTag = CreatureTag.Create("Neutral");
 
     // listens to spawned creature event -> yes will need to update all other spawned events that work 
     // on character spawning.
@@ -27,7 +27,7 @@ public class TeamTracker
     */
 
     //private Dictionary<string, List<Creature>> teamsAndMembersDictionary;
-    private Dictionary<TeamTag, List<Creature>> teamsAndMembersDictionary;
+    private Dictionary<CreatureTag, List<Creature>> teamsAndMembersDictionary;
 
     //public TeamTracker(List<string> tagList) : this()
     //{
@@ -35,19 +35,19 @@ public class TeamTracker
     //        teamsAndMembersDictionary.Add(tag, new List<Creature>());
     //}
 
-    public TeamTracker(List<TeamTag> tagList) : this()
+    public CreatureTagManager(List<CreatureTag> tagList) : this()
     {
-        foreach (TeamTag tag in tagList)
+        foreach (CreatureTag tag in tagList)
             teamsAndMembersDictionary.Add(tag, new List<Creature>());
     }
 
-    public TeamTracker()
+    public CreatureTagManager()
     {
-        teamsAndMembersDictionary = new Dictionary<TeamTag, List<Creature>>();
+        teamsAndMembersDictionary = new Dictionary<CreatureTag, List<Creature>>();
         teamsAndMembersDictionary.Add(_noTag, new List<Creature>());
     }
 
-    public void add(TeamTag tag, Creature creature)  // associates the tag and creature 
+    public void add(CreatureTag tag, Creature creature)  // associates the tag and creature 
     {
         if (!tagExists(tag))
             teamsAndMembersDictionary[tag] = new List<Creature>();
@@ -60,15 +60,15 @@ public class TeamTracker
     /// <param name="newTag"></param>
     /// <param name="creature"></param>
     /// <returns>True: if change was made, False otherwise.</returns>
-    public bool changeTag(TeamTag newTag, Creature creature)  // attempts to change the tag for this creature if it exists
+    public bool changeTag(CreatureTag newTag, Creature creature)  // attempts to change the tag for this creature if it exists
     {
         // don't change tag
-        if (creature.GetTeamTag() == newTag)
+        if (creature.GetCreatureTag() == newTag)
             return true;
 
         // change the tag
         add(newTag, creature);
-        teamsAndMembersDictionary[creature.GetTeamTag()].Remove(creature);
+        teamsAndMembersDictionary[creature.GetCreatureTag()].Remove(creature);
         return true;
         ////bool creatureExists = teamsAndMembersDictionary.Values.Any(creatureList => creatureList.Contains(creature));
         
@@ -105,7 +105,7 @@ public class TeamTracker
     /// <returns>True if the creature was removed, false otherwise.</returns>
     public bool removeCreature(Creature creature) // true: was removed, false otherwise
     {
-        return teamsAndMembersDictionary[creature.GetTeamTag()].Remove(creature);
+        return teamsAndMembersDictionary[creature.GetCreatureTag()].Remove(creature);
         //// find the creature in the dictionary
         //foreach (KeyValuePair<string, List<Creature>> valuePair in teamsAndMembersDictionary)
         //{
@@ -116,11 +116,11 @@ public class TeamTracker
     }
 
     /// <summary>
-    ///[will be done in TeamTag class and will trigger an event that will make the creatures have the "no tag" tag] Removes the desired TeamTag from existing tags, and all Creatures within that tag will be re-tagged to "No Tag".
+    ///[will be done in Tag class and will trigger an event that will make the creatures have the "no tag" tag] Removes the desired TeamTag from existing tags, and all Creatures within that tag will be re-tagged to "No Tag".
     /// </summary>
     /// <param name="tag"></param>
-    /// <returns>True if the TeamTag was removed, false otherwise.</returns>
-    public bool removeTag(TeamTag tag)
+    /// <returns>True if the Tag was removed, false otherwise.</returns>
+    public bool removeTag(CreatureTag tag)
     {
         if (!tagExists(tag))
             return false;
@@ -131,7 +131,7 @@ public class TeamTracker
         return true;       
     }
 
-    private bool tagExists(TeamTag tag)
+    private bool tagExists(CreatureTag tag)
     {
         return teamsAndMembersDictionary.ContainsKey(tag);
     }
