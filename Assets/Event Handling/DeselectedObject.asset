@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe52247dc5c1ef34994fbc1c43ca96b2, type: 3}
-  m_Name: MousrRightClick
+  m_Name: DeselectedObject
   m_EditorClassIdentifier: 
   listenerList: []
