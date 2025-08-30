@@ -8,7 +8,9 @@ public class OrbitCam
     /// <summary>
     /// Variable to set when a Orbit Camera is going to be used
     /// </summary>
-    private Transform orbitTarget;
+    //private Transform orbitTarget;
+    private GameObject orbitTarget;
+
     /// <summary>
     /// Variable to set when a Orbit Camera is created
     /// </summary>
@@ -19,6 +21,7 @@ public class OrbitCam
     private float currentRotatX = 0f;   // theta
     private float currentRotatY = 20f;  // phi
     private float orbitDistance = 5f;   // how far camera is from object
+    private Vector3 origin = Vector3.zero;
 
     public OrbitCam(Camera orbitCam, CameraData cameraData)
     {
@@ -29,14 +32,20 @@ public class OrbitCam
 
     public void UpdateOrbitCam()
     {
-        if (!Mouse.current.middleButton.isPressed)  // do orbit cam when holding middle mouse down
+        if (!Mouse.current.middleButton.isPressed)  // don't orbit cam when not holding middle mouse down, but update camera position relative to selected object's position
+        {
+            Vector3 direction = new Vector3(0, 0, -orbitDistance);
+            orbitCam.transform.position = orbitTarget.transform.position + (orbitCam.transform.rotation * direction);
+            //UpdateOrbitCamOnce();
             return;
+        }
 
         OrbitCamLogic();
     }
     public void Enable(GameObject objToLookAt)
     {
-        orbitTarget = objToLookAt.transform;
+        //orbitTarget = objToLookAt.transform;
+        orbitTarget = objToLookAt;
         orbitCam.enabled = true;
         UpdateOrbitCamOnce();
     }
@@ -56,7 +65,8 @@ public class OrbitCam
 
         Quaternion rotation = Quaternion.Euler(currentRotatY, currentRotatX, 0);
         Vector3 direction = new Vector3(0, 0, -orbitDistance);
-        Vector3 position = ((orbitTarget != null) ? orbitTarget.position : Vector3.zero) + rotation * direction;
+        //Vector3 position = ((orbitTarget != null) ? orbitTarget.position : origin) + rotation * direction;
+        Vector3 position = ((orbitTarget != null) ? orbitTarget.transform.position : origin) + rotation * direction;
 
         orbitCam.transform.position = position;
         orbitCam.transform.rotation = rotation;
@@ -290,12 +300,12 @@ public class CameraManager : MonoBehaviour
             cam.orthographic = true;
     }
 
-    public void OnSelectedCreature(Component sender, object data)
+    public void OnSelectedObject(Component sender, object data)
     {
-        if (data is Character)   // maybe have a condition to check whether or not we switch to player or go to map cam... (Eagel or creature view to moving..)
+        if (data is Creature)   // maybe have a condition to check whether or not we switch to player or go to map cam... (Eagel or creature view to moving..)
         {
             Debug.Log("Switching to orbit cam");
-            Character creature = (Character)data;
+            Creature creature = (Creature)data;
             _EnableObjectCam();
             _orbitCam.Enable(creature.creatureDisk);
 
@@ -303,5 +313,10 @@ public class CameraManager : MonoBehaviour
             //_EnableObjectCam();
             //_orbitCam.UpdateOrbitCamOnce();
         }
+    }
+
+    public void OnDeselectObject(Component sender, object data)
+    {
+        _EnableMapCam();
     }
 }
