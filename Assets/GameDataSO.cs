@@ -7,9 +7,8 @@ using UnityEngine;
 public class GameData : ScriptableObject
 {
     //GameEventListener onSpawnedObject;
-    public List<Character> creatureList = new(); // everything, players, enemies, etc
-    public List<Player> playerList = new(); // turn them into GameObject lists?
-    public List<Enemy> enemyList = new();
+    public List<Creature> creatureList = new(); // everything, players, enemies, etc
+    public List<Character> characterList = new(); // turn them into GameObject lists?
 
     //public void OnSpawnedObject(Component component, object data)
     //{
@@ -39,29 +38,27 @@ public class GameData : ScriptableObject
     //    }
     //}
 
-    public List<Character> characterList = new(); 
-
-    public void PrintPlayers()
+    public void PrintCharacters()
     {
         string output = "";
 
-        foreach (Player player in playerList)
+        foreach (Character c in characterList)
         {
-            output += "Player | " + player.GetPosition() + "\n";
+            output += "Character | " + c.GetPosition() + "\n";
         }
         Debug.Log(output);
     }
 
-    public void PrintEnemies()
-    {
-        string output = "";
+    //public void PrintEnemies()    // use tags, printHOstiles to PCs
+    //{
+    //    string output = "";
 
-        foreach (Enemy enemy in enemyList)
-        {
-            output += "Enemy | " + enemy.GetPosition() + "\n";
-        }
-        Debug.Log(output);
-    }
+    //    foreach (Enemy enemy in enemyList)
+    //    {
+    //        output += "Enemy | " + enemy.GetPosition() + "\n";
+    //    }
+    //    Debug.Log(output);
+    //}
 
     public void PrintCreatures()
     {

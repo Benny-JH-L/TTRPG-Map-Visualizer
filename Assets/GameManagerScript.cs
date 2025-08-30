@@ -5,10 +5,12 @@ using UnityEngine.InputSystem;
 public class GameManagerScript : MonoBehaviour
 {
     public static GameData gameData;
+    private static string _debugStart = "Game Manager Script | ";
 
     public CameraManager cameraManager;
 
     public GameEvent selectedObjectEvent;
+    public GameEvent deSelectedObjectEvent;
     public GameEvent mouseRightClickEvent;
     public GameEvent cameraChangedEvent;
     
@@ -27,25 +29,43 @@ public class GameManagerScript : MonoBehaviour
     {
         if (Keyboard.current.backslashKey.wasPressedThisFrame)  // '\'
         {
-            gameData.PrintPlayers();
+            //gameData.PrintPlayers();
+            gameData.PrintCharacters();
         }
         else if (Keyboard.current.qKey.wasPressedThisFrame)
         {
             count++;
             //gameData.playerList[0].saveData.className = $"woighowegwe + {count}";
             //gameData.playerList[0].GetComponent<Character>().saveData.className = ClassType.NONE;
-            gameData.playerList[0].GetComponent<Character>().GetSaveData().className = ClassType.NONE;
+            gameData.characterList[0].GetComponent<Character>().GetSaveData().className = ClassType.NONE;
         }
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
-            SelectCreature();
+            CheckMousePos();
     }
 
-    private Character SelectCreature()
+    private void CheckMousePos()
     {
-        Character creature = GetCreatureAtMousePos();
-        Debug.Log("Raising SelectedObject Event");
+        Creature creature = SelectCreature();
+
+        if (creature == null)
+        {
+            Debug.Log(_debugStart + "Raising deSelectedObject Event | creature (should be null): " + creature);
+            deSelectedObjectEvent.Raise(this, null); // `creature` is null
+            return;
+        }
+
+        Debug.Log(_debugStart + "Raising SelectedObject Event | creature: " + creature);
         selectedObjectEvent.Raise(this, creature);
+    }
+
+    /// <summary>
+    /// Selects the Creature at the mouse position, if it exists.
+    /// </summary>
+    /// <returns>The Creature the mouse is over.</returns>
+    private Creature SelectCreature()
+    {
+        Creature creature = GetCreatureAtMousePos();
         return creature;
     }
 
@@ -54,7 +74,7 @@ public class GameManagerScript : MonoBehaviour
     /// Returns `null` if there are no Creatures spawned, or the mouse is not directlt atop of a Creature.
     /// </summary>
     /// <returns></returns>
-    private Character GetCreatureAtMousePos()
+    private Creature GetCreatureAtMousePos()
     {
         if (gameData.creatureList.Count == 0)
         {
