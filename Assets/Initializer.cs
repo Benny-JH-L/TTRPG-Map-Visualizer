@@ -15,8 +15,8 @@ public class Initializer : MonoBehaviour
         Highlight.Initialize(highlightRingPrefab);
 
         gameData = (GameData) ScriptableObject.CreateInstance("GameData");  // not recommended to use `new
-        SuperObject.gameData = gameData;
-        SuperObject.diskPrefab = diskBasePrefab;
+        GeneralObject.gameData = gameData;
+        GeneralObject.diskPrefab = diskBasePrefab;
         Creature.spawnedObjectEvent = spawnedObjectEvent;
 
         GameManagerScript.gameData = gameData;
@@ -25,8 +25,9 @@ public class Initializer : MonoBehaviour
         cameraData = (CameraData) ScriptableObject.CreateInstance<CameraData>();
         CameraManager.cameraData = cameraData;
 
-        Dictionary<string, TeamTag> tagList = new();
-        TeamTag.Initialize(tagList);
+        Dictionary<string, CreatureTag> tagList = new();
+        CreatureTag.Initialize(tagList);
+
     }
 
 
