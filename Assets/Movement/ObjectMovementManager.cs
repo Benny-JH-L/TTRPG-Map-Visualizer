@@ -51,24 +51,48 @@ public class ObjectMovementManager : MonoBehaviour
             movement.MoveEast();
         }
 
+        // Check if the game object was even moved
+        if (movement.GetMovement().magnitude == 0)
+            return;
+
+        // Do movement
         Vector3 newPos = _selectedGameObject.transform.position + movement.GetMovement();
         _selectedGameObject.transform.position = newPos;
-
+        //Debug.Log("ewikjgbwebgwe");
         Tuple<GameObject, Vector3> send = new Tuple<GameObject, Vector3>(gameObject, newPos);
+        //Debug.Log("ewikjgbwebgwe123");
         objectMovedEvent.Raise(this, send);
+        //Debug.Log("ewikjgbwebgwe2141");
+
     }
 
+    /// <summary>
+    /// Sets the selected game object for movement.
+    /// </summary>
+    /// <param name="comp"></param>
+    /// <param name="data"></param>
     public void OnSelectedObject(Component comp, object data)
     {
         Debug.Log(_debugStart + " Selected Object Event");
 
-        if (data is Character) // creatrure, player, etc.
+        if (data is Creature) // creatrure, player, etc.
         {
             Debug.Log(_debugStart + "Setting selected object");
 
             // could use either it seems
             //_selectedGameObject = ((Creature)data).creatureDisk;
-            _selectedGameObject = ((Character)data).gameObject;
+            _selectedGameObject = ((Creature)data).gameObject;
         }
+    }
+
+    /// <summary>
+    /// Deselectes game object for movement.
+    /// </summary>
+    /// <param name="comp"></param>
+    /// <param name="data"></param>
+    public void OnDeselectObject(Component comp, object data)
+    {
+        Debug.Log(_debugStart + "deselected Object Event");
+        _selectedGameObject = null;
     }
 }
