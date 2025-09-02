@@ -4,11 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public class Creature : GeneralObject
 {    
-    public static GameEvent spawnedObjectEvent;
-
-    public static Vector3 yOffsetDiskSpawn = new(0f, 0.5f, 0f);
-
-    protected CreatureSaveData saveData;  // will make it protected, public is to test/debug [in Unity editor, it will show as Creature save data for all sub classes]
+    public new CreatureData saveData;  // will make it protected, public is to test/debug [in Unity editor, it will show as Creature save data for all sub classes]
     public GameObject creatureDisk; // should also be the var `gameObject` (they are the same)
     //GameObject modelOnDisk; // for later version (child of disk)
 
@@ -56,17 +52,12 @@ public class Creature : GeneralObject
     }
     public static Creature Create(Vector3 pos)
     {
-        CreatureSaveData saveData = new()
-        {
-            // set default values -> from a json file prolly
-            ac = 10
-            // ...
-        };
-
+        CreatureData saveData = new();
+        
         return Create(pos, saveData);
     }
 
-    public static Creature Create(Vector3 pos, CreatureSaveData saveData)
+    public static Creature Create(Vector3 pos, CreatureData saveData)
     {
         Debug.Log("Creating pure creature obj...");
         GameObject obj = CreateGameObject(pos);
@@ -83,7 +74,7 @@ public class Creature : GeneralObject
     /// </summary>
     /// <param name="diskBase"></param>
     /// <param name="data"></param>
-    protected void Init(GameObject diskBase, CreatureSaveData data)
+    protected void Init(GameObject diskBase, CreatureData data)
     {
         //Debug.Log("Creature init");
 
@@ -103,7 +94,7 @@ public class Creature : GeneralObject
         return creatureDisk.transform.position;
     }
 
-    public CreatureSaveData GetSaveData()
+    public CreatureData GetSaveData()
     {
         return saveData;
     }

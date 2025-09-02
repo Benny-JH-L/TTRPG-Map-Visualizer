@@ -17,7 +17,7 @@ public class Initializer : MonoBehaviour
         gameData = (GameData) ScriptableObject.CreateInstance("GameData");  // not recommended to use `new
         GeneralObject.gameData = gameData;
         GeneralObject.diskPrefab = diskBasePrefab;
-        Creature.spawnedObjectEvent = spawnedObjectEvent;
+        GeneralObject.spawnedObjectEvent = spawnedObjectEvent;
 
         GameManagerScript.gameData = gameData;
         // and whoever else needing it

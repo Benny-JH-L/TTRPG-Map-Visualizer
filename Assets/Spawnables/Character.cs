@@ -32,17 +32,12 @@ public class Character : Creature
 
     public static new Character Create(Vector3 pos)
     {
-        CharacterSaveData saveData = new()
-        {
-            // set default values -> from a json file prolly
-            ac = 10
-            // ...
-        };
+        CharacterData saveData = new();
 
         return Create(pos, saveData);
     }
 
-    public static Character Create(Vector3 pos, CharacterSaveData saveData)
+    public static Character Create(Vector3 pos, CharacterData saveData)
     {
         Debug.Log(_debugStart + "Creating character...");
         GameObject obj = CreateGameObject(pos);
@@ -58,9 +53,9 @@ public class Character : Creature
     /// if i use `new` runtime polymorphism wont work, if i call this with `Creature c = new Character; c.GetSaveData()` it will give me the creature save data
     /// </summary>
     /// <returns></returns>
-    public new CharacterSaveData GetSaveData() 
+    public new CharacterData GetSaveData() 
     {
-        return (CharacterSaveData)saveData;
+        return (CharacterData)saveData;
     }
 
  }
