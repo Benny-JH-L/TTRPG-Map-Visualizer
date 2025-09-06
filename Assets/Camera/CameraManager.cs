@@ -132,7 +132,6 @@ public class CameraManager : MonoBehaviour
         UpdateCamera();
     }
 
-
     private void UpdateCamera()
     {
         if (Keyboard.current.backquoteKey.wasPressedThisFrame) // '`'
@@ -168,6 +167,16 @@ public class CameraManager : MonoBehaviour
             else if (Keyboard.current.dKey.isPressed)
             {
                 movementValue.MoveEast();
+            }
+
+            if (Mouse.current.middleButton.isPressed)
+            {
+                movementValue = new(cameraData.mapMoveSensitivity + 0.2f);
+                Vector2 mouseDelta = Mouse.current.delta.ReadValue();
+                Debug.Log($"Mouse Delta: {mouseDelta}");
+                // mouseDelta.x -> right (+) / left (-)
+                // mouseDelta.y -> up (+) / down (-)
+                movementValue.SetMove(-mouseDelta); // negate so the camera moves opposite of mouse movement
             }
 
             MoveMapCamBy(movementValue);

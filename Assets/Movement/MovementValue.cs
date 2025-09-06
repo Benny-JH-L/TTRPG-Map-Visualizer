@@ -83,12 +83,39 @@ public class MovementValue
     }
 
     /// <summary>
+    /// Overrides what the movement is currently with the desired movement.
+    /// </summary>
+    /// <param name="moveBy"></param>
+    public void SetMove(Vector3 moveBy)
+    {
+        _moveBy = moveBy;
+    }
+
+    /// <summary>
+    /// Overrides what the movement is currently with the desired movement. (Ignores the y axis; axis pointing out of the screen)
+    /// </summary>
+    /// <param name="moveBy"></param>
+    public void SetMove(Vector2 moveBy)
+    {
+        _moveBy.x = moveBy.x;
+        _moveBy.z = moveBy.y;
+    }
+
+    /// <summary>
     /// returns the movement value; Vector3.Normalized * movement factor
     /// </summary>
     /// <returns>Vector3 representation of the movement done</returns>
     public Vector3 GetMovement()
     {
         return (_moveBy.normalized) * _movementFactor;
+    }
+
+    /// <summary>
+    /// Sets the Vector3 movement to (0, 0, 0)
+    /// </summary>
+    public void ResetMovement()
+    {
+        _moveBy = Vector3.zero;
     }
 }
 
