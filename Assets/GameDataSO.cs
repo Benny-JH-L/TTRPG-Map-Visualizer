@@ -9,6 +9,7 @@ public class GameData : ScriptableObject
     //GameEventListener onSpawnedObject;
     public List<Creature> creatureList = new(); // everything, players, enemies, etc
     public List<Character> characterList = new(); // turn them into GameObject lists?
+    public List<GeneralObject> generalObjectList = new();
 
     //public void OnSpawnedObject(Component component, object data)
     //{
@@ -37,6 +38,17 @@ public class GameData : ScriptableObject
 
     //    }
     //}
+
+    public void PrintGeneralObjects()
+    {
+        string output = "";
+
+        foreach (GeneralObject c in generalObjectList)
+        {
+            output += "General Object | " + c.GetPosition() + "\n";
+        }
+        Debug.Log(output);
+    }
 
     public void PrintCharacters()
     {

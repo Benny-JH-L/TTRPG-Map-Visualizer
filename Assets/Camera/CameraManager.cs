@@ -360,7 +360,7 @@ public class CameraManager : MonoBehaviour
             Debug.Log("Switching to orbit cam");
             Creature creature = (Creature)data;
             _EnableObjectCam();
-            _orbitCam.Enable(creature.creatureDisk);
+            _orbitCam.Enable(creature.diskBase);
 
             //_orbitCam.orbitTarget = creature.creatureDisk.transform;
             //_EnableObjectCam();

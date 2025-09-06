@@ -5,7 +5,6 @@ using UnityEngine;
 public class Creature : GeneralObject
 {    
     public new CreatureData saveData;  // will make it protected, public is to test/debug [in Unity editor, it will show as Creature save data for all sub classes]
-    public GameObject creatureDisk; // should also be the var `gameObject` (they are the same)
     //GameObject modelOnDisk; // for later version (child of disk)
 
     public int diskRadius = 1;  // NEED TO guess and check
@@ -78,20 +77,16 @@ public class Creature : GeneralObject
     {
         //Debug.Log("Creature init");
 
-        creatureDisk = diskBase;
+        this.diskBase = diskBase;
         saveData = data;
 
+        // wont be done directly in the future, will prolly use events.
         gameData.creatureList.Add(diskBase.GetComponent<Creature>());
-        
+        gameData.generalObjectList.Add(diskBase.GetComponent<GeneralObject>());
         //creatureDisk = obj;
         //saveData = data;
         //gameData.creatureList.Add(obj.GetComponent<Creature>());
         //Debug.Log("Player component to string: " + comp.ToString());
-    }
-
-    public Vector3 GetPosition()
-    {
-        return creatureDisk.transform.position;
     }
 
     public CreatureData GetSaveData()
