@@ -5,13 +5,17 @@ public class Initializer : MonoBehaviour
 {
     public GameData gameData;           // is created during runtime
     public CameraData cameraData;       // is created during runtime
+
     public GameObject diskBasePrefab;
     public GameObject highlightRingPrefab;
-    public GameEvent spawnedObjectEvent;
+    public GameObject screenSpaceGameObject;
 
+    public GameEvent spawnedObjectEvent;
 
     private void Awake()
     {
+        Canvas.ForceUpdateCanvases();
+
         Highlight.Initialize(highlightRingPrefab);
 
         gameData = (GameData) ScriptableObject.CreateInstance("GameData");  // not recommended to use `new
@@ -24,6 +28,7 @@ public class Initializer : MonoBehaviour
 
         cameraData = (CameraData) ScriptableObject.CreateInstance<CameraData>();
         CameraManager.cameraData = cameraData;
+        CameraManager.screenSpaceGameObject = screenSpaceGameObject;
 
         Dictionary<string, CreatureTag> tagList = new();
         CreatureTag.Initialize(tagList);

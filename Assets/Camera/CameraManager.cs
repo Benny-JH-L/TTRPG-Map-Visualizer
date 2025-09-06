@@ -88,8 +88,9 @@ public class CameraManager : MonoBehaviour
     // will be on the gameobject
     //public GameEventListener onSelectedObject;
     //public GameEventListener onCameraProjectionChange;
-
+    private static string _cameraDebugStart = "Camera Manager | ";
     public static CameraData cameraData;
+    public static GameObject screenSpaceGameObject; // UI component that occupies the screen space of the active game.
 
     public Camera mapCam;
     public Camera objectCam;    
@@ -124,6 +125,8 @@ public class CameraManager : MonoBehaviour
 
         _currentCam = mapCam;
         _currentCam.enabled = true;
+
+        _SetCameraRect();
     }
 
     // Update is called once per frame
@@ -295,6 +298,47 @@ public class CameraManager : MonoBehaviour
         _DisableAllCams();
         _currentCam = mapCam;
         _currentCam.enabled = true;
+    }
+
+    /// <summary>
+    /// Sets the Camera Rect (The area that the camera will render).
+    /// Sets all Camera Rect's relative to the screen space occupied by `screenSpaceGameObject`.
+    /// MUST ENSURE THERE IS AN ACTIVE CAMERA!
+    /// </summary>
+    private void _SetCameraRect()
+    {
+        Debug.Log(_cameraDebugStart + "Setting camera rect's");
+        Canvas.ForceUpdateCanvases();
+
+        RectTransform rt = screenSpaceGameObject.GetComponent<RectTransform>();
+
+        // Get four corners of the UI object
+        Vector3[] corners = new Vector3[4];
+        rt.GetWorldCorners(corners);
+
+        Vector3 bottomLeft = corners[0];
+        Vector3 topRight = corners[2];
+
+        // Since Screen Space - Overlay, these are already in screen space
+        Rect screenRect = new(
+            bottomLeft.x,
+            bottomLeft.y,
+            topRight.x - bottomLeft.x,
+            topRight.y - bottomLeft.y
+        );
+
+        // Normalize to viewport coordinates (0–1)
+        Rect viewPortRect = new(
+            screenRect.x / Screen.width,
+            screenRect.y / Screen.height,
+            screenRect.width / Screen.width,
+            screenRect.height / Screen.height
+        );
+
+        Debug.Log($"ScreenRect: {screenRect} | ViewPortRect: {viewPortRect}");
+
+        foreach (Camera camera in _cameraList)
+            camera.rect = viewPortRect;
     }
 
     public void EnablePerspectiveView()

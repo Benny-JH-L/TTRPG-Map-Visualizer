@@ -89,7 +89,7 @@ public class GameManagerScript : MonoBehaviour
         string gameObjectName = gameData.creatureList[0].name;  // should be the same for all those inside -> "disk(Clone)"
         if (rayHitGameObject != gameObjectName)
         {
-            Debug.Log("Mouse position does not direcly overlap with any `Creature` given with name<" + gameObjectName + ">");
+            Debug.Log($"{_debugStart} Mouse position {mousePos} does not direcly overlap with any `Creature` given with name<{gameObjectName}>");
             return null;
         }
 
