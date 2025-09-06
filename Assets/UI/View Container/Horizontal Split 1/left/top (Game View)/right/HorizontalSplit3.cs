@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameView : AbstractUI
+public class HorizontalSplit3 : AbstractUI
 {
     public ViewDataSO viewData;
 
-    public GameObject leftSideButtonsUI;
-    public GameObject rightSide;
+    public GameObject rightButtonsUI;
+    public GameObject mainGameView;
 
     private Image thisImage;
 
@@ -19,7 +19,6 @@ public class GameView : AbstractUI
         horizontalLayoutGroup = GetComponent<HorizontalLayoutGroup>();
         layoutElement = GetComponent<LayoutElement>();
     }
-
     public override void Configure()
     {
         horizontalLayoutGroup.padding = viewData.padding;
