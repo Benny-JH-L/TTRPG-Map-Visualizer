@@ -260,21 +260,21 @@ public class CameraManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns a tuple with name of object the mouse is over and the mouses location in the world.
+    /// Returns a tuple with the `gameObject` the mouse is over and the mouse's location in the world.
     /// </summary>
     /// <returns>
-    /// Tuple(string, Vector3)
-    /// Item 1: Name of the object the mouse is over. Is Null if the mouse is not over a GameObject
+    /// Tuple(GameObject, Vector3)
+    /// Item 1: GameObject the mouse is over. Is Null if the mouse is not over a GameObject
     /// Item 2: Location of where the mouse is over. Is Null if the mouse is not over a GameObject
     /// </returns>
-    public Tuple<string, Vector3> GetCurrMosePos()
+    public Tuple<GameObject, Vector3> GetGameObjectAtMousePos()
     {
         //Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()); // works with camera's with the tag "MainCamera"
         Ray ray = _currentCam.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            Debug.Log("Camera | Mouse hit <" + hit.collider.name + "> at " + hit.point);
-            return new Tuple<string, Vector3>(hit.collider.name, hit.point);
+            Debug.Log("Camera | Mouse hit <" + hit.collider.gameObject + "> at " + hit.point);
+            return new Tuple<GameObject, Vector3>(hit.collider.gameObject, hit.point);
         }
 
         return null;
@@ -355,10 +355,10 @@ public class CameraManager : MonoBehaviour
 
     public void OnSelectedObject(Component sender, object data)
     {
-        if (data is Creature)   // maybe have a condition to check whether or not we switch to player or go to map cam... (Eagel or creature view to moving..)
+        if (data is GeneralObject)   // maybe have a condition to check whether or not we switch to player or go to map cam... (Eagel or creature view to moving..)
         {
             Debug.Log("Switching to orbit cam");
-            Creature creature = (Creature)data;
+            GeneralObject creature = (GeneralObject)data;
             _EnableObjectCam();
             _orbitCam.Enable(creature.diskBase);
 
