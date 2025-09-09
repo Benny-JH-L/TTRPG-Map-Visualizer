@@ -1,4 +1,5 @@
 
+[System.Serializable]
 public enum ClassType
 {
     OTHER = -3,

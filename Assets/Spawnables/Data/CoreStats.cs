@@ -111,7 +111,6 @@ public class CoreStats
     //}
     //public CoreStat stats;
 
-    public string name;
     public CreatureSize size;
     public string alignment; // note: will make this into a class to keep track of alignments / or use enum
 
@@ -146,7 +145,6 @@ public class CoreStats
         //stats.intelligence = 0;
         //stats.wisdom = 0;
         //stats.charaisma = 0;
-        name = null;
         size = CreatureSize.Medium;
         alignment = null;
         ac = 0;

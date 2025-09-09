@@ -18,16 +18,23 @@ public class Spawner : MonoBehaviour
         // should i have this in GameManagerScript instead?
         if (Keyboard.current.digit1Key.wasPressedThisFrame)
         {
-            var tup = cameraManager.GetCurrMosePos();
+            var tup = cameraManager.GetGameObjectAtMousePos();
             Vector3 pos = tup.Item2;
             Character.Create(pos);
         }
         else if (Keyboard.current.digit2Key.wasPressedThisFrame)
         {
-            var tup = cameraManager.GetCurrMosePos();
+            var tup = cameraManager.GetGameObjectAtMousePos();
             Vector3 pos = tup.Item2;
             Creature.Create(pos);
         }
+        else if (Keyboard.current.digit3Key.wasPressedThisFrame)
+        {
+            var tup = cameraManager.GetGameObjectAtMousePos();
+            Vector3 pos = tup.Item2;
+            InanimateObject.Create(pos);
+        }
+
     }
 
 }
