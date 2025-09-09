@@ -75,13 +75,13 @@ public class ObjectMovementManager : MonoBehaviour
     {
         Debug.Log(_debugStart + " Selected Object Event");
 
-        if (data is Creature) // creatrure, player, etc.
+        if (data is GeneralObject)
         {
             Debug.Log(_debugStart + "Setting selected object");
 
             // could use either it seems
             //_selectedGameObject = ((Creature)data).creatureDisk;
-            _selectedGameObject = ((Creature)data).gameObject;
+            _selectedGameObject = ((GeneralObject)data).gameObject;
         }
     }
 
