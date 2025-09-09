@@ -11,7 +11,7 @@ public class Highlight : MonoBehaviour
 
     private static GameObject highlightRingPrefab;
     private GameObject highlightRing;
-    private Creature selectedCreature;
+    private GeneralObject selectedCreature;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,13 +36,13 @@ public class Highlight : MonoBehaviour
     {
         if (data == null)
         {
-            Debug.Log(_debugStart + "this part of the code should thearetically shouyldn;t be called");
+            Debug.Log(_debugStart + "this part of the code should thearetically shouyldn't be called");
             deactivateRing();
         }
-        else if (data is Creature)   // creature for now, will need to allow other object like trees and what not if the user wants to move/replace those things. will also need to resize the highlight ring to encompass the object!
+        else if (data is GeneralObject)   // will also need to resize the highlight ring to encompass the object!
         {
-            Debug.Log(_debugStart + "Highlighting creature (Selected object event)");
-            selectedCreature = (Creature)data;
+            Debug.Log(_debugStart + "Highlighting GeneralObject (Selected object event)");
+            selectedCreature = (GeneralObject)data;
             highlightRing.SetActive(true);
             updatePosition();
 
@@ -65,7 +65,7 @@ public class Highlight : MonoBehaviour
 
     public void OnDeselectObject(Component comp, object data)
     {
-        Debug.Log(_debugStart + "dehighlighting creature (deselect object event)");
+        Debug.Log(_debugStart + "dehighlighting GeneralObject (deselect object event)");
         deactivateRing();
     }
 
