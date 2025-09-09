@@ -16,39 +16,6 @@ public class Creature : GeneralObject
     //public GameEventListener onMouseRightClick;
     //public GameEventListener onSelectedObject;
 
-    //protected static GameObject CreateGameObject(CreatureType type, Vector3 position)
-    protected static GameObject CreateGameObject(Vector3 position)
-    {
-        //return CreateGameObject(position, Quaternion.identity);
-        return CreateGameObject(position, diskPrefab.transform.rotation);
-    }
-
-    protected static GameObject CreateGameObject(Vector3 position, Quaternion rotation)
-    {
-        //Debug.Log("Creating Creature GameObject");
-        return Instantiate(diskPrefab, position + yOffsetDiskSpawn, rotation); // need to add a y-offset to the position or else the object will sometimes launch into the air (collides with the ground)
-        //GameObject obj = Instantiate(diskPrefab, position, rotation);
-
-        //object componentType = null;
-        //switch (creatureType)
-        //{
-        //    case CreatureType.Player:
-        //        componentType = obj.AddComponent<Player>();
-        //        ((Player)componentType).Init(obj);
-        //        gameData.playerList.Add((Player)componentType);
-        //        break;
-        //    case CreatureType.Enemy:
-        //        componentType = obj.AddComponent<Enemy>();
-        //        gameData.enemyList.Add((Enemy)componentType);
-        //        break;
-        //    case CreatureType.Other:
-        //        componentType = obj.AddComponent<Creature>();
-        //        break;
-        //}
-        //gameData.creatureList.Add((Creature)componentType);
-
-        //return obj;
-    }
     public static Creature Create(Vector3 pos)
     {
         CreatureData saveData = new();
@@ -60,7 +27,7 @@ public class Creature : GeneralObject
     {
         Debug.Log("Creating pure creature obj...");
         GameObject obj = CreateGameObject(pos);
-        Creature creature = obj.AddComponent<Character>();
+        Creature creature = obj.AddComponent<Creature>();
         creature.Init(obj, saveData); // set values
 
         Debug.Log("Pure creature obj created...");
@@ -76,13 +43,12 @@ public class Creature : GeneralObject
     protected void Init(GameObject diskBase, CreatureData data)
     {
         //Debug.Log("Creature init");
+        base.Init(diskBase, data);
 
-        this.diskBase = diskBase;
         saveData = data;
 
         // wont be done directly in the future, will prolly use events.
         gameData.creatureList.Add(diskBase.GetComponent<Creature>());
-        gameData.generalObjectList.Add(diskBase.GetComponent<GeneralObject>());
         //creatureDisk = obj;
         //saveData = data;
         //gameData.creatureList.Add(obj.GetComponent<Creature>());
