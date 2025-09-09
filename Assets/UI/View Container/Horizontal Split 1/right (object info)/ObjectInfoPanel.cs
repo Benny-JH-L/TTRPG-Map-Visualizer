@@ -1,16 +1,18 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ObjectInfo : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public GameObject objectInfoPanelView;
+    public GameObject generalObjectPanelPreset;
+    public GameObject creaturePanelPreset;
 
-    // Update is called once per frame
-    void Update()
+    public void OnObjectSelected(Component comp, Object data)
     {
-        
+        if (data is Creature)
+        {
+            Creature creature = (Creature)data;
+            
+        }
     }
 }
