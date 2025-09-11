@@ -33,14 +33,17 @@ public class CoreStats
         // make private, use public for testing -?
         public int abilityScore;
         public int modifier;
+        public GameEvent attributeModifierChanged;
 
-        public Attribute(int abilityScore) 
+        public Attribute(GameEvent attributeModifierChanged, int abilityScore) 
         {
+            this.attributeModifierChanged = attributeModifierChanged;
             SetNewAbilityScore(abilityScore);
         }
 
         /// <summary>
         /// Set the new ability score value, and updates modifier value.
+        /// Raises `attributeModifierChanged` event.
         /// </summary>
         /// <param name="abilityScore"></param>
         public void SetNewAbilityScore(int abilityScore)
@@ -49,6 +52,7 @@ public class CoreStats
                 abilityScore = 1;
             this.abilityScore = abilityScore;
             SetModifierValue();
+            attributeModifierChanged.Raise(null, modifier);
         }
 
         /// <summary>
@@ -125,6 +129,14 @@ public class CoreStats
     public Attribute wisdom;
     public Attribute charaisma;
 
+    // Must be set in initializer first
+    public static GameEvent strModChanged;
+    public static GameEvent dexModChanged;
+    public static GameEvent conModChanged;
+    public static GameEvent intModChanged;
+    public static GameEvent wisModChanged;
+    public static GameEvent chaModChanged;
+
     public CoreStats()
     {
         //stats.name = null;
@@ -156,12 +168,12 @@ public class CoreStats
         speedTypes.swim = 0;
 
         hp = 0;
-        strength = new(0);
-        dexterity = new(0);
-        constitution = new(0);
-        intelligence = new(0);
-        wisdom = new(0);
-        charaisma = new(0);
+        strength = new(strModChanged, 0);
+        dexterity = new(dexModChanged, 0);
+        constitution = new(conModChanged, 0);
+        intelligence = new(intModChanged, 0);
+        wisdom = new(wisModChanged, 0);
+        charaisma = new(chaModChanged, 0);
     }
 
 }

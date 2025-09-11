@@ -34,7 +34,6 @@ public class Spawner : MonoBehaviour
             Vector3 pos = tup.Item2;
             InanimateObject.Create(pos);
         }
-
     }
 
 }

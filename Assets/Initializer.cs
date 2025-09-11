@@ -11,6 +11,12 @@ public class Initializer : MonoBehaviour
     public GameObject screenSpaceGameObject;
 
     public GameEvent spawnedObjectEvent;
+    public GameEvent strModChanged;
+    public GameEvent dexModChanged;
+    public GameEvent conModChanged;
+    public GameEvent intModChanged;
+    public GameEvent wisModChanged;
+    public GameEvent chaModChanged;
 
     private void Awake()
     {
@@ -33,6 +39,12 @@ public class Initializer : MonoBehaviour
         Dictionary<string, CreatureTag> tagList = new();
         CreatureTag.Initialize(tagList);
 
+        CoreStats.strModChanged = strModChanged;
+        CoreStats.dexModChanged = dexModChanged;
+        CoreStats.conModChanged = conModChanged;
+        CoreStats.intModChanged = intModChanged;
+        CoreStats.wisModChanged = wisModChanged;
+        CoreStats.chaModChanged = chaModChanged;
     }
 
 
