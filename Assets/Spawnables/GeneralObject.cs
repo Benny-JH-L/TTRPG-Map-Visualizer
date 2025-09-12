@@ -14,7 +14,9 @@ public abstract class GeneralObject : MonoBehaviour
     //public GameObject modelOnBase;    // later implmentation
 
     public GeneralObjectData saveData;  // will make it protected, public is to test/debug [in Unity editor, it will show as Creature save data for all sub classes]
-    public string objectName; // here or put into savedata?
+    //public string objectName = "NAME"; // here or put into savedata?
+    public string objectName = string.Empty; // here or put into savedata?
+
 
     //protected static GameObject CreateGameObject(CreatureType type, Vector3 position)
     protected static GameObject CreateGameObject(Vector3 position)

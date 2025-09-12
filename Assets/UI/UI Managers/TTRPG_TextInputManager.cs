@@ -33,6 +33,16 @@ public class TTRPG_TextInputManager : AbstractInputManager
     {
         Debug.Log($"{_debugStart}Stopped editing, text entered: {_textSoFar}");
         _inputField.text = _textSoFar;
-        //valueChanged.Raise(this, _textSoFar); // commented out during testing
+        valueChanged.Raise(this, _textSoFar); // commented out during testing
     }
+
+    public override void InitializeInputField(Component comp, object data)
+    {
+        if (data is string s)
+        {
+            _inputField.text = s;
+            Debug.Log($"init text to {s}");
+        }
+    }
+
 }

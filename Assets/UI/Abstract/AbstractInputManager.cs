@@ -9,6 +9,8 @@ public abstract class AbstractInputManager : AbstractUI
     public abstract void OnValueChanged(string text);
     public abstract void OnEndEdit();
 
+    public abstract void InitializeInputField(Component comp, object data);
+
     public void OnSelect()
     {
         UIFocused.Raise(this, true);
@@ -21,11 +23,5 @@ public abstract class AbstractInputManager : AbstractUI
         Debug.Log("UI unfocased event raised");
     }
 
-    public void InitializeInputField(Component comp, object data)
-    {
-        if (data is string val)
-            _inputField.text = val;
-        else if (data is int num)
-            _inputField.text = num.ToString();
-    }
+
 }

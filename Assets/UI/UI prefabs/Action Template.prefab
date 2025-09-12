@@ -158,7 +158,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4398557786657607673, guid: c8deaef6ad98a5a4595d8fc2c284446d, type: 3}
       propertyPath: m_Text
-      value: Action Name....
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4398557786657607673, guid: c8deaef6ad98a5a4595d8fc2c284446d, type: 3}
       propertyPath: m_LineType
@@ -166,11 +166,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6256387741066055523, guid: c8deaef6ad98a5a4595d8fc2c284446d, type: 3}
       propertyPath: m_text
-      value: "Action Name....\u200B"
+      value: "\u200B"
       objectReference: {fileID: 0}
     - target: {fileID: 6256387741066055523, guid: c8deaef6ad98a5a4595d8fc2c284446d, type: 3}
       propertyPath: m_TextWrappingMode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312541368717753349, guid: c8deaef6ad98a5a4595d8fc2c284446d, type: 3}
+      propertyPath: m_text
+      value: Action Name...
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312541368717753349, guid: c8deaef6ad98a5a4595d8fc2c284446d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312541368717753349, guid: c8deaef6ad98a5a4595d8fc2c284446d, type: 3}
+      propertyPath: m_TextWrappingMode
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -276,7 +288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4398557786657607673, guid: c8deaef6ad98a5a4595d8fc2c284446d, type: 3}
       propertyPath: m_Text
-      value: Description...
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4398557786657607673, guid: c8deaef6ad98a5a4595d8fc2c284446d, type: 3}
       propertyPath: m_LineType
@@ -284,10 +296,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6256387741066055523, guid: c8deaef6ad98a5a4595d8fc2c284446d, type: 3}
       propertyPath: m_text
-      value: "Description...\u200B"
+      value: "\u200B"
       objectReference: {fileID: 0}
     - target: {fileID: 6256387741066055523, guid: c8deaef6ad98a5a4595d8fc2c284446d, type: 3}
       propertyPath: m_TextWrappingMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312541368717753349, guid: c8deaef6ad98a5a4595d8fc2c284446d, type: 3}
+      propertyPath: m_text
+      value: Description...
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312541368717753349, guid: c8deaef6ad98a5a4595d8fc2c284446d, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

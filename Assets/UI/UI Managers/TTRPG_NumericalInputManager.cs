@@ -26,6 +26,12 @@ public class TTRPG_NumericalInputManager : AbstractInputManager
     }
     public override void OnValueChanged(string text)
     {
+        if (text == string.Empty)
+        {
+            _inputField.text = string.Empty;
+            return;
+        }
+
         int val = ParseStringToInt(text);
 
         if (val > 0)
@@ -84,5 +90,14 @@ public class TTRPG_NumericalInputManager : AbstractInputManager
     private int ParseStringToInt(string text)
     {
         return ParseStringToInt(text, true);
+    }
+    public override void InitializeInputField(Component comp, object data)
+    {
+        if (data is CoreStats.Attribute abs)
+            _inputField.text = abs.GetAbilityScore().ToString();
+        else if (data is int i)
+            _inputField.text = i.ToString();
+        else if (data is float f)   // idk if i have any floating point data being sent
+            _inputField.text = f.ToString();
     }
 }
