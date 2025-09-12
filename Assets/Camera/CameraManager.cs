@@ -22,7 +22,6 @@ public class OrbitCam
     private float currentRotatY = 20f;  // phi
     private float orbitDistance = 5f;   // how far camera is from object
     private Vector3 origin = Vector3.zero;
-
     public OrbitCam(Camera orbitCam, CameraData cameraData)
     {
         orbitTarget = null;
@@ -83,6 +82,7 @@ public class OrbitCam
     }
 }
 
+[System.Serializable]
 public class CameraManager : MonoBehaviour
 {
     // will be on the gameobject
@@ -98,6 +98,9 @@ public class CameraManager : MonoBehaviour
     private Camera _currentCam;
     private List<Camera> _cameraList;
 
+    public bool _isUIFocused;   // only public so inspector can see it
+    private bool _isGameScreenFocused; // most likely do not need anymore
+
     /// <summary>
     /// per camera; stores their X and Y rotations for persepctive & ortho (rotations are shared between perspectives)
     /// </summary>
@@ -106,6 +109,8 @@ public class CameraManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        _isUIFocused = false;
+
         _cameraList = new()
         {
             mapCam,
@@ -132,6 +137,12 @@ public class CameraManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_isUIFocused)   // Do not allow Camera adjustments while interacting with the UI
+        {
+            //Debug.Log($"{_cameraDebugStart}UI is focused");
+            return;
+        }
+
         UpdateCamera();
     }
 
@@ -270,10 +281,10 @@ public class CameraManager : MonoBehaviour
     public Tuple<GameObject, Vector3> GetGameObjectAtMousePos()
     {
         //Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()); // works with camera's with the tag "MainCamera"
-        Ray ray = _currentCam.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Ray ray = _currentCam.ScreenPointToRay(MouseTracker.GetMousePos());
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            Debug.Log("Camera | Mouse hit <" + hit.collider.gameObject + "> at " + hit.point);
+            //Debug.Log("Camera | Mouse hit <" + hit.collider.gameObject + "> at " + hit.point);
             return new Tuple<GameObject, Vector3>(hit.collider.gameObject, hit.point);
         }
 
@@ -371,5 +382,17 @@ public class CameraManager : MonoBehaviour
     public void OnDeselectObject(Component sender, object data)
     {
         _EnableMapCam();
+    }
+
+    public void OnUIFocued(Component comp, object data)
+    {
+        if (data is bool r)
+            _isUIFocused = r;
+    }
+
+    public void OnGameScreenFocused(Component comp, object data) // most likely do not need anymore
+    {
+        if (data is bool r)
+            _isGameScreenFocused = r;
     }
 }

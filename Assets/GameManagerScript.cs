@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class GameManagerScript : MonoBehaviour
 {
     public static GameData gameData;
+    public static GameObject screenSpaceGameObject;
     private static string _debugStart = "Game Manager Script | ";
 
     public CameraManager cameraManager;
@@ -13,21 +14,25 @@ public class GameManagerScript : MonoBehaviour
     public GameEvent deSelectedObjectEvent;
     public GameEvent mouseRightClickEvent;
     public GameEvent cameraChangedEvent;
-    
+
+    private bool _isUIFocused;
+    private bool _isGameScreenFocused;
+
     // old
     //public GameEvent spawnPlayerEvent;
     //public GameEvent spawnEnemyEvent;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    //void Start()
-    //{
-        
-    //}
+    void Start()
+    {
+        _isUIFocused = false;
+    }
 
     int count = 0;
     // Update is called once per frame
     void Update()
     {
+        // random testing
         if (Keyboard.current.backslashKey.wasPressedThisFrame)  // '\'
         {
             //gameData.PrintPlayers();
@@ -41,18 +46,50 @@ public class GameManagerScript : MonoBehaviour
             gameData.characterList[0].GetComponent<Character>().GetSaveData().className = ClassType.NONE;   // does not show in unity debug thing, really tempted to remvoe CharacterData and just use CreatureData... (Sept 8 9;44pm note)
             gameData.characterList[0].GetComponent<Character>().GetSaveData().coreStats.ac = 10000;
         }
+        //
 
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-            CheckMousePos();
+
+
+        // check if the user is interacting with the UI or if the mouse is not over the `GameScreenSpace`
+        if (_isUIFocused || !_isGameScreenFocused)
+        {
+            //Debug.Log($"mouse is interacting with UI OR mouse is not over `GameScreenSpace` | {MouseTracker.GetMousePos()}");
+            return;
+        }
+
+        CheckLeftMousePress();
+        CheckSpawning();
     }
 
     /// <summary>
-    /// Checks the mouse position. 
+    /// Check for spawning via keyboard bind
+    /// </summary>
+    private void CheckSpawning()
+    {
+        var tup = cameraManager.GetGameObjectAtMousePos();
+        Vector3 pos = tup.Item2;
+
+        if (Keyboard.current.digit1Key.wasPressedThisFrame)
+        {
+            Creature.Create(pos);
+        }
+        else if (Keyboard.current.digit2Key.wasPressedThisFrame)
+        {
+            InanimateObject.Create(pos);
+            Debug.Log("NEED UI IMPLMENTATION!");
+        }
+    }
+
+    /// <summary>
+    /// Checks the mouse position if the left mouse button was pressed. 
     /// If is there a GeneralObject over it `SelectedObject` event is raised.
     /// Otherwise `DeselectedObject` event is raised.
     /// </summary>
-    private void CheckMousePos()
+    private void CheckLeftMousePress()
     {
+        if (!Mouse.current.leftButton.wasPressedThisFrame)
+            return;
+
         GeneralObject generalObj = GetGeneralObjectAtMousePos();
 
         if (generalObj == null)
@@ -125,5 +162,15 @@ public class GameManagerScript : MonoBehaviour
         return generalObjectClosestToMouse;
     }
 
-    
+    public void OnUIFocued(Component comp, object data)
+    {
+        if (data is bool r)
+            _isUIFocused = r;
+    }
+
+    public void OnGameScreenFocused(Component comp, object data)
+    {
+        if (data is bool r)
+            _isGameScreenFocused = r;
+    }
 }

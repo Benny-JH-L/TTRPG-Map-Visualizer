@@ -11,22 +11,24 @@ public class ObjectMovementManager : MonoBehaviour
 
     private GameObject _selectedGameObject;
 
-    private string _debugStart = "Object Movement Manager | ";
-
     public float movementFactor = 0.2f;
 
+    private string _debugStart = "Object Movement Manager | ";
+    private bool _isUIFocused;
+    private bool _isGameScreenFocused;  // most likely do not need anymore
 
-    //// Start is called once before the first execution of Update after the MonoBehaviour is created
-    //void Start()
-    //{
 
-    //}
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        _isUIFocused = false;
+    }
 
 
     // Update is called once per frame
     void Update()
     {
-        if (_selectedGameObject == null)
+        if (_isUIFocused)  // should not be able to move object if; interacting with the UI 
             return;
 
         //Vector3 moveBy = new(0f, 0f, 0f);
@@ -58,11 +60,8 @@ public class ObjectMovementManager : MonoBehaviour
         // Do movement
         Vector3 newPos = _selectedGameObject.transform.position + movement.GetMovement();
         _selectedGameObject.transform.position = newPos;
-        //Debug.Log("ewikjgbwebgwe");
         Tuple<GameObject, Vector3> send = new Tuple<GameObject, Vector3>(gameObject, newPos);
-        //Debug.Log("ewikjgbwebgwe123");
         objectMovedEvent.Raise(this, send);
-        //Debug.Log("ewikjgbwebgwe2141");
 
     }
 
@@ -95,4 +94,17 @@ public class ObjectMovementManager : MonoBehaviour
         Debug.Log(_debugStart + "deselected Object Event");
         _selectedGameObject = null;
     }
+
+    public void OnUIFocued(Component comp, object data)
+    {
+        if (data is bool r)
+            _isUIFocused = r;
+    }
+
+    public void OnGameScreenFocused(Component comp, object data)    // most likely do not need anymore
+    {
+        if (data is bool r)
+            _isGameScreenFocused = r;
+    }
+
 }
