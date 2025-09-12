@@ -185,4 +185,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5419295caba324b4d8d70041c7c0c523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIFocused: {fileID: 11400000, guid: 7ddd845901d6f4f47943fde4567b7bb3, type: 2}
   textData: {fileID: 11400000, guid: 362f6d680e69adf468a466923a1d7e41, type: 2}

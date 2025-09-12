@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2021956247384364257}
   m_Layer: 5
-  m_Name: TTRPG_Button
+  m_Name: TTRPG Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

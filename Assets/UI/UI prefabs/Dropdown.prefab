@@ -498,12 +498,12 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.7735849, g: 0.27367392, b: 0.27367392, a: 0}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
+    m_PressedColor: {r: 0.3301887, g: 0.1791118, b: 0.1791118, a: 0}
+    m_SelectedColor: {r: 0.76854545, g: 0.7830189, b: 0.22530258, a: 0}
+    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
+    m_ColorMultiplier: 0
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
@@ -977,6 +977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f4e74215a45d4d4095fc5152bae2e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIFocused: {fileID: 11400000, guid: 7ddd845901d6f4f47943fde4567b7bb3, type: 2}
   dropdownData: {fileID: 11400000, guid: 05dd251b7147b134c89bc18c50bd030d, type: 2}
 --- !u!1 &8662376571785736680
 GameObject:

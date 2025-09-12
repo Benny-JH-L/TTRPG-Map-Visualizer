@@ -20,4 +20,6 @@ public abstract class AbstractUI : MonoBehaviour
     {
         Init();
     }
+
+
 }
