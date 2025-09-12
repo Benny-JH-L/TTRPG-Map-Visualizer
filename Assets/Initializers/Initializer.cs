@@ -45,6 +45,8 @@ public class Initializer : MonoBehaviour
         CoreStats.intModChanged = intModChanged;
         CoreStats.wisModChanged = wisModChanged;
         CoreStats.chaModChanged = chaModChanged;
+
+        MouseTracker.screenSpaceGameObject = screenSpaceGameObject;
     }
 
 
