@@ -3,11 +3,11 @@ using UnityEngine;
 // A wrapper for GameObjects
 [System.Serializable]
 public class Creature : GeneralObject
-{    
+{
+    private static string _debugStart = "Creature | ";
     public new CreatureData saveData;  // will make it protected, public is to test/debug [in Unity editor, it will show as Creature save data for all sub classes]
     //GameObject modelOnDisk; // for later version (child of disk)
 
-    public int diskRadius = 1;  // NEED TO guess and check
     protected CreatureTag creatureTag;
     protected TeamTag teamTag;
 
@@ -19,18 +19,22 @@ public class Creature : GeneralObject
     public static Creature Create(Vector3 pos)
     {
         CreatureData saveData = new();
-        
         return Create(pos, saveData);
     }
 
     public static Creature Create(Vector3 pos, CreatureData saveData)
     {
-        Debug.Log("Creating pure creature obj...");
+        if (!IsPositionSpawnable(pos))
+        {
+            Debug.Log($"{_debugStart}Can't spawn, intersects with a GeneralObject");
+            return null;
+        }
+
         GameObject obj = CreateGameObject(pos);
         Creature creature = obj.AddComponent<Creature>();
         creature.Init(obj, saveData); // set values
 
-        Debug.Log("Pure creature obj created...");
+        Debug.Log($"{_debugStart}Creature obj created...");
 
         return creature;
     }

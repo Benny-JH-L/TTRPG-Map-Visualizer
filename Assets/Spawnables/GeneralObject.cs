@@ -9,7 +9,7 @@ public abstract class GeneralObject : MonoBehaviour
 
     public static Vector3 yOffsetDiskSpawn = new(0f, 0.5f, 0f);
 
-
+    public float diskBaseRadius = 1.7f;  // NEED TO guess and check
     public GameObject diskBase; // should also be the var `gameObject` (they are the same)
     //public GameObject modelOnBase;    // later implmentation
 
@@ -65,6 +65,23 @@ public abstract class GeneralObject : MonoBehaviour
     //    generalObject.Init(obj, saveData);
     //    return generalObject;
     //}
+
+    /// <summary>
+    /// Checks if the `spawnPosition` will collide with any GenrealObjects in the map within that object's `radius`.
+    /// </summary>
+    /// <param name="spawnPosition"></param>
+    /// <returns>Return True, if `spawnPosition` wont collide with anything, False otherwise.</returns>
+    protected static bool IsPositionSpawnable(Vector3 spawnPosition)
+    {
+        foreach (GeneralObject generalObj in gameData.generalObjectList)
+        {
+            Vector3 generalObjPos = generalObj.GetPosition();
+            float magnitudeFromSpawnPosToObjPos = (generalObjPos - spawnPosition).magnitude;
+            if (magnitudeFromSpawnPosToObjPos <= generalObj.diskBaseRadius)
+                return false;
+        }
+        return true;
+    }
 
     protected void Init(GameObject diskBase, GeneralObjectData data)
     {

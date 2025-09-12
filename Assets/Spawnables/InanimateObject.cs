@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class InanimateObject : GeneralObject
 {
+    private static string _debugStart = "InanimateObject | ";
     public static InanimateObject Create(Vector3 pos)
     {
         GeneralObjectData generalObjectData = new();
@@ -10,10 +11,18 @@ public class InanimateObject : GeneralObject
 
     public static InanimateObject Create(Vector3 pos, GeneralObjectData saveData)
     {
-        Debug.Log("Creating Inanimate obj...");
+        if (!IsPositionSpawnable(pos))
+        {
+            Debug.Log($"{_debugStart}Can't spawn, intersects with a GeneralObject");
+            return null;
+        }
+
         GameObject obj = CreateGameObject(pos);
         InanimateObject generalObject = obj.AddComponent<InanimateObject>();
         generalObject.Init(obj, saveData);
+
+        Debug.Log($"{_debugStart}Inanimate obj created...");
+
         return generalObject;
     }
 }
