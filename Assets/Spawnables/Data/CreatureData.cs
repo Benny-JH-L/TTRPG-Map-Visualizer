@@ -5,7 +5,8 @@
 [System.Serializable]
 public class CreatureData : GeneralObjectData
 {
-    public CreatureType creatureType;
+    public Species species;
+    public ClassType className;
     public CoreStats coreStats;
     // saving throws
     // dmg vulnerabilities
@@ -18,7 +19,7 @@ public class CreatureData : GeneralObjectData
 
     public CreatureData()
     {
-        creatureType = CreatureType.Humanoid; // by default
+        species = Species.Humanoid; // by default
         coreStats = new CoreStats();
         
         // set default values -> from a json file prolly

@@ -1,5 +1,6 @@
 
-public enum CreatureType
+[System.Serializable]
+public enum Species
 {
     Character = -1,
     Aberration = 0, 
@@ -17,3 +18,4 @@ public enum CreatureType
     Plant = 12, 
     Undead = 13
 }
+
