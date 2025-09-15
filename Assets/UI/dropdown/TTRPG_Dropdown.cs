@@ -50,7 +50,7 @@ public class TTRPG_Dropdown : AbstractUI
             dropdown.RefreshShownValue();
         }
         else
-            Debug.Log($"{_debugStart}Init data is invalid | {data}");
+            Debug.Log($"{_debugStart}Init data is invalid: {data}");
     }
 
     public void SetNewOptions(string[] optionNames)

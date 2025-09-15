@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class InitGameEventStorage : MonoBehaviour
+public class InitCreatureGameEventStorage : MonoBehaviour
 {
     // initialize GameEvents----
     public GameEvent initDropdownSpecies;
@@ -31,5 +31,7 @@ public class InitGameEventStorage : MonoBehaviour
     public GameEvent initScoreINT;
     public GameEvent initScoreWIS;
     public GameEvent initScoreCHA;
+
+    public GameEvent initAdditionalInfo;
     // initialize GameEvents end----
 }

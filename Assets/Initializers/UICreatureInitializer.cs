@@ -11,7 +11,7 @@ public class UICreatureInitializer : MonoBehaviour
     public GameObject creatureUIDataPanelPrefab;
     public View view;
 
-    public InitGameEventStorage initGameEventStorage;
+    public InitCreatureGameEventStorage initGameEventStorage;
 
     private Creature _selectedCreature; //prolly not needed
 
@@ -76,6 +76,8 @@ public class UICreatureInitializer : MonoBehaviour
             initGameEventStorage.initScoreINT.Raise(this, coreStats.intelligence);
             initGameEventStorage.initScoreWIS.Raise(this, coreStats.wisdom);
             initGameEventStorage.initScoreCHA.Raise(this, coreStats.charaisma);
+
+            initGameEventStorage.initAdditionalInfo.Raise(this, creature.GetSaveData().additionalInfo);
 
             Debug.Log($"Stats of {creature.GetSaveData().objectName}:\n{coreStats}");
         }

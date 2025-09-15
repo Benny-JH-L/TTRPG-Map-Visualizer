@@ -176,4 +176,9 @@ public class UICreatureManager : MonoBehaviour
     }
     // Attribute changes end----
 
+    public void OnAdditionalInfoChanged(Component comp, object data)
+    {
+        if (data is string val)
+            _selectedCreature.GetSaveData().additionalInfo = val;
+    }
 }
