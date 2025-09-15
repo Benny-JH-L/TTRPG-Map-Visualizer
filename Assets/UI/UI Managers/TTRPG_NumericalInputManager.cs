@@ -18,6 +18,8 @@ public class TTRPG_NumericalInputManager : AbstractInputManager
     public override void Setup()
     {
         _inputField = GetComponentInChildren<TMP_InputField>();
+        _inputField.pointSize = textData.size;
+        _inputField.characterLimit = textData.characterLimit;
     }
 
     private void OnDestroy()
@@ -99,5 +101,8 @@ public class TTRPG_NumericalInputManager : AbstractInputManager
             _inputField.text = i.ToString();
         else if (data is float f)   // idk if i have any floating point data being sent
             _inputField.text = f.ToString();
+
+        if (data is null)
+            Debug.Log("Yo something ain't right with the data!");
     }
 }
