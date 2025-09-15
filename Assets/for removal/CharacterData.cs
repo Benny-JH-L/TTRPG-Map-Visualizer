@@ -6,8 +6,6 @@ using UnityEngine;
 [System.Serializable]
 public class CharacterData : CreatureData
 {
-    //public CreatureType creatureType;
-    public ClassType className;
 
     // more stuff
 
