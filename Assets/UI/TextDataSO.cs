@@ -6,4 +6,7 @@ public class TextDataSO : ScriptableObject
 {
     public TMP_FontAsset font;
     public float size;
+
+    public int characterLimit;
+
 }

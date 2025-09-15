@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIFocused: {fileID: 11400000, guid: 7ddd845901d6f4f47943fde4567b7bb3, type: 2}
+  textData: {fileID: 11400000, guid: 8ea572cc816ea9f4aafe3c2613af5b85, type: 2}
   valueChanged: {fileID: 0}
 --- !u!114 &-5475864653854801449
 MonoBehaviour:
@@ -172,8 +173,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 10
+  m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -361,8 +362,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 10
+  m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -559,7 +560,7 @@ MonoBehaviour:
   m_HideSoftKeyboard: 0
   m_CharacterValidation: 0
   m_RegexValue: 
-  m_GlobalPointSize: 14
+  m_GlobalPointSize: 10
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
