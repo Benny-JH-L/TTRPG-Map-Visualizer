@@ -9,14 +9,13 @@ public abstract class GeneralObject : MonoBehaviour
 
     public static Vector3 yOffsetDiskSpawn = new(0f, 0.5f, 0f);
 
+    public static int objectCount = 0;
+
     public float diskBaseRadius = 1.7f;  // NEED TO guess and check
     public GameObject diskBase; // should also be the var `gameObject` (they are the same)
     //public GameObject modelOnBase;    // later implmentation
 
     public GeneralObjectData saveData;  // will make it protected, public is to test/debug [in Unity editor, it will show as Creature save data for all sub classes]
-    //public string objectName = "NAME"; // here or put into savedata?
-    public string objectName = string.Empty; // here or put into savedata?
-
 
     //protected static GameObject CreateGameObject(CreatureType type, Vector3 position)
     protected static GameObject CreateGameObject(Vector3 position)
@@ -28,6 +27,7 @@ public abstract class GeneralObject : MonoBehaviour
     protected static GameObject CreateGameObject(Vector3 position, Quaternion rotation)
     {
         //Debug.Log("Creating Creature GameObject");
+        objectCount++;
         return Instantiate(diskPrefab, position + yOffsetDiskSpawn, rotation); // need to add a y-offset to the position or else the object will sometimes launch into the air (collides with the ground)
         //GameObject obj = Instantiate(diskPrefab, position, rotation);
 
@@ -89,6 +89,7 @@ public abstract class GeneralObject : MonoBehaviour
     {
         this.diskBase = diskBase;
         saveData = data;
+        saveData.objectName = "Object" + objectCount;
 
         // wont be done directly in the future, will prolly use events.
         gameData.generalObjectList.Add(diskBase.GetComponent<GeneralObject>());

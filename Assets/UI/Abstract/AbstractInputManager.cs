@@ -4,7 +4,8 @@ using UnityEngine;
 public abstract class AbstractInputManager : AbstractUI
 {
     public GameEvent UIFocused;
-    protected TMP_InputField _inputField;
+    public TextDataSO textData;
+    public TMP_InputField _inputField;  // keep protected | public for inspector?
 
     public abstract void OnValueChanged(string text);
     public abstract void OnEndEdit();
