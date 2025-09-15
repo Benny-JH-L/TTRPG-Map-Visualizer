@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -6,9 +7,13 @@ using UnityEngine.UI;
 
 public class TTRPG_Dropdown : AbstractUI
 {
+    private static string _debugStart = "TTRPG_Dropdown | ";
+
     public DropdownDataSO dropdownData;
 
-    private TMP_Dropdown dropdown;
+    public TMP_Dropdown dropdown;   // public for inspector
+
+    public GameEvent onValueChange;
 
     public override void Configure()
     {
@@ -19,12 +24,33 @@ public class TTRPG_Dropdown : AbstractUI
         colorBlock.pressedColor = dropdownData.pressed;
         colorBlock.colorMultiplier = dropdownData.colorMultiplier;
         dropdown.colors = colorBlock;
-
     }
 
     public override void Setup()
     {
         dropdown = GetComponentInChildren<TMP_Dropdown>();
+    }
+
+    public void OnValueChanged(Int32 val)
+    {
+        onValueChange.Raise(this, val);
+    }
+
+    public void InitDropdownOptions(Component comp, object data) 
+    { 
+        if (data is string[] optionNames)
+            SetNewOptions(optionNames);
+    }
+
+    public void InitActiveOption(Component comp, object data)
+    {
+        if (data is int val)
+        {
+            dropdown.value = val;
+            dropdown.RefreshShownValue();
+        }
+        else
+            Debug.Log($"{_debugStart}Init data is invalid | {data}");
     }
 
     public void SetNewOptions(string[] optionNames)

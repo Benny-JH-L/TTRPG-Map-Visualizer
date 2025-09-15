@@ -539,7 +539,19 @@ MonoBehaviour:
       m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1941572158358064802}
+        m_TargetAssemblyTypeName: TTRPG_Dropdown, Assembly-CSharp
+        m_MethodName: OnValueChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!1 &3619474380894642993
 GameObject:
@@ -938,6 +950,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6013854795334388732}
   - component: {fileID: 1941572158358064802}
+  - component: {fileID: 7877244651364862469}
+  - component: {fileID: 2623679131134586903}
   m_Layer: 5
   m_Name: Dropdown
   m_TagString: Untagged
@@ -977,8 +991,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f4e74215a45d4d4095fc5152bae2e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIFocused: {fileID: 11400000, guid: 7ddd845901d6f4f47943fde4567b7bb3, type: 2}
   dropdownData: {fileID: 11400000, guid: 05dd251b7147b134c89bc18c50bd030d, type: 2}
+  dropdown: {fileID: 7375442133419248200}
+  onValueChange: {fileID: 0}
+--- !u!114 &7877244651364862469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7477517876436042664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 0}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1941572158358064802}
+        m_TargetAssemblyTypeName: TTRPG_Dropdown, Assembly-CSharp
+        m_MethodName: InitDropdownOptions
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2623679131134586903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7477517876436042664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 0}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1941572158358064802}
+        m_TargetAssemblyTypeName: TTRPG_Dropdown, Assembly-CSharp
+        m_MethodName: InitActiveOption
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8662376571785736680
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,7 +1,6 @@
 
-using System;
-using System.Net.NetworkInformation;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// Initializes Creature UI Values.
@@ -22,6 +21,7 @@ public class UICreatureInitializer : MonoBehaviour
         {
             Debug.Log($"{_debugStart}Creature selected");
             _selectedCreature = creature;
+            CreatureData creatureData = creature.GetSaveData();
 
             // set Creature UI Panel
             view.rightContainer = creatureUIDataPanelPrefab;
@@ -29,10 +29,20 @@ public class UICreatureInitializer : MonoBehaviour
 
 
             // Set initial UI values
-            initGameEventStorage.initCreatureName.Raise(this, _selectedCreature.GetSaveData().objectName);
-            // ...
+            initGameEventStorage.initDropdownSpecies.Raise(this, EnumToString<Species>());
+            PrintStringList(EnumToString<Species>());
+            //initGameEventStorage.initDropdownAlignment.Raise(EnumToString<Alignment>);
+            initGameEventStorage.initDropdownClass.Raise(this, EnumToString<ClassType>());
+
+            initGameEventStorage.initCreatureName.Raise(this, creatureData.objectName);
+            initGameEventStorage.initSpecies.Raise(this, ((int)creatureData.species));
+            initGameEventStorage.initAlignment.Raise(this, creatureData.coreStats.alignment);
+            initGameEventStorage.initClass.Raise(this, ((int)creatureData.className));
+
             // Set attribtue scores 
-            CoreStats coreStats = creature.GetSaveData().coreStats;
+            //CoreStats coreStats = creature.GetSaveData().coreStats;
+            CoreStats coreStats = creatureData.coreStats;
+
             //initScoreSTR.Raise(this, coreStats.strength.GetAbilityScore());
             //initScoreDEX.Raise(this, coreStats.dexterity.GetAbilityScore());
             //initScoreCON.Raise(this, coreStats.constitution.GetAbilityScore());
@@ -72,4 +82,16 @@ public class UICreatureInitializer : MonoBehaviour
 
     }
 
+    private static string[] EnumToString<T>() where T : Enum
+    {
+        return Enum.GetNames(typeof(T));
+    }
+
+    private static void PrintStringList(String[] list)
+    {
+        string outPut = "[";
+        foreach (String s in list)
+            outPut += s + ", ";
+        Debug.Log(outPut + "]");
+    }
 }

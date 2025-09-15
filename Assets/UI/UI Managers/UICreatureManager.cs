@@ -52,11 +52,27 @@ public class UICreatureManager : MonoBehaviour
         }
     }
 
+    public void OnSpeciesChange(Component comp, object data)
+    {
+        if (data is int val)
+            _saveData.species = (Species)val;
+    }
+
+    public void OnAlignmentChange(Component comp, object data)
+    {
+        Debug.Log("NOT YET IMPLMENTED ALIGNMENT");
+    }
+
+    public void OnClassChange(Component comp, object data)
+    {
+        if (data is int val)
+            _saveData.className = (ClassType)val;
+    }
+
     public void OnACChange(Component comp, object data)
     {
         if (data is int val)
             _saveData.coreStats.ac = val;
-        Debug.Log($"AC data recieved: {data}");
     }
 
     public void OnHPChange(Component comp, object data)

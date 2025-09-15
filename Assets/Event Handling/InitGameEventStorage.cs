@@ -4,7 +4,15 @@ using UnityEngine;
 public class InitGameEventStorage : MonoBehaviour
 {
     // initialize GameEvents----
+    public GameEvent initDropdownSpecies;
+    public GameEvent initDropdownAlignment;
+    public GameEvent initDropdownClass;
+
     public GameEvent initCreatureName;
+
+    public GameEvent initSpecies;
+    public GameEvent initAlignment;
+    public GameEvent initClass;
 
     public GameEvent initAC;
     public GameEvent initHP;
