@@ -25,6 +25,19 @@ public class CoreStats
     }
 
     /// <summary>
+    /// to delete prolly
+    /// </summary>
+    public enum SpeedType
+    { 
+        speed = 0, 
+        burrow = 1, 
+        climb = 2, 
+        fly = 3, 
+        swim = 4 
+    }
+
+
+    /// <summary>
     /// For ability score < 1, it will be set to 1. MAX modifier value is +5 and LOWEST is -5.
     /// </summary>
     [System.Serializable]
@@ -93,6 +106,12 @@ public class CoreStats
         {
             return modifier;
         }
+
+        public override string ToString()
+        {
+            string modStr = modifier >= 0 ? "+" + modifier : modifier.ToString();
+            return $"[{abilityScore}] ({modStr})";
+        }
     }
 
     //[System.Serializable]
@@ -115,6 +134,10 @@ public class CoreStats
     //}
     //public CoreStat stats;
 
+    /// <summary>
+    /// IF THIS VALUE IS 0, Unity will treat is as a null object for some reason. ENSURE THIS NUMBER IS > 0!
+    /// </summary>
+    public int defaultInitVal = 5; 
     public CreatureSize size;
     public string alignment; // note: will make this into a class to keep track of alignments / or use enum
 
@@ -159,21 +182,37 @@ public class CoreStats
         //stats.charaisma = 0;
         size = CreatureSize.Medium;
         alignment = null;
-        ac = 0;
+        ac = defaultInitVal;
 
-        speedTypes.speed = 0;
-        speedTypes.burrow = 0;
-        speedTypes.climb = 0;
-        speedTypes.fly = 0;
-        speedTypes.swim = 0;
+        speedTypes.speed = defaultInitVal;
+        speedTypes.burrow = defaultInitVal;
+        speedTypes.climb = defaultInitVal;
+        speedTypes.fly = defaultInitVal;
+        speedTypes.swim = defaultInitVal;
 
-        hp = 0;
+        hp = defaultInitVal;
         strength = new(strModChanged, 0);
         dexterity = new(dexModChanged, 0);
         constitution = new(conModChanged, 0);
         intelligence = new(intModChanged, 0);
         wisdom = new(wisModChanged, 0);
         charaisma = new(chaModChanged, 0);
+    }
+
+    public override string ToString()
+    {
+        return $"" +
+            $"AC:{ac}" +
+            $"\nHP:{hp}" +
+            $"\n[Speed: {speedTypes.speed} | Burrow: {speedTypes.burrow} | Climb: {speedTypes.climb} | Fly: {speedTypes.fly} | Swim: {speedTypes.swim}]" +
+            $"\nSTR:{strength}" +
+            $"\nDEX: {dexterity}" +
+            $"\nCON:{constitution}" +
+            $"\nINT:{intelligence}" +
+            $"\nWIS:{wisdom}" +
+            $"\nCHA:{charaisma}" +
+            $""
+            ;
     }
 
 }
