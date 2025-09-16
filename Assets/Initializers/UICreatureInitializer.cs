@@ -30,7 +30,7 @@ public class UICreatureInitializer : MonoBehaviour
 
             // Set initial UI values
             initGameEventStorage.initDropdownSpecies.Raise(this, EnumToString<Species>());
-            PrintStringList(EnumToString<Species>());
+            //PrintStringList(EnumToString<Species>());
             //initGameEventStorage.initDropdownAlignment.Raise(EnumToString<Alignment>);
             initGameEventStorage.initDropdownClass.Raise(this, EnumToString<ClassType>());
 

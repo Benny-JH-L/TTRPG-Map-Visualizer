@@ -1,5 +1,6 @@
 
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,7 +9,9 @@ using UnityEngine.Events;
 /// </summary>
 public class UICreatureManager : MonoBehaviour
 {
+    private static string _debugStart = "UICreatureManager | ";
     public ChangedGameEventStorage changedGameEventStorage;
+    public View view;
 
     private Creature _selectedCreature;
     private CreatureData _saveData;
@@ -33,13 +36,80 @@ public class UICreatureManager : MonoBehaviour
     {
         if (data is Creature creature)
         {
-            _selectedCreature = creature;
-            _saveData = _selectedCreature.saveData;
+            // when a new creature is selected, initialize the creature actions panel
+            if (_selectedCreature != creature)
+            {
+                _ClearActionsAndSave(_selectedCreature, true);  // save the actions for `_selectedCreature` and clear the actionContainer
+                InitCreatureActionPanel(creature);              // initialize the actionContainer to the new creature
+                _selectedCreature = creature;
+                _saveData = _selectedCreature.saveData;
+            }
         }
     }
 
+    private void InitCreatureActionPanel(Creature creature)
+    {
+        if (creature.GetSaveData().actionNames.Count <= 0)
+        {
+            Debug.Log($"{_debugStart}no actions detected in save data, adding 1 panel");
+            OnAddAction(view.actionPanelPrefab);    // add 1 panel
+            return;
+        }
+        
+        Debug.Log($"{_debugStart}Init creature actions");
+        for (int i = 0; i < creature.GetSaveData().actionNames.Count; i++)   // Note: `creatureData.actionDescriptions.Count` will have the same count
+        {
+            GameObject panel = OnAddAction(view.actionPanelPrefab);
+            TMP_InputField[] inputs = panel.GetComponentsInChildren<TMP_InputField>();
+            inputs[0].text = creature.GetSaveData().actionNames[i];
+            inputs[1].text = creature.GetSaveData().actionDescriptions[i];
+        }
+    }
+
+    //public void InitCreatureActions(Component comp, object data)
+    //{
+    //    _ClearActionsAndSave(true);    // Clear any action panels
+
+    //    //if (data is CreatureData creatureData)
+    //    //{
+    //    //    if (creatureData.actionNames.Count <= 0)
+    //    //    {
+    //    //        OnAddAction(view.actionPanelPrefab);    // add 1 panel
+    //    //        return;
+    //    //    }
+
+    //    //    for (int i = 0; i < creatureData.actionNames.Count; i++)   // Note: `creatureData.actionDescriptions.Count` will have the same count
+    //    //    {
+    //    //        GameObject panel = OnAddAction(view.actionPanelPrefab);
+    //    //        TMP_InputField[] inputs = panel.GetComponentsInChildren<TMP_InputField>();
+    //    //        inputs[0].text = creatureData.actionNames[i];
+    //    //        inputs[1].text = creatureData.actionDescriptions[i];
+    //    //    }
+    //    //}
+
+    //    if (data is Creature creature)
+    //    {
+    //        if (creature.GetSaveData().actionNames.Count <= 0)
+    //        {
+    //            Debug.Log($"{_debugStart}no actions detected in save data, adding 1 panel");
+    //            OnAddAction(view.actionPanelPrefab);    // add 1 panel
+    //            return;
+    //        }
+
+    //        Debug.Log($"{_debugStart}Init creature actions");
+    //        for (int i = 0; i < creature.GetSaveData().actionNames.Count; i++)   // Note: `creatureData.actionDescriptions.Count` will have the same count
+    //        {
+    //            GameObject panel = OnAddAction(view.actionPanelPrefab);
+    //            TMP_InputField[] inputs = panel.GetComponentsInChildren<TMP_InputField>();
+    //            inputs[0].text = creature.GetSaveData().actionNames[i];
+    //            inputs[1].text = creature.GetSaveData().actionDescriptions[i];
+    //        }
+    //    }
+    //}
+
     public void OnDeselectObject(Component comp, object data)
     {
+        _ClearActionsAndSave(_selectedCreature, true);
         _selectedCreature = null;
         _saveData = null;
     }
@@ -65,6 +135,7 @@ public class UICreatureManager : MonoBehaviour
 
     public void OnClassChange(Component comp, object data)
     {
+        Debug.Log($"CLASS CHANGE: {data}");
         if (data is int val)
             _saveData.className = (ClassType)val;
     }
@@ -181,4 +252,111 @@ public class UICreatureManager : MonoBehaviour
         if (data is string val)
             _selectedCreature.GetSaveData().additionalInfo = val;
     }
+
+    //public void InitCreatureActions(Component comp, object data)
+    //{
+    //    _ClearActionsAndSave(true);    // Clear any action panels
+
+    //    //if (data is CreatureData creatureData)
+    //    //{
+    //    //    if (creatureData.actionNames.Count <= 0)
+    //    //    {
+    //    //        OnAddAction(view.actionPanelPrefab);    // add 1 panel
+    //    //        return;
+    //    //    }
+
+    //    //    for (int i = 0; i < creatureData.actionNames.Count; i++)   // Note: `creatureData.actionDescriptions.Count` will have the same count
+    //    //    {
+    //    //        GameObject panel = OnAddAction(view.actionPanelPrefab);
+    //    //        TMP_InputField[] inputs = panel.GetComponentsInChildren<TMP_InputField>();
+    //    //        inputs[0].text = creatureData.actionNames[i];
+    //    //        inputs[1].text = creatureData.actionDescriptions[i];
+    //    //    }
+    //    //}
+
+    //    if (data is Creature creature)
+    //    {
+    //        if (creature.GetSaveData().actionNames.Count <= 0)
+    //        {
+    //            Debug.Log($"{_debugStart}no actions detected in save data, adding 1 panel");
+    //            OnAddAction(view.actionPanelPrefab);    // add 1 panel
+    //            return;
+    //        }
+
+    //        Debug.Log($"{_debugStart}Init creature actions");
+    //        for (int i = 0; i < creature.GetSaveData().actionNames.Count; i++)   // Note: `creatureData.actionDescriptions.Count` will have the same count
+    //        {
+    //            GameObject panel = OnAddAction(view.actionPanelPrefab);
+    //            TMP_InputField[] inputs = panel.GetComponentsInChildren<TMP_InputField>();
+    //            inputs[0].text = creature.GetSaveData().actionNames[i];
+    //            inputs[1].text = creature.GetSaveData().actionDescriptions[i];
+    //        }
+    //    }
+    //}
+
+    /// <summary>
+    /// Adds another action section in the creature data panel, and returns it
+    /// </summary>
+    /// <param name="comp"></param>
+    /// <param name="data"></param>
+    public GameObject OnAddAction(object data)
+    {
+        if (data is GameObject objToAdd)
+        {
+            Debug.Log($"{_debugStart}adding action panel");
+
+            // 1. Instantiate the prefab
+            //GameObject newActionPanel = Instantiate(actionPanelPrefab);
+            GameObject newActionPanel = Instantiate(objToAdd);
+
+            // 2. Set its parent to the container (false keeps UI scaling/anchoring correct)
+            newActionPanel.transform.SetParent(view.actionContainer.transform, false);
+
+            return newActionPanel;
+            // 3. (Optional) do something with objToAdd (e.g., attach it or pass data)
+            // Example: if objToAdd is some UI element you want to place inside the new panel
+            //objToAdd.transform.SetParent(newActionPanel.transform, false);
+
+            // 4. (Optional) configure text/images/etc inside the new panel
+            // var text = newActionPanel.GetComponentInChildren<Text>();
+            // if (text != null) text.text = "Action Added!";
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// Adds another action section in the creature data panel
+    /// </summary>
+    /// <param name="comp"></param>
+    /// <param name="data"></param>
+    public void OnAddAction(Component comp, object data)
+    {
+        OnAddAction(data);
+    }
+
+
+    /// <summary>
+    /// Clears children of action panel container, and saves the data of the creature depending on param.
+    /// </summary>
+    private void _ClearActionsAndSave(Creature creature, bool save)
+    {
+        Debug.Log($"{_debugStart}Clearing all actions | save: {save}");
+
+        foreach (Transform child in view.actionContainer.transform)
+        {
+            ActionPanelInfo actionPanelinfo;
+            if (!child.gameObject.TryGetComponent<ActionPanelInfo>(out actionPanelinfo))
+            {
+                Debug.Log($"{_debugStart}oh uhhh... couldn't get `ActionPanelInfo` from actionContainer child");
+            }
+            else if (save)
+            {
+                // record info and store it
+                creature.GetSaveData().AddAction(actionPanelinfo);
+            }
+
+            Destroy(child.gameObject);
+        }
+    }
+
 }

@@ -43,7 +43,7 @@ public class TTRPG_TextInputManager : AbstractInputManager
         if (data is string s)
         {
             _inputField.text = s;
-            Debug.Log($"init text to {s}");
+            //Debug.Log($"init text to {s}");
         }
 
         if (data is null)
