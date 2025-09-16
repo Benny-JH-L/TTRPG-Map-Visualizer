@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,9 @@ public class View : AbstractUI
 
     public GameObject leftContainer;
     public GameObject rightContainer;
+
+    public GameObject actionContainer;
+    public GameObject actionPanelPrefab;
 
     // images?
 
