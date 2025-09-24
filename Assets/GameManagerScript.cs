@@ -9,6 +9,7 @@ public class GameManagerScript : MonoBehaviour
     private static string _debugStart = "Game Manager Script | ";
 
     public CameraManager cameraManager;
+    public Map map; // for testing
 
     public GameEvent selectedObjectEvent;
     public GameEvent deSelectedObjectEvent;
@@ -77,6 +78,11 @@ public class GameManagerScript : MonoBehaviour
         {
             InanimateObject.Create(pos);
             Debug.Log("NEED UI IMPLMENTATION!");
+        }
+        // testing
+        else if (Keyboard.current.digit3Key.wasPressedThisFrame)
+        {
+            map.AddLayer(1);
         }
     }
 

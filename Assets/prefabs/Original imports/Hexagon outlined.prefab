@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8806089816437800714}
   - component: {fileID: -6217480199061985420}
   m_Layer: 0
-  m_Name: Disk Base
+  m_Name: Hexagon outlined
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,8 +30,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -2, y: 0, z: -2}
-  m_LocalScale: {x: 600, y: 600, z: 600}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 85.109886, y: 85.109886, z: 85.109886}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7629299605031923427}
   - {fileID: 919615895466169233}

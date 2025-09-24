@@ -47,6 +47,8 @@ public class Initializer : MonoBehaviour
         CoreStats.chaModChanged = chaModChanged;
 
         MouseTracker.screenSpaceGameObject = screenSpaceGameObject;
+
+        MapTile.mapTilePrefab = diskBasePrefab;
     }
 
 
