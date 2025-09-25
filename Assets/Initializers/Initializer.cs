@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+[DefaultExecutionOrder(-1000)]  // execute first
 public class Initializer : MonoBehaviour
 {
     public GameData gameData;           // is created during runtime
@@ -35,6 +36,8 @@ public class Initializer : MonoBehaviour
         cameraData = (CameraData) ScriptableObject.CreateInstance<CameraData>();
         CameraManager.cameraData = cameraData;
         CameraManager.screenSpaceGameObject = screenSpaceGameObject;
+        AbstractCamera.cameraData = cameraData;
+        AbstractCamera.screenSpaceGameObject = screenSpaceGameObject;
 
         Dictionary<string, CreatureTag> tagList = new();
         CreatureTag.Initialize(tagList);

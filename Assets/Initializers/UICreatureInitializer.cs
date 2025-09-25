@@ -5,6 +5,7 @@ using System;
 /// <summary>
 /// Initializes Creature UI Values.
 /// </summary>
+[DefaultExecutionOrder(-1000)]  // execute first
 public class UICreatureInitializer : MonoBehaviour
 {
     private static string _debugStart = "UICreatureInitializer | ";
