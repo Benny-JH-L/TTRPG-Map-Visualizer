@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+//[DefaultExecutionOrder(-999)]
 public class View : AbstractUI
 {
     public ViewDataSO viewData;

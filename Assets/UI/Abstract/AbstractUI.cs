@@ -1,5 +1,6 @@
 using UnityEngine;
 
+//[DefaultExecutionOrder(-999)]
 public abstract class AbstractUI : MonoBehaviour
 {
     private void Awake()
