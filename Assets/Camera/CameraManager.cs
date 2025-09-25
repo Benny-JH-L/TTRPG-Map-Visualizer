@@ -3,85 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class OrbitCam
-{
-    /// <summary>
-    /// Variable to set when a Orbit Camera is going to be used
-    /// </summary>
-    //private Transform orbitTarget;
-    private GameObject orbitTarget;
-
-    /// <summary>
-    /// Variable to set when a Orbit Camera is created
-    /// </summary>
-    public Camera orbitCam;
-
-    private CameraData _cameraData;
-
-    private float currentRotatX = 0f;   // theta
-    private float currentRotatY = 20f;  // phi
-    private float orbitDistance = 5f;   // how far camera is from object
-    private Vector3 origin = Vector3.zero;
-    public OrbitCam(Camera orbitCam, CameraData cameraData)
-    {
-        orbitTarget = null;
-        this.orbitCam = orbitCam;
-        _cameraData = cameraData;
-    }
-
-    public void UpdateOrbitCam()
-    {
-        if (!Mouse.current.middleButton.isPressed)  // don't orbit cam when not holding middle mouse down, but update camera position relative to selected object's position
-        {
-            Vector3 direction = new Vector3(0, 0, -orbitDistance);
-            orbitCam.transform.position = orbitTarget.transform.position + (orbitCam.transform.rotation * direction);
-            //UpdateOrbitCamOnce();
-            return;
-        }
-
-        OrbitCamLogic();
-    }
-    public void Enable(GameObject objToLookAt)
-    {
-        //orbitTarget = objToLookAt.transform;
-        orbitTarget = objToLookAt;
-        orbitCam.enabled = true;
-        UpdateOrbitCamOnce();
-    }
-
-    private void OrbitCamLogic()
-    {
-        float scrollDelta = Mouse.current.scroll.ReadValue().y; // zoom in +1, zoom out -1
-
-        Vector2 lookDelta = Mouse.current.delta.ReadValue();
-        currentRotatX += lookDelta.x * _cameraData.orbitSens * Time.deltaTime;
-        currentRotatY -= lookDelta.y * _cameraData.orbitSens * Time.deltaTime;
-        currentRotatY = Mathf.Clamp(currentRotatY, _cameraData.orbitMinVerticalClamp, _cameraData.orbitMaxVerticalClamp);
-
-        // Zoom with scroll wheel -> needed here?, other parts of the code may do it already
-        //orbitDistance -= scrollDelta * _cameraData.zoomSpeed * Time.deltaTime;
-        orbitDistance = Mathf.Clamp(orbitDistance, _cameraData.minZoom, _cameraData.maxZoom);
-
-        Quaternion rotation = Quaternion.Euler(currentRotatY, currentRotatX, 0);
-        Vector3 direction = new Vector3(0, 0, -orbitDistance);
-        //Vector3 position = ((orbitTarget != null) ? orbitTarget.position : origin) + rotation * direction;
-        Vector3 position = ((orbitTarget != null) ? orbitTarget.transform.position : origin) + rotation * direction;
-
-        orbitCam.transform.position = position;
-        orbitCam.transform.rotation = rotation;
-    }
-
-    private void UpdateOrbitCamOnce()
-    {
-        OrbitCamLogic();
-    }
-
-    public void Disable()
-    {
-        orbitCam.enabled = false;
-    }
-}
-
 [System.Serializable]
 public class CameraManager : MonoBehaviour
 {
@@ -90,48 +11,31 @@ public class CameraManager : MonoBehaviour
     //public GameEventListener onCameraProjectionChange;
     private static string _cameraDebugStart = "Camera Manager | ";
     public static CameraData cameraData;
-    public static GameObject screenSpaceGameObject; // UI component that occupies the screen space of the active game.
 
-    public Camera mapCam;
-    public Camera objectCam;    
+    private MapCam _mapCam;
     private OrbitCam _orbitCam; // actually used | for game object
-    private Camera _currentCam;
-    private List<Camera> _cameraList;
+    private AbstractCamera _currentCam;
 
     public bool _isUIFocused;   // only public so inspector can see it
     private bool _isGameScreenFocused; // most likely do not need anymore
 
-    /// <summary>
-    /// per camera; stores their X and Y rotations for persepctive & ortho (rotations are shared between perspectives)
-    /// </summary>
-    private Dictionary<Camera, Vector2> cameraRotationDict;
+    private void Awake()
+    {
+        _orbitCam = GetComponentInChildren<OrbitCam>();
+        _mapCam = GetComponentInChildren<MapCam>();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _isUIFocused = false;
+        _mapCam.EnableCamera();
+        _currentCam = _mapCam;
 
-        _cameraList = new()
+        if (_currentCam != null && _currentCam.CamEnabled())
         {
-            mapCam,
-            objectCam
-        };
-        _DisableAllCams();
-
-        cameraRotationDict = new Dictionary<Camera, Vector2>();
-
-        foreach (Camera camera in _cameraList)
-        {
-            Vector2 vec2 = new(camera.transform.rotation.x, camera.transform.rotation.y);
-            cameraRotationDict[camera] = vec2;
+            Debug.Log("Map cam enabled");
         }
-
-        _orbitCam = new OrbitCam(objectCam, cameraData);
-
-        _currentCam = mapCam;
-        _currentCam.enabled = true;
-
-        _SetCameraRect();
     }
 
     // Update is called once per frame
@@ -148,19 +52,14 @@ public class CameraManager : MonoBehaviour
 
     private void UpdateCamera()
     {
-        if (Keyboard.current.backquoteKey.wasPressedThisFrame) // '`'
+        if (Keyboard.current.backquoteKey.wasPressedThisFrame) // key: '`'
         {
             ToggleCam();
         }
 
-        if (Keyboard.current.shiftKey.isPressed && mapCam.enabled)
-            MoveMapCameraInOut();
-        else
-            ZoomCurrentCamera();
-
-        //if (_currentCam == mapCam)
-        if (mapCam.enabled)
+        if (_mapCam.CamEnabled())
         {
+            _mapCam.UpdateCamera();
             MovementValue movementValue = new(cameraData.mapMoveSensitivity);
 
             // use `wasd` or mouse input to move camera)
@@ -187,87 +86,41 @@ public class CameraManager : MonoBehaviour
             {
                 movementValue = new(cameraData.mapMoveSensitivity + 0.2f);
                 Vector2 mouseDelta = Mouse.current.delta.ReadValue();
-                Debug.Log($"Mouse Delta: {mouseDelta}");
+                //Debug.Log($"{_cameraDebugStart}Mouse Delta: {mouseDelta}");
                 // mouseDelta.x -> right (+) / left (-)
                 // mouseDelta.y -> up (+) / down (-)
                 movementValue.SetMove(-mouseDelta); // negate so the camera moves opposite of mouse movement
             }
 
-            MoveMapCamBy(movementValue);
+            _mapCam.MoveMapCamBy(movementValue);
         }
-
-        //else if (_currentCam == objectCam)
-        else if (objectCam.enabled)
+        else if (_orbitCam.CamEnabled())
         {
-            _orbitCam.UpdateOrbitCam();
+            _orbitCam.UpdateCamera();
         }
     }
 
     /// <summary>
-    /// Toggles between the map cam and object cam
+    /// Toggles between the map cam and orbit cam
     /// </summary>
     private void ToggleCam()
     {
-        mapCam.enabled = !mapCam.enabled;
-        objectCam.enabled = !objectCam.enabled;
+        _mapCam.ToggleEnable();
+        _orbitCam.ToggleEnable();
 
-        foreach (Camera camera in _cameraList)
+        foreach (AbstractCamera abstractCamera in AbstractCamera.cameraList)
         {
-            if (camera.enabled)
+            if (abstractCamera.CamEnabled())
             {
-                _currentCam = camera;
+                _currentCam = abstractCamera;
                 break;
             }
-        }        
-        
-        //if (mapCam.enabled)
-        //    _currentCam = mapCam;
-        //else if (objectCam.enabled)
-        //    _currentCam = objectCam;
-    }
-
-    /// <summary>
-    /// only for the map camera, may create Camera classes to differentiate map cam, object cam and whatever cams i may make.
-    /// Takes in a `MovementValue` and uses it to move the map camera's position.
-    /// </summary>
-    /// <param name="moveBy"></param>
-    private void MoveMapCamBy(MovementValue moveBy)
-    {
-        mapCam.transform.position += moveBy.GetMovement();
-    }
-
-    /// <summary>
-    /// Zooms in/out with the current camera (Perspective FOV & Ortho size) with respect to mouse scroll input.
-    /// </summary>
-    private void ZoomCurrentCamera()
-    {
-        float scrollDelta = Mouse.current.scroll.ReadValue().y; // zoom in +1, zoom out -1
-        //Debug.Log("scroll data:"+scrollDelta);
-
-        if (Mathf.Abs(scrollDelta) > 0.01f)
-        {
-            if (_currentCam.orthographic)
-            {
-                _currentCam.orthographicSize -= scrollDelta * (cameraData.zoomSpeed * 0.01f);
-                _currentCam.orthographicSize = Mathf.Clamp(_currentCam.orthographicSize, cameraData.minOrthoSize, cameraData.maxOrthoSize);
-            }
-            else
-            {
-                _currentCam.fieldOfView -= scrollDelta * cameraData.zoomSpeed * Time.deltaTime;
-                _currentCam.fieldOfView = Mathf.Clamp(_currentCam.fieldOfView, cameraData.minZoom, cameraData.maxZoom);
-            }
         }
-    }
 
-    /// <summary>
-    /// Moves the map camera into the screen or away from the screen. ie changes the y value of the camera
-    /// </summary>
-    private void MoveMapCameraInOut()
-    {
-        float scrollDelta = Mouse.current.scroll.ReadValue().y; // zoom in +1, zoom out -1
-        Vector3 pos = _currentCam.transform.position;
-        pos.y -= (scrollDelta * cameraData.mapZoomInOutSensitivity * Time.deltaTime);
-        _currentCam.transform.position = pos;
+        if (_mapCam.CamEnabled())
+            Debug.Log($"{_cameraDebugStart}Map cam enabled");
+        else if (_orbitCam.CamEnabled())
+            Debug.Log($"{_cameraDebugStart}Orbit cam enabled");
     }
 
     /// <summary>
@@ -281,7 +134,7 @@ public class CameraManager : MonoBehaviour
     public Tuple<GameObject, Vector3> GetGameObjectAtMousePos()
     {
         //Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()); // works with camera's with the tag "MainCamera"
-        Ray ray = _currentCam.ScreenPointToRay(MouseTracker.GetMousePos());
+        Ray ray = _currentCam.GetCamera().ScreenPointToRay(MouseTracker.GetMousePos());
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             //Debug.Log("Camera | Mouse hit <" + hit.collider.gameObject + "> at " + hit.point);
@@ -291,97 +144,21 @@ public class CameraManager : MonoBehaviour
         return null;
     }
 
-    private void _DisableAllCams()
-    {
-        foreach (Camera cam in _cameraList)
-            cam.enabled = false;
-    }
-
-    private void _EnableObjectCam()
-    {
-        _DisableAllCams();
-        _currentCam = objectCam;
-        _currentCam.enabled = true;
-    }
-
-    private void _EnableMapCam()
-    {
-        _DisableAllCams();
-        _currentCam = mapCam;
-        _currentCam.enabled = true;
-    }
-
-    /// <summary>
-    /// Sets the Camera Rect (The area that the camera will render).
-    /// Sets all Camera Rect's relative to the screen space occupied by `screenSpaceGameObject`.
-    /// MUST ENSURE THERE IS AN ACTIVE CAMERA!
-    /// </summary>
-    private void _SetCameraRect()
-    {
-        Debug.Log(_cameraDebugStart + "Setting camera rect's");
-        Canvas.ForceUpdateCanvases();
-
-        RectTransform rt = screenSpaceGameObject.GetComponent<RectTransform>();
-
-        // Get four corners of the UI object
-        Vector3[] corners = new Vector3[4];
-        rt.GetWorldCorners(corners);
-
-        Vector3 bottomLeft = corners[0];
-        Vector3 topRight = corners[2];
-
-        // Since Screen Space - Overlay, these are already in screen space
-        Rect screenRect = new(
-            bottomLeft.x,
-            bottomLeft.y,
-            topRight.x - bottomLeft.x,
-            topRight.y - bottomLeft.y
-        );
-
-        // Normalize to viewport coordinates (0–1)
-        Rect viewPortRect = new(
-            screenRect.x / Screen.width,
-            screenRect.y / Screen.height,
-            screenRect.width / Screen.width,
-            screenRect.height / Screen.height
-        );
-
-        Debug.Log($"ScreenRect: {screenRect} | ViewPortRect: {viewPortRect}");
-
-        foreach (Camera camera in _cameraList)
-            camera.rect = viewPortRect;
-    }
-
-    public void EnablePerspectiveView()
-    {
-        foreach (Camera cam in _cameraList)
-         cam.orthographic = false;
-    }
-
-    public void EnableOrthographicView()
-    {
-        foreach (Camera cam in _cameraList)
-            cam.orthographic = true;
-    }
-
     public void OnSelectedObject(Component sender, object data)
     {
         if (data is GeneralObject)   // maybe have a condition to check whether or not we switch to player or go to map cam... (Eagel or creature view to moving..)
         {
-            Debug.Log("Switching to orbit cam");
+            Debug.Log($"{_cameraDebugStart}Switching to orbit cam");
             GeneralObject creature = (GeneralObject)data;
-            _EnableObjectCam();
-            _orbitCam.Enable(creature.diskBase);
 
-            //_orbitCam.orbitTarget = creature.creatureDisk.transform;
-            //_EnableObjectCam();
-            //_orbitCam.UpdateOrbitCamOnce();
+            _orbitCam.EnableCamera(creature.diskBase);
+            _currentCam = _orbitCam;
         }
     }
 
     public void OnDeselectObject(Component sender, object data)
     {
-        _EnableMapCam();
+        _mapCam.EnableCamera();
     }
 
     public void OnUIFocued(Component comp, object data)

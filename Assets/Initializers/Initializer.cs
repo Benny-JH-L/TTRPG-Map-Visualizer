@@ -35,7 +35,6 @@ public class Initializer : MonoBehaviour
 
         cameraData = (CameraData) ScriptableObject.CreateInstance<CameraData>();
         CameraManager.cameraData = cameraData;
-        CameraManager.screenSpaceGameObject = screenSpaceGameObject;
         AbstractCamera.cameraData = cameraData;
         AbstractCamera.screenSpaceGameObject = screenSpaceGameObject;
 
