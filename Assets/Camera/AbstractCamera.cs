@@ -135,9 +135,14 @@ public abstract class AbstractCamera : MonoBehaviour
         else if (disableAllOtherCams)
         {
             foreach (AbstractCamera abstractCamera in cameraList)
-                abstractCamera.cam.enabled = false;
-        }
+            {
+                //abstractCamera.cam.enabled = false;
+                abstractCamera.DisableCamera();
+            }
 
+        }
+        //string s = this is OrbitCam ? "ORBIT" : "MAP";
+        //Debug.Log($"enabling camera: {s}");
         cam.enabled = true;
     }
 

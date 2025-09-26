@@ -21,8 +21,13 @@ public class CameraManager : MonoBehaviour
 
     private void Awake()
     {
+        //Camera[] s = GetComponentsInChildren<Camera>();  // get all cameras
+
         _orbitCam = GetComponentInChildren<OrbitCam>();
         _mapCam = GetComponentInChildren<MapCam>();
+
+        if (_mapCam == _orbitCam)
+            Debug.Log("MAP AND ORBIT CAM IS THE SAME!!! NO NO");
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -134,6 +139,9 @@ public class CameraManager : MonoBehaviour
     public Tuple<GameObject, Vector3> GetGameObjectAtMousePos()
     {
         //Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()); // works with camera's with the tag "MainCamera"
+        string s = _currentCam is OrbitCam ? "ORBIT" : "MAP";
+        //Debug.Log($"current cam: {s}");
+
         Ray ray = _currentCam.GetCamera().ScreenPointToRay(MouseTracker.GetMousePos());
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
@@ -159,6 +167,7 @@ public class CameraManager : MonoBehaviour
     public void OnDeselectObject(Component sender, object data)
     {
         _mapCam.EnableCamera();
+        _currentCam = _mapCam;
     }
 
     public void OnUIFocued(Component comp, object data)
