@@ -3194,7 +3194,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6961656308204020915, guid: ad6575ab25bf664448290d8c4ef8b454, type: 3}
       propertyPath: m_Name
-      value: Right Panel 1
+      value: Creature UI Right Panel
       objectReference: {fileID: 0}
     - target: {fileID: 7362964113632689191, guid: ad6575ab25bf664448290d8c4ef8b454, type: 3}
       propertyPath: m_Pivot.x
