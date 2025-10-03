@@ -36,7 +36,7 @@ public class Initializer : MonoBehaviour
         cameraData = (CameraData) ScriptableObject.CreateInstance<CameraData>();
         CameraManager.cameraData = cameraData;
         AbstractCamera.cameraData = cameraData;
-        AbstractCamera.screenSpaceGameObject = screenSpaceGameObject;
+        //AbstractCamera.screenSpaceGameObject = screenSpaceGameObject;
 
         Dictionary<string, CreatureTag> tagList = new();
         CreatureTag.Initialize(tagList);
@@ -57,12 +57,13 @@ public class Initializer : MonoBehaviour
     //// Start is called once before the first execution of Update after the MonoBehaviour is created
     //void Start()
     //{
-        
+
     //}
 
-    //// Update is called once per frame
+    ////Update is called once per frame
     //void Update()
     //{
-        
+    //    AbstractCamera.screenSpaceGameObject = screenSpaceGameObject;
+
     //}
 }
