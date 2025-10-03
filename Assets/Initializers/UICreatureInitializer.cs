@@ -25,7 +25,7 @@ public class UICreatureInitializer : MonoBehaviour
             CreatureData creatureData = creature.GetSaveData();
 
             // set Creature UI Panel
-            view.rightContainer = creatureUIDataPanelPrefab;
+            //view.rightContainer = creatureUIDataPanelPrefab;  // old
             // ...
 
 

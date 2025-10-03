@@ -26,13 +26,13 @@ public class MouseTracker : MonoBehaviour
         {
             gameScreenFocused.Raise(this, true);
             _mouseInsideGameScreenSpace = true;
-            Debug.Log($"{_debugStart} | gameScreenFocused TRUE");
+            Debug.Log($"{_debugStart}gameScreenFocused TRUE");
         }
         else if (!result && _mouseInsideGameScreenSpace)    // mouse moved outside of GameScreenSpace
         {
             gameScreenFocused.Raise(this, false);
             _mouseInsideGameScreenSpace = false;
-            Debug.Log($"{_debugStart} | gameScreenFocused FALSE");
+            Debug.Log($"{_debugStart}gameScreenFocused FALSE");
         }
     }
 

@@ -9,12 +9,12 @@ public class ObjectMovementManager : MonoBehaviour
     
     public GameEvent objectMovedEvent;
 
-    private GameObject _selectedGameObject;
+    [SerializeField] private GameObject _selectedGameObject;
 
-    public float movementFactor = 0.2f;
+    public float movementFactor = 30f;
 
     private string _debugStart = "Object Movement Manager | ";
-    private bool _isUIFocused;
+    [SerializeField] private bool _isUIFocused;
     private bool _isGameScreenFocused;  // most likely do not need anymore
 
 
@@ -24,13 +24,16 @@ public class ObjectMovementManager : MonoBehaviour
         _isUIFocused = false;
     }
 
-
     // Update is called once per frame
     void Update()
     {
-        if (_isUIFocused)  // should not be able to move object if; interacting with the UI 
+        // should not be able to move object if; interacting with the UI 
+        if (_isUIFocused)  
             return;
-
+        // can't move an object if no object is selected
+        else if (_selectedGameObject == null)
+            return;
+            
         //Vector3 moveBy = new(0f, 0f, 0f);
         MovementValue movement = new MovementValue(movementFactor);
 
@@ -58,7 +61,8 @@ public class ObjectMovementManager : MonoBehaviour
             return;
 
         // Do movement
-        Vector3 newPos = _selectedGameObject.transform.position + movement.GetMovement();
+        Vector3 newPos = _selectedGameObject.transform.position + movement.GetMovement() * Time.deltaTime;
+
         _selectedGameObject.transform.position = newPos;
         Tuple<GameObject, Vector3> send = new Tuple<GameObject, Vector3>(gameObject, newPos);
         objectMovedEvent.Raise(this, send);
@@ -85,7 +89,7 @@ public class ObjectMovementManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Deselectes game object for movement.
+    /// Deselect's game object for movement.
     /// </summary>
     /// <param name="comp"></param>
     /// <param name="data"></param>

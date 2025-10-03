@@ -21,8 +21,6 @@ public class CameraManager : MonoBehaviour
 
     private void Awake()
     {
-        //Camera[] s = GetComponentsInChildren<Camera>();  // get all cameras
-
         _orbitCam = GetComponentInChildren<OrbitCam>();
         _mapCam = GetComponentInChildren<MapCam>();
 
@@ -139,7 +137,8 @@ public class CameraManager : MonoBehaviour
     public Tuple<GameObject, Vector3> GetGameObjectAtMousePos()
     {
         //Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()); // works with camera's with the tag "MainCamera"
-        string s = _currentCam is OrbitCam ? "ORBIT" : "MAP";
+        
+        //string s = _currentCam is OrbitCam ? "ORBIT" : "MAP";
         //Debug.Log($"current cam: {s}");
 
         Ray ray = _currentCam.GetCamera().ScreenPointToRay(MouseTracker.GetMousePos());
