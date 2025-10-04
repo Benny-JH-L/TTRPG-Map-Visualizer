@@ -50,16 +50,16 @@ public class GameData : ScriptableObject
         Debug.Log(output);
     }
 
-    public void PrintCharacters()
-    {
-        string output = "";
+    //public void PrintCharacters() // use tags
+    //{
+    //    string output = "";
 
-        foreach (Character c in characterList)
-        {
-            output += "Character | " + c.GetPosition() + "\n";
-        }
-        Debug.Log(output);
-    }
+    //    foreach (Character c in characterList)
+    //    {
+    //        output += "Character | " + c.GetPosition() + "\n";
+    //    }
+    //    Debug.Log(output);
+    //}
 
     //public void PrintEnemies()    // use tags, printHOstiles to PCs
     //{

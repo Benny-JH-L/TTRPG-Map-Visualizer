@@ -12,7 +12,7 @@ public abstract class GeneralObject : MonoBehaviour
 
     public static int objectCount = 0;
 
-    public float diskBaseRadius = 1.7f;  // NEED TO guess and check
+    [SerializeField] public float diskBaseRadius = 13f;  // NEED TO guess and check (its about 12.45f to be touching)
     public GameObject diskBase; // should also be the var `gameObject` (they are the same)
     //public GameObject modelOnBase;    // later implmentation
 
@@ -76,10 +76,13 @@ public abstract class GeneralObject : MonoBehaviour
     /// <returns>Return True, if `spawnPosition` wont collide with anything, False otherwise.</returns>
     protected static bool IsPositionSpawnable(Vector3 spawnPosition)
     {
+        //Debug.Log($"spawn pos: {spawnPosition}");
+
         foreach (GeneralObject generalObj in gameData.generalObjectList)
         {
             Vector3 generalObjPos = generalObj.GetPosition();
-            float magnitudeFromSpawnPosToObjPos = (generalObjPos - spawnPosition).magnitude;
+            //float magnitudeFromSpawnPosToObjPos = (generalObjPos - spawnPosition).magnitude;
+            float magnitudeFromSpawnPosToObjPos = Vector3.Distance(generalObjPos, spawnPosition);
             if (magnitudeFromSpawnPosToObjPos <= generalObj.diskBaseRadius)
                 return false;
         }

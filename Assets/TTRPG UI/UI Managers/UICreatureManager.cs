@@ -246,7 +246,8 @@ public class UICreatureManager : MonoBehaviour
     public void OnCHAChanged(Component comp, object data)
     {
         if (data is int val)
-            _selectedCreature.GetSaveData().coreStats.charaisma.SetNewAbilityScore(val);
+            //_selectedCreature.GetSaveData().coreStats.charaisma.SetNewAbilityScore(val);
+            _saveData.coreStats.charaisma.SetNewAbilityScore(val);
     }
     // Attribute changes end----
 
