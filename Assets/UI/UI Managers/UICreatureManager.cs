@@ -124,20 +124,23 @@ public class UICreatureManager : MonoBehaviour
 
     public void OnSpeciesChange(Component comp, object data)
     {
+        Debug.Log($"SPECIES CHANGE: {data}");
         if (data is int val)
-            _saveData.species = (Species)val;
+            _saveData.species = (TTRPG_Species)val;
     }
 
     public void OnAlignmentChange(Component comp, object data)
     {
-        Debug.Log("NOT YET IMPLMENTED ALIGNMENT");
+        Debug.Log($"ALIGNMENT CHANGE: {data}");
+        if (data is int val)
+            _saveData.alignment = (TTRPG_Alignments)val;
     }
 
     public void OnClassChange(Component comp, object data)
     {
         Debug.Log($"CLASS CHANGE: {data}");
         if (data is int val)
-            _saveData.className = (ClassType)val;
+            _saveData.className = (TTRPG_Class)val;
     }
 
     public void OnACChange(Component comp, object data)

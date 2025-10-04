@@ -15,7 +15,7 @@ public class CharacterData : CreatureData
 
     public CharacterData() : base()
     {
-        className = ClassType.NA;
+        //className = ClassType.NA;
 
     }
     

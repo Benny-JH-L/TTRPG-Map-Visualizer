@@ -44,7 +44,7 @@ public class GameManagerScript : MonoBehaviour
             count++;
             //gameData.playerList[0].saveData.className = $"woighowegwe + {count}";
             //gameData.playerList[0].GetComponent<Character>().saveData.className = ClassType.NONE;
-            gameData.characterList[0].GetComponent<Character>().GetSaveData().className = ClassType.NONE;   // does not show in unity debug thing, really tempted to remvoe CharacterData and just use CreatureData... (Sept 8 9;44pm note)
+            gameData.characterList[0].GetComponent<Character>().GetSaveData().className = TTRPG_Class.NONE;   // does not show in unity debug thing, really tempted to remvoe CharacterData and just use CreatureData... (Sept 8 9;44pm note)
             gameData.characterList[0].GetComponent<Character>().GetSaveData().coreStats.ac = 10000;
         }
         //
