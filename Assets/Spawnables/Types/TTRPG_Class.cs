@@ -1,10 +1,7 @@
 
 [System.Serializable]
-public enum ClassType
+public enum TTRPG_Class
 {
-    OTHER = -3,
-    NA = -2,
-    NONE = -1,
     Artificer = 0,
     Barbarian = 1,
     Bard = 2,
@@ -17,5 +14,7 @@ public enum ClassType
     Rogue = 9,
     Sorcerer = 10,
     Warlock = 11,
-    Wizard = 12
+    Wizard = 12,
+    NONE = 13,
+    OTHER = 14
 }

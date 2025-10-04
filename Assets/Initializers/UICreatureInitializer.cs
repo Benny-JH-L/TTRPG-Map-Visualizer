@@ -30,14 +30,16 @@ public class UICreatureInitializer : MonoBehaviour
 
 
             // Set initial UI values
-            initGameEventStorage.initDropdownSpecies.Raise(this, EnumToString<Species>());
+            // set drop down options
+            initGameEventStorage.initDropdownSpecies.Raise(this, EnumToString<TTRPG_Species>());
             //PrintStringList(EnumToString<Species>());
-            //initGameEventStorage.initDropdownAlignment.Raise(EnumToString<Alignment>);
-            initGameEventStorage.initDropdownClass.Raise(this, EnumToString<ClassType>());
+            initGameEventStorage.initDropdownAlignment.Raise(this, EnumToString<TTRPG_Alignments>());
+            initGameEventStorage.initDropdownClass.Raise(this, EnumToString<TTRPG_Class>());
 
+            // set values from creature data
             initGameEventStorage.initCreatureName.Raise(this, creatureData.objectName);
             initGameEventStorage.initSpecies.Raise(this, ((int)creatureData.species));
-            initGameEventStorage.initAlignment.Raise(this, creatureData.coreStats.alignment);
+            initGameEventStorage.initAlignment.Raise(this, ((int)creatureData.alignment));
             initGameEventStorage.initClass.Raise(this, ((int)creatureData.className));
 
             // Set attribtue scores 
@@ -54,6 +56,7 @@ public class UICreatureInitializer : MonoBehaviour
             initGameEventStorage.initAC.Raise(this, coreStats.ac);
             initGameEventStorage.initHP.Raise(this, coreStats.hp);
 
+            // Speed values
             initGameEventStorage.initSpeed.Raise(this, coreStats.speedTypes.speed);
             initGameEventStorage.initBurrow.Raise(this, coreStats.speedTypes.burrow);
             initGameEventStorage.initClimb.Raise(this, coreStats.speedTypes.climb);

@@ -1,8 +1,7 @@
 
 [System.Serializable]
-public enum Species
+public enum TTRPG_Species
 {
-    Character = -1,
     Aberration = 0, 
     Beast = 1, 
     Celestial = 2, 
@@ -16,6 +15,7 @@ public enum Species
     Monstrosity = 10, 
     Ooze = 11, 
     Plant = 12, 
-    Undead = 13
+    Undead = 13,
+    UNKNOWN = 14
 }
 

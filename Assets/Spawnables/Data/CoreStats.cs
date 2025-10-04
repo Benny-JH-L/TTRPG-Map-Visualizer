@@ -1,6 +1,6 @@
 
 /// <summary>
-/// Core stats of a creature. Ex. speed, hp, ac, alignment, size, str, con, etc.
+/// Core stats of a creature. Ex. speed, hp, ac, size, str, con, etc.
 /// </summary>
 [System.Serializable]
 public class CoreStats
@@ -62,7 +62,6 @@ public class CoreStats
     /// </summary>
     public int defaultInitVal = 5; 
     public CreatureSize size;
-    public string alignment; // note: will make this into a class to keep track of alignments / or use enum
 
     public int ac;
     public Speed speedTypes;
@@ -104,7 +103,6 @@ public class CoreStats
         //stats.wisdom = 0;
         //stats.charaisma = 0;
         size = CreatureSize.Medium;
-        alignment = null;
         ac = defaultInitVal;
 
         speedTypes.speed = defaultInitVal;

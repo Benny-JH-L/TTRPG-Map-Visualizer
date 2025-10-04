@@ -1,7 +1,8 @@
 
-using UnityEngine;
 using System.Collections.Generic;
 using System.Diagnostics;
+using UnityEngine;
+using static UnityEditor.Searcher.SearcherWindow;
 
 /// <summary>
 /// Commonly shared attributes/data of all creatures
@@ -10,8 +11,9 @@ using System.Diagnostics;
 public class CreatureData : GeneralObjectData
 {
     private static string _debugStart = "CreatureData | ";
-    public Species species;
-    public ClassType className;
+    public TTRPG_Species species;
+    public TTRPG_Class className;
+    public TTRPG_Alignments alignment;
     public CoreStats coreStats;
     public string additionalInfo;
 
@@ -29,8 +31,10 @@ public class CreatureData : GeneralObjectData
 
     public CreatureData()
     {
-        species = Species.Humanoid; // by default
-        className = ClassType.NONE; // by default
+        // default values
+        species = TTRPG_Species.Humanoid; 
+        className = TTRPG_Class.NONE;
+        alignment = TTRPG_Alignments.NONE;    
         coreStats = new CoreStats();
         SetAdditionalInfo();
 
