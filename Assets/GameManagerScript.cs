@@ -33,24 +33,6 @@ public class GameManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // random testing
-        if (Keyboard.current.backslashKey.wasPressedThisFrame)  // '\'
-        {
-            //gameData.PrintPlayers();
-            gameData.PrintCharacters();
-        }
-        else if (Keyboard.current.qKey.wasPressedThisFrame)
-        {
-            count++;
-            //gameData.playerList[0].saveData.className = $"woighowegwe + {count}";
-            //gameData.playerList[0].GetComponent<Character>().saveData.className = ClassType.NONE;
-            gameData.characterList[0].GetComponent<Character>().GetSaveData().className = TTRPG_Class.NONE;   // does not show in unity debug thing, really tempted to remvoe CharacterData and just use CreatureData... (Sept 8 9;44pm note)
-            gameData.characterList[0].GetComponent<Character>().GetSaveData().coreStats.ac = 10000;
-        }
-        //
-
-
-
         // check if the user is interacting with the UI or if the mouse is not over the `GameScreenSpace`
         if (_isUIFocused || !_isGameScreenFocused)
         {
