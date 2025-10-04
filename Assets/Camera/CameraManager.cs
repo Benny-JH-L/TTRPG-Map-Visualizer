@@ -169,6 +169,15 @@ public class CameraManager : MonoBehaviour
         _currentCam = _mapCam;
     }
 
+    /// <summary>
+    /// Gets the active camera in the scene.
+    /// </summary>
+    /// <returns></returns>
+    public AbstractCamera GetCurrentCamera()
+    {
+        return _currentCam;
+    }
+
     public void OnUIFocued(Component comp, object data)
     {
         if (data is bool r)

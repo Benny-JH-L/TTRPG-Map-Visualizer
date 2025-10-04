@@ -6,16 +6,18 @@ using UnityEngine.InputSystem;
 public class ObjectMovementManager : MonoBehaviour
 {
     //GameEventListener<SelectedObject>;
+
+    private static string _debugStart = "Object Movement Manager | ";
     
     public GameEvent objectMovedEvent;
 
+    public CameraManager cameraManager;
     [SerializeField] private GameObject _selectedGameObject;
 
     public float movementFactor = 30f;
 
-    private string _debugStart = "Object Movement Manager | ";
     [SerializeField] private bool _isUIFocused;
-    private bool _isGameScreenFocused;  // most likely do not need anymore
+    [SerializeField] private bool _isGameScreenFocused;  // most likely do not need anymore
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -61,8 +63,27 @@ public class ObjectMovementManager : MonoBehaviour
             return;
 
         // Do movement
-        Vector3 newPos = _selectedGameObject.transform.position + movement.GetMovement() * Time.deltaTime;
+        //Vector3 newPos = _selectedGameObject.transform.position + movement.GetMovement() * Time.deltaTime;
 
+        Vector3 moveDirection = movement.GetMovement();
+
+        // Rotate movement based on the orbit camera's rotation about the Y-axis
+        if (cameraManager.GetCurrentCamera() is OrbitCam orbitCam)
+        {
+            // Get camera's forward and right directions, flattened on the horizontal plane
+            Vector3 forward = orbitCam.GetCamera().transform.forward;
+            forward.y = 0;
+            forward.Normalize();
+
+            Vector3 right = orbitCam.GetCamera().transform.right;
+            right.y = 0;
+            right.Normalize();
+
+            // Rotate the movement vector based on camera orientation
+            moveDirection = (right * movement.GetMovement().x) + (forward * movement.GetMovement().z);
+        }
+
+        Vector3 newPos = _selectedGameObject.transform.position + moveDirection * Time.deltaTime;
         _selectedGameObject.transform.position = newPos;
         Tuple<GameObject, Vector3> send = new Tuple<GameObject, Vector3>(gameObject, newPos);
         objectMovedEvent.Raise(this, send);
