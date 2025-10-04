@@ -132,7 +132,7 @@ public class CameraManager : MonoBehaviour
     /// <returns>
     /// Tuple(GameObject, Vector3)
     /// Item 1: GameObject the mouse is over. Is Null if the mouse is not over a GameObject
-    /// Item 2: Location of where the mouse is over. Is Null if the mouse is not over a GameObject
+    /// Item 2: Location of where the mouse is over in the world. Is Null if the mouse is not over a GameObject
     /// </returns>
     public Tuple<GameObject, Vector3> GetGameObjectAtMousePos()
     {
@@ -149,6 +149,21 @@ public class CameraManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// Return's the world location (Vector3) of where the mouse is over.
+    /// Otherwise, return Vector3.positiveInfinity.
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetMousePosInWorld()
+    {
+        Ray ray = _currentCam.GetCamera().ScreenPointToRay(MouseTracker.GetMousePos());
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            return hit.point;
+        }
+        return Vector3.positiveInfinity;
     }
 
     public void OnSelectedObject(Component sender, object data)
