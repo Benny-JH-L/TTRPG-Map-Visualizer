@@ -85,4 +85,9 @@ public class View : AbstractUI
         Debug.Log($"{_debugStart}Removing right container");
         _DeActivateAllRightContainers();
     }
+
+    public void OnGeneralObjectDestroyed(Component comp, object data)
+    {
+        _DeActivateAllRightContainers();
+    }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public abstract class GeneralObject : MonoBehaviour
 {
+    public static string _debugStart = "GeneralObject | ";
     public static GameData gameData;
     public static GameObject diskPrefab;
 
@@ -98,5 +99,17 @@ public abstract class GeneralObject : MonoBehaviour
     public Vector3 GetPosition()
     {
         return diskBase.transform.position;
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log($"{_debugStart}OnDestroy");
+        RemoveFromGame();
+    }
+
+    protected void RemoveFromGame()
+    {
+        gameData.generalObjectList.Remove(this);
+        Destroy(diskBase);
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 // A wrapper for GameObjects
 [System.Serializable]
@@ -57,6 +58,14 @@ public class Creature : GeneralObject
         //saveData = data;
         //gameData.creatureList.Add(obj.GetComponent<Creature>());
         //Debug.Log("Player component to string: " + comp.ToString());
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log($"{_debugStart}OnDestroy");
+
+        gameData.creatureList.Remove(this);
+        base.RemoveFromGame();
     }
 
     public CreatureData GetSaveData()
