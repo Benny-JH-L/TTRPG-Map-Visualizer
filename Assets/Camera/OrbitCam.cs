@@ -11,8 +11,8 @@ public class OrbitCam : AbstractCamera
     /// Variable to set when a Orbit Camera is going to be used
     /// </summary>
     //private Transform orbitTarget;
-    private GameObject orbitTarget;
-
+    [SerializeField]private GameObject orbitTarget;
+    
     private float currentRotatX;   // theta
     private float currentRotatY;   // phi
     private float orbitDistance;   // how far camera is from object
@@ -49,7 +49,7 @@ public class OrbitCam : AbstractCamera
         if (!Mouse.current.middleButton.isPressed)  // don't orbit cam when middle mouse is not held down, but update camera position relative to selected object's position
         {
             Vector3 direction = new Vector3(0, 0, -orbitDistance);
-            cam.transform.position = orbitTarget.transform.position + (cam.transform.rotation * direction);
+            cam.transform.position = (orbitTarget != null ? orbitTarget.transform.position : origin) + (cam.transform.rotation * direction);
             //UpdateOrbitCamOnce();
             return;
         }
@@ -83,7 +83,6 @@ public class OrbitCam : AbstractCamera
 
         Quaternion rotation = Quaternion.Euler(currentRotatY, currentRotatX, 0);
         Vector3 direction = new Vector3(0, 0, -orbitDistance);
-        //Vector3 position = ((orbitTarget != null) ? orbitTarget.position : origin) + rotation * direction;
         Vector3 position = ((orbitTarget != null) ? orbitTarget.transform.position : origin) + rotation * direction;
 
         cam.transform.position = position;
@@ -108,4 +107,5 @@ public class OrbitCam : AbstractCamera
     {
         OrbitCamLogic();
     }
+
 }

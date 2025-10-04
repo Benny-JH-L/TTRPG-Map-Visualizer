@@ -35,7 +35,7 @@ public class CameraManager : MonoBehaviour
         _mapCam.EnableCamera();
         _currentCam = _mapCam;
 
-        if (_currentCam != null && _currentCam.CamEnabled())
+        if (_currentCam != null && _currentCam.IsCamEnabled())
         {
             Debug.Log("Map cam enabled");
         }
@@ -60,7 +60,7 @@ public class CameraManager : MonoBehaviour
             ToggleCam();
         }
 
-        if (_mapCam.CamEnabled())
+        if (_mapCam.IsCamEnabled())
         {
             _mapCam.UpdateCamera();
             MovementValue movementValue = new(cameraData.mapMoveSensitivity);
@@ -97,7 +97,7 @@ public class CameraManager : MonoBehaviour
 
             _mapCam.MoveMapCamBy(movementValue);
         }
-        else if (_orbitCam.CamEnabled())
+        else if (_orbitCam.IsCamEnabled())
         {
             _orbitCam.UpdateCamera();
         }
@@ -113,16 +113,16 @@ public class CameraManager : MonoBehaviour
 
         foreach (AbstractCamera abstractCamera in AbstractCamera.cameraList)
         {
-            if (abstractCamera.CamEnabled())
+            if (abstractCamera.IsCamEnabled())
             {
                 _currentCam = abstractCamera;
                 break;
             }
         }
 
-        if (_mapCam.CamEnabled())
+        if (_mapCam.IsCamEnabled())
             Debug.Log($"{_cameraDebugStart}Map cam enabled");
-        else if (_orbitCam.CamEnabled())
+        else if (_orbitCam.IsCamEnabled())
             Debug.Log($"{_cameraDebugStart}Orbit cam enabled");
     }
 
@@ -179,5 +179,14 @@ public class CameraManager : MonoBehaviour
     {
         if (data is bool r)
             _isGameScreenFocused = r;
+    }
+
+    public void OnGeneralObjectDestroyed(Component comp, object data)
+    {
+        // if the orbit cam is enabled and the object is destroyed, switch to map cam.
+        if (_orbitCam.IsCamEnabled())
+        {
+            ToggleCam();
+        }
     }
 }

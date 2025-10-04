@@ -103,7 +103,7 @@ public abstract class AbstractCamera : MonoBehaviour
     /// Returns a boolean indicating whether or not this camrea is enabled.
     /// </summary>
     /// <returns>Boolean. true, camera is enabled. false otherwise.</returns>
-    public bool CamEnabled()
+    public bool IsCamEnabled()
     {
         return cam.enabled;
     }
