@@ -95,7 +95,7 @@ public class TTRPG_NumericalInputManager : AbstractInputManager
     }
     public override void InitializeInputField(Component comp, object data)
     {
-        if (data is Attribute abs)
+        if (data is TTRPG_Attribute abs)
             _inputField.text = abs.GetAbilityScore().ToString();
         else if (data is int i)
             _inputField.text = i.ToString();

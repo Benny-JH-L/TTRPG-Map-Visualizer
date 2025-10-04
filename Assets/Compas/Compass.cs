@@ -15,7 +15,7 @@ public class CompassUI : AbstractUI
     public TextMeshProUGUI degreeText;         // Text showing the degree value
     public TextMeshProUGUI directionText;      // Text showing N/E/S/W direction
 
-    [SerializeField] private float currentAngle = 0f;
+    [SerializeField] private float currentAngle = 0f;   // uses the Y-axis with respect to euler angles
 
     public override void Setup()
     {

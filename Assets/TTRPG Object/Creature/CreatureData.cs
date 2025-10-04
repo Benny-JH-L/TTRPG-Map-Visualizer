@@ -14,7 +14,7 @@ public class CreatureData : GeneralObjectData
     public TTRPG_Species species;
     public TTRPG_Class className;
     public TTRPG_Alignments alignment;
-    public CoreStats coreStats;
+    public TTRPG_CoreStats coreStats;
     public string additionalInfo;
 
     public List<string> actionNames;  // will prolly use these...
@@ -35,7 +35,7 @@ public class CreatureData : GeneralObjectData
         species = TTRPG_Species.Humanoid; 
         className = TTRPG_Class.NONE;
         alignment = TTRPG_Alignments.NONE;    
-        coreStats = new CoreStats();
+        coreStats = new TTRPG_CoreStats();
         SetAdditionalInfo();
 
         actionNames = new List<string>();

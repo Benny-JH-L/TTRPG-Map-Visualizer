@@ -44,7 +44,7 @@ public class UICreatureInitializer : MonoBehaviour
 
             // Set attribtue scores 
             //CoreStats coreStats = creature.GetSaveData().coreStats;
-            CoreStats coreStats = creatureData.coreStats;
+            TTRPG_CoreStats coreStats = creatureData.coreStats;
 
             //initScoreSTR.Raise(this, coreStats.strength.GetAbilityScore());
             //initScoreDEX.Raise(this, coreStats.dexterity.GetAbilityScore());

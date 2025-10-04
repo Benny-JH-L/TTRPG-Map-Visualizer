@@ -47,6 +47,6 @@ public class HexGrid : MonoBehaviour
         TextMeshProUGUI tmp = cell.GetComponentInChildren<Canvas>().GetComponentInChildren<TextMeshProUGUI>();
         tmp.text = cell.coordinates.ToStringOnSeparateLines();
 
-        Debug.Log($"Created cell #{i} at pos: {tmp.text}");
+        //Debug.Log($"Created cell #{i} at pos: {tmp.text}");
     }
 }

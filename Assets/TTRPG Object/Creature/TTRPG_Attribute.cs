@@ -2,14 +2,14 @@
 /// For ability score < 1, it will be set to 1. MAX modifier value is +5 and LOWEST is -5.
 /// </summary>
 [System.Serializable]
-public class Attribute
+public class TTRPG_Attribute
 {
     // make private, use public for testing -?
     public int abilityScore;
     public int modifier;
     public GameEvent attributeModifierChanged;
 
-    public Attribute(GameEvent attributeModifierChanged, int abilityScore)
+    public TTRPG_Attribute(GameEvent attributeModifierChanged, int abilityScore)
     {
         this.attributeModifierChanged = attributeModifierChanged;
         SetNewAbilityScore(abilityScore);

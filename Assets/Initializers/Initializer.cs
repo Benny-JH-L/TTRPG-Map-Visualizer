@@ -41,12 +41,12 @@ public class Initializer : MonoBehaviour
         Dictionary<string, CreatureTag> tagList = new();
         CreatureTag.Initialize(tagList);
 
-        CoreStats.strModChanged = strModChanged;
-        CoreStats.dexModChanged = dexModChanged;
-        CoreStats.conModChanged = conModChanged;
-        CoreStats.intModChanged = intModChanged;
-        CoreStats.wisModChanged = wisModChanged;
-        CoreStats.chaModChanged = chaModChanged;
+        TTRPG_CoreStats.strModChanged = strModChanged;
+        TTRPG_CoreStats.dexModChanged = dexModChanged;
+        TTRPG_CoreStats.conModChanged = conModChanged;
+        TTRPG_CoreStats.intModChanged = intModChanged;
+        TTRPG_CoreStats.wisModChanged = wisModChanged;
+        TTRPG_CoreStats.chaModChanged = chaModChanged;
 
         MouseTracker.screenSpaceGameObject = screenSpaceGameObject;
 

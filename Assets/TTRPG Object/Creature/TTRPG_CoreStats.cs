@@ -3,7 +3,7 @@
 /// Core stats of a creature. Ex. speed, hp, ac, size, str, con, etc.
 /// </summary>
 [System.Serializable]
-public class CoreStats
+public class TTRPG_CoreStats
 {
     public enum CreatureSize
     {
@@ -67,12 +67,12 @@ public class CoreStats
     public Speed speedTypes;
     public int hp;
 
-    public Attribute strength;
-    public Attribute dexterity;
-    public Attribute constitution;
-    public Attribute intelligence;
-    public Attribute wisdom;
-    public Attribute charaisma;
+    public TTRPG_Attribute strength;
+    public TTRPG_Attribute dexterity;
+    public TTRPG_Attribute constitution;
+    public TTRPG_Attribute intelligence;
+    public TTRPG_Attribute wisdom;
+    public TTRPG_Attribute charaisma;
 
     // Must be set in initializer first
     public static GameEvent strModChanged;
@@ -82,7 +82,7 @@ public class CoreStats
     public static GameEvent wisModChanged;
     public static GameEvent chaModChanged;
 
-    public CoreStats()
+    public TTRPG_CoreStats()
     {
         //stats.name = null;
         //stats.size = CreatureSize.Medium;
