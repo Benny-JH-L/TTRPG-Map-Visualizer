@@ -7,10 +7,14 @@ public class CameraData : ScriptableObject
     public float zoomSpeed = 200f;
 
     // map
-    public float mapMoveSensitivity = 0.5f; // range [0.25, 2], for moving the map camera
-    public float mapZoomInOutSensitivity = 200f;    // range [50, 300] -> tentative values
+    [Header("Map")]
+    [Range(0.25f, 4)]
+    public float mapMoveSensitivity = 1f;
+    [Range(50, 300)]    // tentative
+    public float mapZoomInOutSensitivity = 200f;
 
     // orbit camera
+    [Header("Orbit")]
     public float initXRotatation = 0f;      // theta
     public float initYRotatation = 45f;     // phi
     public float initOrbitDistance = 30f;
@@ -22,14 +26,17 @@ public class CameraData : ScriptableObject
     public float orbitMaxVerticalClamp = 90f;
 
     // perspective
+    [Header("Perspective")]
     public float minZoom = 30f;
     public float maxZoom = 90f;
 
     // orthographic
+    [Header("Orthographic")]
     public float minOrthoSize = 2f;
     public float maxOrthoSize = 30f;
 
     // maybe a free cam?
+    [Header("Free cam?")]
     public float minVerticalClamp = -89f;
     public float maxVerticalClamp = 89f;
 }
