@@ -9,7 +9,7 @@ public class CameraData : ScriptableObject
     // map
     [Header("Map")]
     [Range(0.25f, 4)]
-    public float mapMoveSensitivity = 1f;
+    public float mapMoveSensitivity = 2f;
     [Range(50, 300)]    // tentative
     public float mapZoomInOutSensitivity = 200f;
 

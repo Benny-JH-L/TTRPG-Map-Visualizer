@@ -50,6 +50,10 @@ public class GameManagerScript : MonoBehaviour
     private void CheckSpawning()
     {
         var tup = cameraManager.GetGameObjectAtMousePos();
+
+        if (tup == null)  // check for non value
+            return;
+
         Vector3 pos = tup.Item2;
 
         if (Keyboard.current.digit1Key.wasPressedThisFrame)

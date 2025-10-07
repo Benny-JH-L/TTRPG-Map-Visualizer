@@ -10,6 +10,7 @@ public class MapCam : AbstractCamera
     [Header("Mouse World Position")]
     [SerializeField] private Vector3 _currWorldPos = Vector3.positiveInfinity;
     [SerializeField] private Vector3 _prevWorldPos = Vector3.positiveInfinity;
+    //[SerializeField] private bool _isDragging = false;
 
     public override void Setup()
     {
@@ -20,7 +21,7 @@ public class MapCam : AbstractCamera
     public override void Configure()
     {
         if (cameraData == null)
-            Debug.Log($"{_debugStart}CAMERA DATA IS NULL");
+            Debug.LogError($"{_debugStart}CAMERA DATA IS NULL");
     }
 
     public override void UpdateCamera()
@@ -58,9 +59,12 @@ public class MapCam : AbstractCamera
             _currWorldPos = GetMousePosInWorld();   // set current position
 
             // compute delta vector and move camera when `_prevWorldPos` has been set.
-            if (_prevWorldPos != Vector3.positiveInfinity) //[doesn't fix the jittering from (_prevWorldPos = _currWorldPos) ]: && _prevWorldPos != _currWorldPos)
+            if (_prevWorldPos.magnitude != float.PositiveInfinity && _currWorldPos.magnitude != float.PositiveInfinity) //[doesn't fix the jittering from (_prevWorldPos = _currWorldPos) ]: && _prevWorldPos != _currWorldPos)
             {
+                //Debug.Log($"prevpos: {_prevWorldPos}\ncurrpos: {_currWorldPos}");
+
                 Vector3 delta = _prevWorldPos - _currWorldPos;  // compute delta vector from two positions
+                delta.y = 0f;                                   // ignore y-axis change
                 transform.position += delta;                    // move the camera by delta vector
             }
             _prevWorldPos = GetMousePosInWorld();   // set previous position
@@ -76,7 +80,7 @@ public class MapCam : AbstractCamera
         //// Detect when middle mouse is first pressed
         //if (Mouse.current.middleButton.wasPressedThisFrame)
         //{
-        //    _prevMouseWorldPos = GetMousePosInWorld();
+        //    _prevWorldPos = GetMousePosInWorld();
         //    _isDragging = true;
         //}
         //// While middle mouse is held down
@@ -85,14 +89,14 @@ public class MapCam : AbstractCamera
         //    Vector3 currentMouseWorldPos = GetMousePosInWorld();
 
         //    // Calculate the distance the mouse moved in world space
-        //    Vector3 delta = _prevMouseWorldPos - currentMouseWorldPos;
+        //    Vector3 delta = _prevWorldPos - currentMouseWorldPos;
 
         //    // Move camera by that delta (negative because we want to move opposite to mouse)
         //    // This creates the "dragging the world" feel
         //    transform.position += new Vector3(delta.x, 0f, delta.z);
 
         //    // Update previous position for next frame
-        //    _prevMouseWorldPos = GetMousePosInWorld();
+        //    _prevWorldPos = GetMousePosInWorld();
         //}
         //// When button is released
         //else if (Mouse.current.middleButton.wasReleasedThisFrame)
