@@ -6,10 +6,15 @@ using UnityEngine.InputSystem;
 public class MapCam : AbstractCamera
 {
     private static string _debugStart = "MapCam | ";
+    
+    [Header("Mouse World Position")]
+    [SerializeField] private Vector3 _currWorldPos = Vector3.positiveInfinity;
+    [SerializeField] private Vector3 _prevWorldPos = Vector3.positiveInfinity;
 
     public override void Setup()
     {
         cam = GetComponent<Camera>();
+
     }
 
     public override void Configure()
@@ -20,11 +25,14 @@ public class MapCam : AbstractCamera
 
     public override void UpdateCamera()
     {
+        // Camera zoom
         if (Keyboard.current.shiftKey.isPressed)
             ZoomCamera();           // check for zoom input 
         else
             MoveCameraDistance();   // check for camera movement (along y-axis)
-        
+
+        MouseCameraPan();
+        KeyboardCameraPan();
     }
 
     /// <summary>
@@ -40,11 +48,96 @@ public class MapCam : AbstractCamera
     }
 
     /// <summary>
-    /// Takes in a `MovementValue` and uses it to move the map camera's position.
+    /// When the middle mouse button is pressed, pans (moves along the xz-plane) the camera based on mouse movement.
     /// </summary>
-    /// <param name="moveBy"></param>
-    public void MoveMapCamBy(MovementValue moveBy)
+    private void MouseCameraPan()
     {
-        cam.transform.position += moveBy.GetMovement();
+        // Check camera panning
+        if (Mouse.current.middleButton.isPressed)
+        {
+            _currWorldPos = GetMousePosInWorld();   // set current position
+
+            // compute delta vector and move camera when `_prevWorldPos` has been set.
+            if (_prevWorldPos != Vector3.positiveInfinity) //[doesn't fix the jittering from (_prevWorldPos = _currWorldPos) ]: && _prevWorldPos != _currWorldPos)
+            {
+                Vector3 delta = _prevWorldPos - _currWorldPos;  // compute delta vector from two positions
+                transform.position += delta;                    // move the camera by delta vector
+            }
+            _prevWorldPos = GetMousePosInWorld();   // set previous position
+            //_prevWorldPos = _currWorldPos;    // causes major jittering
+        }
+        // Reset positions when middle mouse button is not pressed
+        else
+        {
+            _currWorldPos = Vector3.positiveInfinity;
+            _prevWorldPos = Vector3.positiveInfinity;
+        }
+
+        //// Detect when middle mouse is first pressed
+        //if (Mouse.current.middleButton.wasPressedThisFrame)
+        //{
+        //    _prevMouseWorldPos = GetMousePosInWorld();
+        //    _isDragging = true;
+        //}
+        //// While middle mouse is held down
+        //else if (Mouse.current.middleButton.isPressed && _isDragging)
+        //{
+        //    Vector3 currentMouseWorldPos = GetMousePosInWorld();
+
+        //    // Calculate the distance the mouse moved in world space
+        //    Vector3 delta = _prevMouseWorldPos - currentMouseWorldPos;
+
+        //    // Move camera by that delta (negative because we want to move opposite to mouse)
+        //    // This creates the "dragging the world" feel
+        //    transform.position += new Vector3(delta.x, 0f, delta.z);
+
+        //    // Update previous position for next frame
+        //    _prevMouseWorldPos = GetMousePosInWorld();
+        //}
+        //// When button is released
+        //else if (Mouse.current.middleButton.wasReleasedThisFrame)
+        //{
+        //    _isDragging = false;
+        //}
     }
+
+    /// <summary>
+    /// Pans (moves along the xz-plane) the camera based on keyboard input, using the `wasd` keys.
+    /// </summary>
+    private void KeyboardCameraPan()
+    {
+        MovementValue movementValue = new(cameraData.mapMoveSensitivity);
+
+        // use `wasd` to move camera
+        // Check if any of the movement keys are being held
+        if (Keyboard.current.wKey.isPressed)
+        {
+            movementValue.MoveNorth();
+        }
+        else if (Keyboard.current.sKey.isPressed)
+        {
+            movementValue.MoveSouth();
+        }
+
+        if (Keyboard.current.aKey.isPressed)
+        {
+            movementValue.MoveWest();
+        }
+        else if (Keyboard.current.dKey.isPressed)
+        {
+            movementValue.MoveEast();
+        }
+
+        transform.position += movementValue.GetMovement();
+    }
+
+    // DEPRECATED
+    ///// <summary>
+    ///// [DEPRECATED] Takes in a `MovementValue` and uses it to move the map camera's position.
+    ///// </summary>
+    ///// <param name="moveBy"></param>
+    //public void MoveMapCamBy(MovementValue moveBy)
+    //{
+    //    cam.transform.position += moveBy.GetMovement();
+    //}
 }

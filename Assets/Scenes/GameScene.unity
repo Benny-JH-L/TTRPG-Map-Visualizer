@@ -2141,9 +2141,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectMovedEvent: {fileID: 11400000, guid: aeb1a39f4e1240a4598b283b40e86909, type: 2}
+  cameraManager: {fileID: 299341090}
+  movementFactor: 600
   _selectedGameObject: {fileID: 0}
-  movementFactor: 30
   _isUIFocused: 0
+  _isGameScreenFocused: 0
+  smoothTime: 0.1
+  stopDistance: 0.1
 --- !u!4 &812659950
 Transform:
   m_ObjectHideFlags: 0
@@ -5295,6 +5299,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8037480564279372728, guid: edf2a1f42e425e9488732cda0efe8bec, type: 3}
   m_PrefabInstance: {fileID: 2102660871}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1488610909
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1488610910}
+  m_Layer: 0
+  m_Name: ========== (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1488610910
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488610909}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.4542236, y: -11.232666, z: 4.41391}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1593551663 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7362964113632689191, guid: ad6575ab25bf664448290d8c4ef8b454, type: 3}
@@ -6116,8 +6151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 494350f218b8838468f3c7fe5ccab526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 12
-  height: 12
+  width: 36
+  height: 36
   cellPrefab: {fileID: -2207096468444308241, guid: 6054baf90d6c13f42bf80562a155a0d6, type: 3}
 --- !u!4 &1916109956
 Transform:
@@ -6960,7 +6995,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6662875029716556308, guid: 035ae100e3d321f46bcfdc4335013f16, type: 3}
       propertyPath: m_Name
-      value: Confirmation Creature Popup Menu
+      value: (General Object Delete) Confirmation Popup Menu
       objectReference: {fileID: 0}
     - target: {fileID: 6662875029716556308, guid: 035ae100e3d321f46bcfdc4335013f16, type: 3}
       propertyPath: m_IsActive
@@ -7074,6 +7109,7 @@ RectTransform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 207355377}
   - {fileID: 841359921}
   - {fileID: 1864156678}
   - {fileID: 128004252}
@@ -7085,14 +7121,14 @@ SceneRoots:
   - {fileID: 1101579901}
   - {fileID: 299341089}
   - {fileID: 1075774670}
+  - {fileID: 812659950}
   - {fileID: 625209513}
-  - {fileID: 207355377}
+  - {fileID: 1488610910}
   - {fileID: 1921481413}
   - {fileID: 1636298839}
   - {fileID: 1383522837}
   - {fileID: 1716619931}
   - {fileID: 588202863}
-  - {fileID: 812659950}
   - {fileID: 1737147173}
   - {fileID: 770111190}
   - {fileID: 1916109956}

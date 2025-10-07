@@ -25,7 +25,7 @@ public class CameraManager : MonoBehaviour
         _mapCam = GetComponentInChildren<MapCam>();
 
         if (_mapCam == _orbitCam)
-            Debug.Log("MAP AND ORBIT CAM IS THE SAME!!! NO NO");
+            Debug.LogError("MAP AND ORBIT CAM IS THE SAME!!! NO NO");
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -50,10 +50,13 @@ public class CameraManager : MonoBehaviour
             return;
         }
 
-        UpdateCamera();
+        UpdateCameras();
     }
 
-    private void UpdateCamera()
+    /// <summary>
+    /// Calls update functions of the map and orbit cameras (AbstractCamera).
+    /// </summary>
+    private void UpdateCameras()
     {
         if (Keyboard.current.backquoteKey.wasPressedThisFrame) // key: '`'
         {
@@ -63,39 +66,6 @@ public class CameraManager : MonoBehaviour
         if (_mapCam.IsCamEnabled())
         {
             _mapCam.UpdateCamera();
-            MovementValue movementValue = new(cameraData.mapMoveSensitivity);
-
-            // use `wasd` or mouse input to move camera)
-            // Check if any of the movement keys are being held
-            if (Keyboard.current.wKey.isPressed)
-            {
-                movementValue.MoveNorth();
-            }
-            else if (Keyboard.current.sKey.isPressed)
-            {
-                movementValue.MoveSouth();
-            }
-
-            if (Keyboard.current.aKey.isPressed)
-            {
-                movementValue.MoveWest();
-            }
-            else if (Keyboard.current.dKey.isPressed)
-            {
-                movementValue.MoveEast();
-            }
-
-            if (Mouse.current.middleButton.isPressed)
-            {
-                movementValue = new(cameraData.mapMoveSensitivity + 0.2f);
-                Vector2 mouseDelta = Mouse.current.delta.ReadValue();
-                //Debug.Log($"{_cameraDebugStart}Mouse Delta: {mouseDelta}");
-                // mouseDelta.x -> right (+) / left (-)
-                // mouseDelta.y -> up (+) / down (-)
-                movementValue.SetMove(-mouseDelta); // negate so the camera moves opposite of mouse movement
-            }
-
-            _mapCam.MoveMapCamBy(movementValue);
         }
         else if (_orbitCam.IsCamEnabled())
         {
@@ -104,7 +74,7 @@ public class CameraManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Toggles between the map cam and orbit cam
+    /// Toggles between the map cam and orbit cam.
     /// </summary>
     private void ToggleCam()
     {
@@ -158,12 +128,7 @@ public class CameraManager : MonoBehaviour
     /// <returns></returns>
     public Vector3 GetMousePosInWorld()
     {
-        Ray ray = _currentCam.GetCamera().ScreenPointToRay(MouseTracker.GetMousePos());
-        if (Physics.Raycast(ray, out RaycastHit hit))
-        {
-            return hit.point;
-        }
-        return Vector3.positiveInfinity;
+        return _currentCam.GetMousePosInWorld();
     }
 
     public void OnSelectedObject(Component sender, object data)
