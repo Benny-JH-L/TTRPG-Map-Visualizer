@@ -92,8 +92,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75
-  m_fontSizeBase: 75
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 1028422858932865816}
   - component: {fileID: 2791909618137995452}
   m_Layer: 5
-  m_Name: Text Title
+  m_Name: Body2 Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -185,4 +185,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c82af7cc8b43d94881739de9a34ea0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TTRPG_Text_New
-  textData: {fileID: 11400000, guid: d7bcf70827ed34b47b528b43db902ae3, type: 2}
+  textData: {fileID: 11400000, guid: b6579efb037c99b46acaf81d848138e0, type: 2}
