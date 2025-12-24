@@ -2,16 +2,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEditor.PackageManager;
+using UnityEngine.Rendering.Universal.Internal;
 
 [RequireComponent(typeof(Image))]
 public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
     public static int UNASSIGNED_INDEX = -1;
+    
     public TabGroup tabGroup;
-
+    
     public Image background;
+    public Color originalColor;
 
     public int assignedIndex = UNASSIGNED_INDEX;
+
+    public GameEventSO onTabSelected;
+    public GameEventSO onTabDeselected;
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -30,7 +36,8 @@ public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandl
 
     void Start()
     {
-        background = GetComponent<Image>();
+        background = GetComponent<Image>();     // or set manually
+        originalColor = background.color;
         tabGroup.Subscribe(this);
 
         if (assignedIndex == UNASSIGNED_INDEX)
@@ -40,9 +47,15 @@ public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandl
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Select()
     {
-        
+        if (onTabSelected != null)
+            onTabSelected.Raise(this, this);
+    }
+
+    public void Deselect()
+    {
+        if (onTabDeselected != null)
+            onTabDeselected.Raise(this, this);
     }
 }

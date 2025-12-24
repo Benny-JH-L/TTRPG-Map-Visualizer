@@ -12,7 +12,7 @@ public class TTRPG_AddButton : AbstractUI
 
     public ButtonDataSO data;
 
-    public GameEvent clickedEvent;
+    public GameEventSO clickedEvent;
 
     public override void Configure()
     {

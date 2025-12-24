@@ -10,7 +10,7 @@ public class CustomGameEvent : UnityEvent<Component, object>
 public class GameEventListener : MonoBehaviour
 {
 
-    public GameEvent gameEvent;
+    public GameEventSO gameEvent;
     public CustomGameEvent response;
 
     public void OnEventRaised(Component sender, object data)

@@ -8,7 +8,7 @@ public class MouseTracker : MonoBehaviour
     public static GameObject screenSpaceGameObject; // UI component that occupies the screen space of the active game.
     private static string _debugStart = "MouseTracker | ";
 
-    public GameEvent gameScreenFocused;         // True: mouse is inside GameScreenSpace, False otherwise. 
+    public GameEventSO gameScreenFocused;         // True: mouse is inside GameScreenSpace, False otherwise. 
     private bool _mouseInsideGameScreenSpace;   // Used so `gameScreenFocused` isn't called every `Update()`
 
     void Start()

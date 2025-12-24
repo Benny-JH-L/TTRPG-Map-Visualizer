@@ -4,34 +4,34 @@ using UnityEngine;
 public class InitCreatureGameEventStorage : MonoBehaviour
 {
     // initialize GameEvents----
-    public GameEvent initDropdownSpecies;
-    public GameEvent initDropdownAlignment;
-    public GameEvent initDropdownClass;
+    public GameEventSO initDropdownSpecies;
+    public GameEventSO initDropdownAlignment;
+    public GameEventSO initDropdownClass;
 
-    public GameEvent initCreatureName;
+    public GameEventSO initCreatureName;
 
-    public GameEvent initSpecies;
-    public GameEvent initAlignment;
-    public GameEvent initClass;
+    public GameEventSO initSpecies;
+    public GameEventSO initAlignment;
+    public GameEventSO initClass;
 
-    public GameEvent initAC;
-    public GameEvent initHP;
+    public GameEventSO initAC;
+    public GameEventSO initHP;
 
-    public GameEvent initSpeed;
-    public GameEvent initBurrow;
-    public GameEvent initClimb;
-    public GameEvent initFly;
-    public GameEvent initSwim;
+    public GameEventSO initSpeed;
+    public GameEventSO initBurrow;
+    public GameEventSO initClimb;
+    public GameEventSO initFly;
+    public GameEventSO initSwim;
 
     //public GameEvent initSpeedType;
 
-    public GameEvent initScoreSTR;
-    public GameEvent initScoreDEX;
-    public GameEvent initScoreCON;
-    public GameEvent initScoreINT;
-    public GameEvent initScoreWIS;
-    public GameEvent initScoreCHA;
+    public GameEventSO initScoreSTR;
+    public GameEventSO initScoreDEX;
+    public GameEventSO initScoreCON;
+    public GameEventSO initScoreINT;
+    public GameEventSO initScoreWIS;
+    public GameEventSO initScoreCHA;
 
-    public GameEvent initAdditionalInfo;
+    public GameEventSO initAdditionalInfo;
     // initialize GameEvents end----
 }

@@ -11,10 +11,10 @@ public class GameManagerScript : MonoBehaviour
     public CameraManager cameraManager;
     public Map map; // for testing
 
-    public GameEvent selectedObjectEvent;
-    public GameEvent deSelectedObjectEvent;
-    public GameEvent mouseRightClickEvent;
-    public GameEvent cameraChangedEvent;
+    public GameEventSO selectedObjectEvent;
+    public GameEventSO deSelectedObjectEvent;
+    public GameEventSO mouseRightClickEvent;
+    public GameEventSO cameraChangedEvent;
 
     private bool _isUIFocused;
     private bool _isGameScreenFocused;

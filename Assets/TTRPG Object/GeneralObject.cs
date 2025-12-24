@@ -6,7 +6,7 @@ public abstract class GeneralObject : MonoBehaviour
     public static GameData gameData;
     public static GameObject diskPrefab;
 
-    public static GameEvent spawnedObjectEvent; // do i need?
+    public static GameEventSO spawnedObjectEvent; // do i need?
 
     public static Vector3 yOffsetDiskSpawn = new(0f, 0.5f, 0f);
 

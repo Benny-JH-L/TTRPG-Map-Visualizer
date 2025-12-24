@@ -9,7 +9,7 @@ public class ObjectMovementManager : MonoBehaviour
 
     private static string _debugStart = "Object Movement Manager | ";
     
-    public GameEvent objectMovedEvent;
+    public GameEventSO objectMovedEvent;
 
     public CameraManager cameraManager;
     public float movementFactor = 30f;

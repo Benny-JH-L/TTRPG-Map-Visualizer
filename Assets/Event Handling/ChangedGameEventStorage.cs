@@ -6,6 +6,6 @@ using UnityEngine;
 /// </summary>
 public class ChangedGameEventStorage : MonoBehaviour
 {
-    public GameEvent ACChanged;
-    public GameEvent HPChanged;
+    public GameEventSO ACChanged;
+    public GameEventSO HPChanged;
 }

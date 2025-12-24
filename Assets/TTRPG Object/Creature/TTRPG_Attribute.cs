@@ -7,9 +7,9 @@ public class TTRPG_Attribute
     // make private, use public for testing -?
     public int abilityScore;
     public int modifier;
-    public GameEvent attributeModifierChanged;
+    public GameEventSO attributeModifierChanged;
 
-    public TTRPG_Attribute(GameEvent attributeModifierChanged, int abilityScore)
+    public TTRPG_Attribute(GameEventSO attributeModifierChanged, int abilityScore)
     {
         this.attributeModifierChanged = attributeModifierChanged;
         SetNewAbilityScore(abilityScore);

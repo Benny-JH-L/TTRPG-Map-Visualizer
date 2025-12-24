@@ -75,12 +75,12 @@ public class TTRPG_CoreStats
     public TTRPG_Attribute charaisma;
 
     // Must be set in initializer first
-    public static GameEvent strModChanged;
-    public static GameEvent dexModChanged;
-    public static GameEvent conModChanged;
-    public static GameEvent intModChanged;
-    public static GameEvent wisModChanged;
-    public static GameEvent chaModChanged;
+    public static GameEventSO strModChanged;
+    public static GameEventSO dexModChanged;
+    public static GameEventSO conModChanged;
+    public static GameEventSO intModChanged;
+    public static GameEventSO wisModChanged;
+    public static GameEventSO chaModChanged;
 
     public TTRPG_CoreStats()
     {

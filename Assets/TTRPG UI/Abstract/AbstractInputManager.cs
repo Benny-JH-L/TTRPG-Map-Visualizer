@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class AbstractInputManager : AbstractUI
 {
-    public GameEvent UIFocused;
+    public GameEventSO UIFocused;
     public TextDataSO textData;
     public TMP_InputField _inputField;  // keep protected | public for inspector?
 

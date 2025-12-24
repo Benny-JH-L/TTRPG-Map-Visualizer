@@ -76,7 +76,7 @@ public class CameraViewportUpdater : AbstractUI
             if (cam != null && cam.GetCamera() != null)
                 cam.GetCamera().rect = viewPortRect;
         }
-        Debug.Log($"{_debugStart}Viewport updated: {viewPortRect}");
+        //Debug.Log($"{_debugStart}Viewport updated: {viewPortRect}");
     }
 
     /// <summary>

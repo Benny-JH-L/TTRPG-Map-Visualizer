@@ -6,7 +6,7 @@ public class TTRPG_NumericalInputManager : AbstractInputManager
     private string _debugStart = "NumericalInputHandler | ";
     private string _numericalStr = string.Empty;
 
-    public GameEvent valueChanged;
+    public GameEventSO valueChanged;
 
     public override void Configure()
     {

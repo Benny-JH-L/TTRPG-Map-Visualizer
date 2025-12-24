@@ -6,7 +6,7 @@ public class TTRPG_TextInputManager : AbstractInputManager
     private string _debugStart = "TTRPG_TextInputManager | ";
     private string _textSoFar = string.Empty;
 
-    public GameEvent valueChanged;
+    public GameEventSO valueChanged;
 
     public override void Configure()
     {

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class TTRPG_Button : AbstractUI
 {
     public TTRPG_ButtonSO buttonData;
-    public GameEvent clickedEvent;
+    public GameEventSO clickedEvent;
 
     protected Button button;
     protected TextMeshProUGUI buttonText;

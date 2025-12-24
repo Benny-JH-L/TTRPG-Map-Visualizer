@@ -11,13 +11,13 @@ public class Initializer : MonoBehaviour
     public GameObject highlightRingPrefab;
     public GameObject screenSpaceGameObject;
 
-    public GameEvent spawnedObjectEvent;
-    public GameEvent strModChanged;
-    public GameEvent dexModChanged;
-    public GameEvent conModChanged;
-    public GameEvent intModChanged;
-    public GameEvent wisModChanged;
-    public GameEvent chaModChanged;
+    public GameEventSO spawnedObjectEvent;
+    public GameEventSO strModChanged;
+    public GameEventSO dexModChanged;
+    public GameEventSO conModChanged;
+    public GameEventSO intModChanged;
+    public GameEventSO wisModChanged;
+    public GameEventSO chaModChanged;
 
     private void Awake()
     {

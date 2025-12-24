@@ -7,8 +7,8 @@ public class TTRPG_ConfirmationPopupMenu : AbstractUI
 
     public GameObject popupMenu;
 
-    public GameEvent UIFocused;
-    public GameEvent GeneralObjectDestroyed;
+    public GameEventSO UIFocused;
+    public GameEventSO GeneralObjectDestroyed;
 
     public override void Configure()
     {

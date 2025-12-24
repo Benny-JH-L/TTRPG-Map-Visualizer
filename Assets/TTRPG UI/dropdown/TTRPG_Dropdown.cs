@@ -13,7 +13,7 @@ public class TTRPG_Dropdown : AbstractUI
 
     public TMP_Dropdown dropdown;   // public for inspector
 
-    public GameEvent onValueChange;
+    public GameEventSO onValueChange;
 
     public override void Configure()
     {
