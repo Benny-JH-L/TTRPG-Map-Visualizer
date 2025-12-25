@@ -4876,6 +4876,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 418478653}
   m_CullTransparentMesh: 1
+--- !u!1 &424534595 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8438718092290828019, guid: c053d58e74218f446811eb587c923c8b, type: 3}
+  m_PrefabInstance: {fileID: 1655884547}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &433340846 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8045794944452762834, guid: 223704342f9d4ab438e057b0a5084b8a, type: 3}
@@ -5852,6 +5857,11 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &525773393 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8438718092290828019, guid: c053d58e74218f446811eb587c923c8b, type: 3}
+  m_PrefabInstance: {fileID: 551245768}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &534653448
 GameObject:
   m_ObjectHideFlags: 0
@@ -8537,6 +8547,7 @@ GameObject:
   - component: {fileID: 758921190}
   - component: {fileID: 758921189}
   - component: {fileID: 758921192}
+  - component: {fileID: 758921193}
   m_Layer: 5
   m_Name: Right (Object Menus)
   m_TagString: Untagged
@@ -8648,6 +8659,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &758921193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758921187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b66977e54d0ff12418897acd7dcfb35f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  onRightUIClosedAnimationFinished: {fileID: 11400000, guid: 78528307ccbd0bb4bb7348b62a42ba54, type: 2}
 --- !u!1 &760770931 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4500440349477919628, guid: 223704342f9d4ab438e057b0a5084b8a, type: 3}
@@ -16492,6 +16516,7 @@ GameObject:
   - component: {fileID: 1369711352}
   - component: {fileID: 1369711351}
   - component: {fileID: 1369711353}
+  - component: {fileID: 1369711354}
   m_Layer: 5
   m_Name: Tab Group (Character)
   m_TagString: Untagged
@@ -16620,6 +16645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabGroup
   tabButtons: []
+  ttrpgView: {fileID: 1958364363}
   tabIdle: {r: 0.7830189, g: 0.09233712, b: 0.09233712, a: 1}
   tabHover: {r: 1, g: 1, b: 1, a: 1}
   tabActive: {r: 0.23614118, g: 0.6603774, b: 0.19624422, a: 1}
@@ -16631,6 +16657,34 @@ MonoBehaviour:
   - {fileID: 1664257779}
   - {fileID: 671821687}
   - {fileID: 800648688}
+--- !u!114 &1369711354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369711346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
+  gameEvent: {fileID: 11400000, guid: 78528307ccbd0bb4bb7348b62a42ba54, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1369711353}
+        m_TargetAssemblyTypeName: TabGroup, Assembly-CSharp
+        m_MethodName: FinishTabSelect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1383522834
 GameObject:
   m_ObjectHideFlags: 0
@@ -18736,6 +18790,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1028872729303742500, guid: 14da4fbb9cd62524ab88d641efeaf722, type: 3}
   m_PrefabInstance: {fileID: 1569601855}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1573167649 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8438718092290828019, guid: c053d58e74218f446811eb587c923c8b, type: 3}
+  m_PrefabInstance: {fileID: 1891906801}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1573648310
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19254,6 +19313,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1600767896 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8438718092290828019, guid: c053d58e74218f446811eb587c923c8b, type: 3}
+  m_PrefabInstance: {fileID: 5963499847105102348}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1601331872 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7517716753550044469, guid: 7cd3fbffbc19aba41abdb83298ccdcf2, type: 3}
@@ -19601,12 +19665,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1628404058}
   - component: {fileID: 1628404059}
-  - component: {fileID: 1628404063}
-  - component: {fileID: 1628404061}
-  - component: {fileID: 1628404060}
-  - component: {fileID: 1628404062}
-  - component: {fileID: 1628404065}
-  - component: {fileID: 1628404064}
   m_Layer: 5
   m_Name: View
   m_TagString: Untagged
@@ -19628,6 +19686,7 @@ RectTransform:
   m_Children:
   - {fileID: 1981330389}
   - {fileID: 758921188}
+  - {fileID: 1958364358}
   m_Father: {fileID: 487374795}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -19661,186 +19720,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &1628404060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1628404057}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
-  gameEvent: {fileID: 11400000, guid: 240b06a4ed944904f9c183c20157d6ff, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1981330393}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Expand Left UI
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 758921192}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Close Right UI
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1628404061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1628404057}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
-  gameEvent: {fileID: 11400000, guid: af7405eb189cb7041b36c6ca5a967b83, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1981330393}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Shrink Left UI
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 758921192}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Open Right UI
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1628404062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1628404057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
-  gameEvent: {fileID: 11400000, guid: 95f1f4092c5b9594eadf6a639c93772b, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1628404063}
-        m_TargetAssemblyTypeName: TTRPG_View, Assembly-CSharp
-        m_MethodName: OnDeselectedObject
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1628404063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1628404057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b99cb36b0b2e5c4d924e95d20e1c4f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TTRPG_View
-  leftUI: {fileID: 1981330388}
-  rightUI: {fileID: 758921187}
-  leftAnimator: {fileID: 1981330393}
-  rightAnimator: {fileID: 758921192}
---- !u!114 &1628404064
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1628404057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
-  gameEvent: {fileID: 11400000, guid: 240b06a4ed944904f9c183c20157d6ff, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1628404063}
-        m_TargetAssemblyTypeName: TTRPG_View, Assembly-CSharp
-        m_MethodName: OnTabDeselected
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1628404065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1628404057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
-  gameEvent: {fileID: 11400000, guid: af7405eb189cb7041b36c6ca5a967b83, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1628404063}
-        m_TargetAssemblyTypeName: TTRPG_View, Assembly-CSharp
-        m_MethodName: OnTabSelected
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1001 &1631182287
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20934,6 +20813,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe89bc2198d9fdb4ba41983cd64a4cd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameObjectsOverScreenSpace:
+  - {fileID: 1600767896}
+  - {fileID: 424534595}
+  - {fileID: 1769718307}
+  - {fileID: 1573167649}
+  - {fileID: 525773393}
   gameScreenFocused: {fileID: 11400000, guid: 674ba3ed110e3ff4bbf9ac34b9c83edb, type: 2}
 --- !u!4 &1716619931
 Transform:
@@ -21089,6 +20974,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabGroup
   tabButtons: []
+  ttrpgView: {fileID: 0}
   tabIdle: {r: 0, g: 0, b: 0, a: 1}
   tabHover: {r: 0, g: 0, b: 0, a: 1}
   tabActive: {r: 0.32491815, g: 0.764151, b: 0.20545568, a: 1}
@@ -21648,6 +21534,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1766679678}
   m_CullTransparentMesh: 1
+--- !u!1 &1769718307 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8438718092290828019, guid: c053d58e74218f446811eb587c923c8b, type: 3}
+  m_PrefabInstance: {fileID: 115515086}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1770195095 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3372852665002299107, guid: 7cd3fbffbc19aba41abdb83298ccdcf2, type: 3}
@@ -24175,6 +24066,174 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1028422858932865816, guid: eac6ee1a073a3db4391ea4dd7cbbc380, type: 3}
   m_PrefabInstance: {fileID: 1950128389}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1958364357
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1958364358}
+  - component: {fileID: 1958364363}
+  - component: {fileID: 1958364362}
+  - component: {fileID: 1958364361}
+  - component: {fileID: 1958364360}
+  - component: {fileID: 1958364359}
+  m_Layer: 5
+  m_Name: View Logic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1958364358
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958364357}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1628404058}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1958364359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958364357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
+  gameEvent: {fileID: 11400000, guid: 95f1f4092c5b9594eadf6a639c93772b, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1958364363}
+        m_TargetAssemblyTypeName: TTRPG_View, Assembly-CSharp
+        m_MethodName: OnDeselectedObject
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1958364360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958364357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
+  gameEvent: {fileID: 11400000, guid: 7491a919ddcc23648b0e097fc1a3047e, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1958364363}
+        m_TargetAssemblyTypeName: TTRPG_View, Assembly-CSharp
+        m_MethodName: OnSelectedObject
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1958364361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958364357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
+  gameEvent: {fileID: 11400000, guid: 240b06a4ed944904f9c183c20157d6ff, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1958364363}
+        m_TargetAssemblyTypeName: TTRPG_View, Assembly-CSharp
+        m_MethodName: OnTabDeselected
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1958364362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958364357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
+  gameEvent: {fileID: 11400000, guid: af7405eb189cb7041b36c6ca5a967b83, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1958364363}
+        m_TargetAssemblyTypeName: TTRPG_View, Assembly-CSharp
+        m_MethodName: OnTabSelected
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1958364363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958364357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b99cb36b0b2e5c4d924e95d20e1c4f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TTRPG_View
+  leftUI: {fileID: 1981330388}
+  rightUI: {fileID: 758921187}
+  leftAnimator: {fileID: 1981330393}
+  rightAnimator: {fileID: 758921192}
 --- !u!1001 &1962528963
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24554,6 +24613,7 @@ GameObject:
   - component: {fileID: 1981330391}
   - component: {fileID: 1981330390}
   - component: {fileID: 1981330393}
+  - component: {fileID: 1981330394}
   m_Layer: 5
   m_Name: Left
   m_TagString: Untagged
@@ -24661,6 +24721,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1981330394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981330388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f62a3d39b4269984eae296e66b6d5aec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!224 &1988958678 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7517716753550044469, guid: 7cd3fbffbc19aba41abdb83298ccdcf2, type: 3}

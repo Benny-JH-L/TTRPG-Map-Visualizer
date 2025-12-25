@@ -50,12 +50,12 @@ public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandl
     public void Select()
     {
         if (onTabSelected != null)
-            onTabSelected.Raise(this, this);
+            onTabSelected.Raise(tabGroup, this);
     }
 
     public void Deselect()
     {
         if (onTabDeselected != null)
-            onTabDeselected.Raise(this, this);
+            onTabDeselected.Raise(tabGroup, this);
     }
 }
