@@ -169,7 +169,7 @@ public abstract class AbstractCamera : MonoBehaviour
         Ray ray = cam.ScreenPointToRay(MouseTracker.GetMousePosInScreen());
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            DebugPrinter.printMessage(this, $"hit pos: {hit.point}");
+            DebugOut.Log(this, $"hit pos: {hit.point}");
             return hit.point;
         }
         return Vector3.zero;

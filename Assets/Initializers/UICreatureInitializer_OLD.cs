@@ -8,7 +8,6 @@ using System;
 [DefaultExecutionOrder(-1000)]  // execute first 
 public class UICreatureInitializer_OLD : MonoBehaviour
 {
-    private static string _debugStart = "UICreatureInitializer | ";
     public GameObject creatureUIDataPanelPrefab;
     public View_OLD view;
 

@@ -25,7 +25,7 @@ public class CameraManager : MonoBehaviour
         _mapCam = GetComponentInChildren<MapCam>();
 
         if (_mapCam == _orbitCam)
-            ErrorOutput.printError(this, " - Awake() - Map and Orbit cam cannot be the same object!");
+            ErrorOut.Throw(this, " - Awake() - Map and Orbit cam cannot be the same object!");
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -37,7 +37,7 @@ public class CameraManager : MonoBehaviour
 
         if (_currentCam != null && _currentCam.IsCamEnabled())
         {
-            DebugPrinter.printMessage(this, "Map cam enabled!");
+            DebugOut.Log(this, "Map cam enabled!");
         }
     }
 
@@ -93,10 +93,10 @@ public class CameraManager : MonoBehaviour
 
         if (_mapCam.IsCamEnabled())
             //Debug.Log($"{_cameraDebugStart}Map cam enabled");
-            DebugPrinter.printMessage(this, "Map cam enabled");
+            DebugOut.Log(this, "Map cam enabled");
         else if (_orbitCam.IsCamEnabled())
             //Debug.Log($"{_cameraDebugStart}Orbit cam enabled");
-            DebugPrinter.printMessage(this, "Orbit cam enabled");
+            DebugOut.Log(this, "Orbit cam enabled");
 
     }
 
@@ -140,7 +140,7 @@ public class CameraManager : MonoBehaviour
         if (data is TTRPG_SceneObjectBase)   // maybe have a condition to check whether or not we switch to player or go to map cam... (Eagel or creature view to moving..)
         {
             //Debug.Log($"{_cameraDebugStart}Switching to orbit cam");
-            DebugPrinter.printMessage(this, "Switching to orbit cam");
+            DebugOut.Log(this, "Switching to orbit cam");
 
             TTRPG_SceneObjectBase obj = (TTRPG_SceneObjectBase)data;
             _orbitCam.EnableCamera(obj.diskBase);

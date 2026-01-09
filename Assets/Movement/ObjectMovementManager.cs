@@ -345,11 +345,11 @@ public class ObjectMovementManager : MonoBehaviour
     {
         Debug.Log(_debugStart + " Selected Object Event");
 
-        if (data is TTRPG_SceneObjectBase)
+        if (data is TTRPG_SceneObjectBase sceneObj)
         {
             Debug.Log(_debugStart + "Setting selected object");
 
-            _selectedGameObject = ((TTRPG_SceneObjectBase)data);
+            _selectedGameObject = sceneObj;
             _selectedRigidbody = _selectedGameObject.GetComponent<Rigidbody>();
 
             // Initialize target position

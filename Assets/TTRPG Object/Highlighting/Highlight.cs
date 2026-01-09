@@ -21,7 +21,7 @@ public class Highlight : MonoBehaviour
     void Start()
     {
         if (highlightRingPrefab == null)
-            ErrorOutput.printError(this, "highlightRingPrefab cannot be null");
+            ErrorOut.Throw(this, "highlightRingPrefab cannot be null");
 
         highlightRing = Instantiate(highlightRingPrefab);
         DeactivateRing();
@@ -41,10 +41,9 @@ public class Highlight : MonoBehaviour
 
     public void HighlightObject(Component comp, object data)
     {
-        if (data is TTRPG_SceneObjectBase)
+        if (data is TTRPG_SceneObjectBase sceneObj)
         {
-            TTRPG_SceneObjectBase sceneObj = (TTRPG_SceneObjectBase)data;
-            DebugPrinter.printMessage(this, $"highlighting TTRPG_SceneObjectBase at position: {sceneObj.transform.position}");
+            DebugOut.Log(this, $"highlighting TTRPG_SceneObjectBase at position: {sceneObj.transform.position}");
 
             // set the parent transform of highlight ring to `data`
             highlightRing.transform.SetParent(sceneObj.transform, false);   // `false` so it moves to the new position
@@ -150,6 +149,11 @@ public class Highlight : MonoBehaviour
 }
 
 
+    /// <summary>
+    /// deprecated
+    /// </summary>
+    /// <param name="comp"></param>
+    /// <param name="data"></param>
     public void OnObjectMove(Component comp, object data)
     {
         //if (data == null)   // no game object has been selected
@@ -176,7 +180,7 @@ public class Highlight : MonoBehaviour
     {
         highlightRing.SetActive(false);
         highlightRing.transform.parent = null;
-        highlightRing.transform.position = Vector3.zero;    // reset position (or else it will stay in place and keep the old position)
+        highlightRing.transform.position = Vector3.zero;    // reset position (or else it will stay in place and keep the old position of parent)
     }
 
 

@@ -17,9 +17,9 @@ public class TTRPG_Button : AbstractUI
     {
         // have a class that does this repetitive config stuff
         if (buttonData == null)
-            ErrorOutput.printError(this, "button data null");
+            ErrorOut.Throw(this, "button data null");
         if (buttonData.textData == null)
-            ErrorOutput.printError(this, "buttonData.textData null");
+            ErrorOut.Throw(this, "buttonData.textData null");
 
         TTRPG_TextSO textData = buttonData.textData;
         buttonText.font = textData.font;
