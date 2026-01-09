@@ -9,15 +9,15 @@ public class CameraManager : MonoBehaviour
     // will be on the gameobject
     //public GameEventListener onSelectedObject;
     //public GameEventListener onCameraProjectionChange;
-    private static string _cameraDebugStart = "Camera Manager | ";
+    //private static string _cameraDebugStart = "Camera Manager | ";
     //public static CameraData cameraData;
 
     private MapCam _mapCam;
     private OrbitCam _orbitCam; // actually used | for game object
     private AbstractCamera _currentCam;
 
-    public bool _isUIFocused;   // only public so inspector can see it
-    private bool _isGameScreenFocused; // most likely do not need anymore
+    //public bool _isUIFocused;   // only public so inspector can see it
+    //private bool _isGameScreenFocused; // most likely do not need anymore
 
     private void Awake()
     {
@@ -25,30 +25,31 @@ public class CameraManager : MonoBehaviour
         _mapCam = GetComponentInChildren<MapCam>();
 
         if (_mapCam == _orbitCam)
-            Debug.LogError("MAP AND ORBIT CAM IS THE SAME!!! NO NO");
+            ErrorOutput.printError(this, " - Awake() - Map and Orbit cam cannot be the same object!");
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _isUIFocused = false;
+        //_isUIFocused = false;
         _mapCam.EnableCamera();
         _currentCam = _mapCam;
 
         if (_currentCam != null && _currentCam.IsCamEnabled())
         {
-            Debug.Log("Map cam enabled");
+            DebugPrinter.printMessage(this, "Map cam enabled!");
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_isUIFocused)   // Do not allow Camera adjustments while interacting with the UI
-        {
-            //Debug.Log($"{_cameraDebugStart}UI is focused");
-            return;
-        }
+        // idk what the reason is for this...
+        //if (_isUIFocused)   // Do not allow Camera adjustments while interacting with the UI
+        //{
+        //    //Debug.Log($"{_cameraDebugStart}UI is focused");
+        //    return;
+        //}
 
         UpdateCameras();
     }
@@ -91,9 +92,12 @@ public class CameraManager : MonoBehaviour
         }
 
         if (_mapCam.IsCamEnabled())
-            Debug.Log($"{_cameraDebugStart}Map cam enabled");
+            //Debug.Log($"{_cameraDebugStart}Map cam enabled");
+            DebugPrinter.printMessage(this, "Map cam enabled");
         else if (_orbitCam.IsCamEnabled())
-            Debug.Log($"{_cameraDebugStart}Orbit cam enabled");
+            //Debug.Log($"{_cameraDebugStart}Orbit cam enabled");
+            DebugPrinter.printMessage(this, "Orbit cam enabled");
+
     }
 
     /// <summary>
@@ -101,8 +105,8 @@ public class CameraManager : MonoBehaviour
     /// </summary>
     /// <returns>
     /// Tuple(GameObject, Vector3)
-    /// Item 1: GameObject the mouse is over. Is Null if the mouse is not over a GameObject
-    /// Item 2: Location of where the mouse is over in the world. Is Null if the mouse is not over a GameObject
+    /// Item 1: GameObject the mouse is over. Is Null if the mouse is not over a GameObject.
+    /// Item 2: Location of where the mouse is over in the world. Is Null if the mouse is not over a GameObject.
     /// </returns>
     public Tuple<GameObject, Vector3> GetGameObjectAtMousePos()
     {
@@ -123,9 +127,9 @@ public class CameraManager : MonoBehaviour
 
     /// <summary>
     /// Return's the world location (Vector3) of where the mouse is over.
-    /// Otherwise, return Vector3.positiveInfinity.
+    /// Otherwise, return Vector3.zero.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Vector3</returns>
     public Vector3 GetMousePosInWorld()
     {
         return _currentCam.GetMousePosInWorld();
@@ -135,9 +139,10 @@ public class CameraManager : MonoBehaviour
     {
         if (data is TTRPG_SceneObjectBase)   // maybe have a condition to check whether or not we switch to player or go to map cam... (Eagel or creature view to moving..)
         {
-            Debug.Log($"{_cameraDebugStart}Switching to orbit cam");
-            TTRPG_SceneObjectBase obj = (TTRPG_SceneObjectBase)data;
+            //Debug.Log($"{_cameraDebugStart}Switching to orbit cam");
+            DebugPrinter.printMessage(this, "Switching to orbit cam");
 
+            TTRPG_SceneObjectBase obj = (TTRPG_SceneObjectBase)data;
             _orbitCam.EnableCamera(obj.diskBase);
             _currentCam = _orbitCam;
         }
@@ -158,17 +163,17 @@ public class CameraManager : MonoBehaviour
         return _currentCam;
     }
 
-    public void OnUIFocued(Component comp, object data)
-    {
-        if (data is bool r)
-            _isUIFocused = r;
-    }
+    //public void OnUIFocued(Component comp, object data)
+    //{
+    //    if (data is bool r)
+    //        _isUIFocused = r;
+    //}
 
-    public void OnGameScreenFocused(Component comp, object data) // most likely do not need anymore
-    {
-        if (data is bool r)
-            _isGameScreenFocused = r;
-    }
+    //public void OnGameScreenFocused(Component comp, object data) // most likely do not need anymore
+    //{
+    //    if (data is bool r)
+    //        _isGameScreenFocused = r;
+    //}
 
     public void OnGeneralObjectDestroyed(Component comp, object data)
     {

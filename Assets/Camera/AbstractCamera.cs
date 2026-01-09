@@ -161,9 +161,9 @@ public abstract class AbstractCamera : MonoBehaviour
 
     /// <summary>
     /// Return's the world location (Vector3) of where the mouse is over, using this camera.
-    /// Otherwise, return Vector3.positiveInfinity.
+    /// Otherwise, return Vector3.zero.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Vector3</returns>
     public Vector3 GetMousePosInWorld()
     {
         Ray ray = cam.ScreenPointToRay(MouseTracker.GetMousePosInScreen());
@@ -172,6 +172,6 @@ public abstract class AbstractCamera : MonoBehaviour
             DebugPrinter.printMessage(this, $"hit pos: {hit.point}");
             return hit.point;
         }
-        return Vector3.positiveInfinity;
+        return Vector3.zero;
     }
 }

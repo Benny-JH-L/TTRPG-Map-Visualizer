@@ -2,6 +2,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Deprecate?
+/// </summary>
 public class TTRPG_Button : AbstractUI
 {
     public TTRPG_ButtonSO buttonData;
@@ -13,6 +16,11 @@ public class TTRPG_Button : AbstractUI
     public override void Configure()
     {
         // have a class that does this repetitive config stuff
+        if (buttonData == null)
+            ErrorOutput.printError(this, "button data null");
+        if (buttonData.textData == null)
+            ErrorOutput.printError(this, "buttonData.textData null");
+
         TTRPG_TextSO textData = buttonData.textData;
         buttonText.font = textData.font;
         buttonText.fontSize = textData.fontSize;

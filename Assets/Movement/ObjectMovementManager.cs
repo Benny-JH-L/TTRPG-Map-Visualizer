@@ -11,13 +11,11 @@ public class ObjectMovementManager : MonoBehaviour
     
     //public GameEventSO objectMovedEvent;
 
-    public CameraManager cameraManager;
     public float movementFactor = 30f;
 
-    [SerializeField] private TTRPG_SceneObjectBase _selectedGameObject;
 
-    [SerializeField] private bool _isUIFocused;
-    [SerializeField] private bool _isGameScreenFocused;
+    //[SerializeField] private bool _isUIFocused;
+    //[SerializeField] private bool _isGameScreenFocused;
 
     // Smooth movement fields
     private Rigidbody _selectedRigidbody;
@@ -30,34 +28,53 @@ public class ObjectMovementManager : MonoBehaviour
     private Vector3 _mouseTargetPosition;
     public float stopDistance = 0.5f; // Distance at which object stops at target
 
+    public UtilityStorage utilStorage;
+    [SerializeField] private MouseTracker mouseTracker;
+    [SerializeField] private CameraManager cameraManager;
+    [SerializeField] private TTRPG_SceneObjectBase _selectedGameObject;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _selectedGameObject = null;
-        _isUIFocused = false;
-        _isGameScreenFocused = false;
+        //_isUIFocused = false;
+        //_isGameScreenFocused = false;
         _isMovingToMouseTarget = false;
+
+        //if (mouseTracker == null)
+        //    ErrorOutput.printError(this, "null mouse tracker!");
+
+        utilStorage.CheckContents();
+        mouseTracker = utilStorage.mouseTracker;
+        cameraManager = utilStorage.cameraManager;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // should not be able to move object if; interacting with the UI 
-        if (_isUIFocused)
+        // should not be able to move object if user is interacting with (over the) UI
+        if (mouseTracker.IsMouseOverUIElement())
+        {
+            //DebugPrinter.printMessage(this, "mouse over UI");
             return;
+        }
+
+        //// should not be able to move object if; interacting with the UI 
+        //if (_isUIFocused)
+        //    return;
         // can't move an object if no object is selected
         else if (_selectedGameObject == null)
             return;
 
         // Check for right mouse click (as long as mouse is focused on the game screen)
-        if (Mouse.current.rightButton.wasPressedThisFrame && _isGameScreenFocused)
+        if (Mouse.current.rightButton.wasPressedThisFrame) // && _isGameScreenFocused)
         {
             HandleMouseClick();
         }
 
         // Check for keyboard input
         bool keyboardInput = false;
-        MovementValue movement = new MovementValue(movementFactor);
+        MovementValue movement = new(movementFactor);
 
         // Check if any of the movement keys are being held (Arrow keys)
         if (Keyboard.current.upArrowKey.isPressed)
@@ -205,119 +222,119 @@ public class ObjectMovementManager : MonoBehaviour
     }
 
     // to be removed/deleted
-    private void OLD_UPDATE()
-    {
-        // In your Update method, replace the movement code with:
-        // should not be able to move object if; interacting with the UI 
-        if (_isUIFocused)
-            return;
-        // can't move an object if no object is selected
-        else if (_selectedGameObject == null)
-            return;
+    //private void OLD_UPDATE()
+    //{
+    //    // In your Update method, replace the movement code with:
+    //    // should not be able to move object if; interacting with the UI 
+    //    if (_isUIFocused)
+    //        return;
+    //    // can't move an object if no object is selected
+    //    else if (_selectedGameObject == null)
+    //        return;
 
-        //Vector3 moveBy = new(0f, 0f, 0f);
-        MovementValue movement = new MovementValue(movementFactor);
-        // Check if any of the movement keys are being held (Arrow keys)
-        if (Keyboard.current.upArrowKey.isPressed)
-        {
-            movement.MoveNorth();
-        }
-        else if (Keyboard.current.downArrowKey.isPressed)
-        {
-            movement.MoveSouth();
-        }
-        if (Keyboard.current.leftArrowKey.isPressed)
-        {
-            movement.MoveWest();
-        }
-        else if (Keyboard.current.rightArrowKey.isPressed)
-        {
-            movement.MoveEast();
-        }
-        // Check if the game object was even moved
-        if (movement.GetMovement().magnitude == 0)
-            return;
+    //    //Vector3 moveBy = new(0f, 0f, 0f);
+    //    MovementValue movement = new MovementValue(movementFactor);
+    //    // Check if any of the movement keys are being held (Arrow keys)
+    //    if (Keyboard.current.upArrowKey.isPressed)
+    //    {
+    //        movement.MoveNorth();
+    //    }
+    //    else if (Keyboard.current.downArrowKey.isPressed)
+    //    {
+    //        movement.MoveSouth();
+    //    }
+    //    if (Keyboard.current.leftArrowKey.isPressed)
+    //    {
+    //        movement.MoveWest();
+    //    }
+    //    else if (Keyboard.current.rightArrowKey.isPressed)
+    //    {
+    //        movement.MoveEast();
+    //    }
+    //    // Check if the game object was even moved
+    //    if (movement.GetMovement().magnitude == 0)
+    //        return;
 
-        // Do movement
-        Vector3 moveDirection = movement.GetMovement();
+    //    // Do movement
+    //    Vector3 moveDirection = movement.GetMovement();
 
-        // Rotate movement based on the orbit camera's rotation about the Y-axis
-        if (cameraManager.GetCurrentCamera() is OrbitCam orbitCam)
-        {
-            // Get camera's forward and right directions, flattened on the horizontal plane
-            Vector3 forward = orbitCam.GetCamera().transform.forward;
-            forward.y = 0;
-            forward.Normalize();
-            Vector3 right = orbitCam.GetCamera().transform.right;
-            right.y = 0;
-            right.Normalize();
-            // Rotate the movement vector based on camera orientation
-            moveDirection = (right * movement.GetMovement().x) + (forward * movement.GetMovement().z);
-        }
+    //    // Rotate movement based on the orbit camera's rotation about the Y-axis
+    //    if (cameraManager.GetCurrentCamera() is OrbitCam orbitCam)
+    //    {
+    //        // Get camera's forward and right directions, flattened on the horizontal plane
+    //        Vector3 forward = orbitCam.GetCamera().transform.forward;
+    //        forward.y = 0;
+    //        forward.Normalize();
+    //        Vector3 right = orbitCam.GetCamera().transform.right;
+    //        right.y = 0;
+    //        right.Normalize();
+    //        // Rotate the movement vector based on camera orientation
+    //        moveDirection = (right * movement.GetMovement().x) + (forward * movement.GetMovement().z);
+    //    }
 
-        // Calculate target position
-        _targetPosition = _selectedGameObject.transform.position + moveDirection * Time.deltaTime;
+    //    // Calculate target position
+    //    _targetPosition = _selectedGameObject.transform.position + moveDirection * Time.deltaTime;
 
-        // initial
-        //// should not be able to move object if; interacting with the UI 
-        //if (_isUIFocused)
-        //    return;
-        //// can't move an object if no object is selected
-        //else if (_selectedGameObject == null)
-        //    return;
+    //    // initial
+    //    //// should not be able to move object if; interacting with the UI 
+    //    //if (_isUIFocused)
+    //    //    return;
+    //    //// can't move an object if no object is selected
+    //    //else if (_selectedGameObject == null)
+    //    //    return;
 
-        ////Vector3 moveBy = new(0f, 0f, 0f);
-        //MovementValue movement = new MovementValue(movementFactor);
+    //    ////Vector3 moveBy = new(0f, 0f, 0f);
+    //    //MovementValue movement = new MovementValue(movementFactor);
 
-        //// Check if any of the movement keys are being held (Arrow keys)
-        //if (Keyboard.current.upArrowKey.isPressed)
-        //{
-        //    movement.MoveNorth();
-        //}
-        //else if (Keyboard.current.downArrowKey.isPressed)
-        //{
-        //    movement.MoveSouth();
-        //}
+    //    //// Check if any of the movement keys are being held (Arrow keys)
+    //    //if (Keyboard.current.upArrowKey.isPressed)
+    //    //{
+    //    //    movement.MoveNorth();
+    //    //}
+    //    //else if (Keyboard.current.downArrowKey.isPressed)
+    //    //{
+    //    //    movement.MoveSouth();
+    //    //}
 
-        //if (Keyboard.current.leftArrowKey.isPressed)
-        //{
-        //    movement.MoveWest();
-        //}
-        //else if (Keyboard.current.rightArrowKey.isPressed)
-        //{
-        //    movement.MoveEast();
-        //}
+    //    //if (Keyboard.current.leftArrowKey.isPressed)
+    //    //{
+    //    //    movement.MoveWest();
+    //    //}
+    //    //else if (Keyboard.current.rightArrowKey.isPressed)
+    //    //{
+    //    //    movement.MoveEast();
+    //    //}
 
-        //// Check if the game object was even moved
-        //if (movement.GetMovement().magnitude == 0)
-        //    return;
+    //    //// Check if the game object was even moved
+    //    //if (movement.GetMovement().magnitude == 0)
+    //    //    return;
 
-        //// Do movement
-        ////Vector3 newPos = _selectedGameObject.transform.position + movement.GetMovement() * Time.deltaTime;
+    //    //// Do movement
+    //    ////Vector3 newPos = _selectedGameObject.transform.position + movement.GetMovement() * Time.deltaTime;
 
-        //Vector3 moveDirection = movement.GetMovement();
+    //    //Vector3 moveDirection = movement.GetMovement();
 
-        //// Rotate movement based on the orbit camera's rotation about the Y-axis
-        //if (cameraManager.GetCurrentCamera() is OrbitCam orbitCam)
-        //{
-        //    // Get camera's forward and right directions, flattened on the horizontal plane
-        //    Vector3 forward = orbitCam.GetCamera().transform.forward;
-        //    forward.y = 0;
-        //    forward.Normalize();
+    //    //// Rotate movement based on the orbit camera's rotation about the Y-axis
+    //    //if (cameraManager.GetCurrentCamera() is OrbitCam orbitCam)
+    //    //{
+    //    //    // Get camera's forward and right directions, flattened on the horizontal plane
+    //    //    Vector3 forward = orbitCam.GetCamera().transform.forward;
+    //    //    forward.y = 0;
+    //    //    forward.Normalize();
 
-        //    Vector3 right = orbitCam.GetCamera().transform.right;
-        //    right.y = 0;
-        //    right.Normalize();
+    //    //    Vector3 right = orbitCam.GetCamera().transform.right;
+    //    //    right.y = 0;
+    //    //    right.Normalize();
 
-        //    // Rotate the movement vector based on camera orientation
-        //    moveDirection = (right * movement.GetMovement().x) + (forward * movement.GetMovement().z);
-        //}
+    //    //    // Rotate the movement vector based on camera orientation
+    //    //    moveDirection = (right * movement.GetMovement().x) + (forward * movement.GetMovement().z);
+    //    //}
 
-        //Vector3 newPos = _selectedGameObject.transform.position + moveDirection * Time.deltaTime;
-        //_selectedGameObject.transform.position = newPos;
-        //Tuple<GameObject, Vector3> send = new Tuple<GameObject, Vector3>(gameObject, newPos);
-        //objectMovedEvent.Raise(this, send);
-    }
+    //    //Vector3 newPos = _selectedGameObject.transform.position + moveDirection * Time.deltaTime;
+    //    //_selectedGameObject.transform.position = newPos;
+    //    //Tuple<GameObject, Vector3> send = new Tuple<GameObject, Vector3>(gameObject, newPos);
+    //    //objectMovedEvent.Raise(this, send);
+    //}
     
     /// <summary>
     /// Sets the selected game object for movement.
@@ -364,16 +381,16 @@ public class ObjectMovementManager : MonoBehaviour
         _isMovingToMouseTarget = false;
     }
 
-    public void OnUIFocued(Component comp, object data)
-    {
-        if (data is bool r)
-            _isUIFocused = r;
-    }
+    //public void OnUIFocued(Component comp, object data)
+    //{
+    //    if (data is bool r)
+    //        _isUIFocused = r;
+    //}
 
-    public void OnGameScreenFocused(Component comp, object data)
-    {
-        if (data is bool r)
-            _isGameScreenFocused = r;
-    }
+    //public void OnGameScreenFocused(Component comp, object data)
+    //{
+    //    if (data is bool r)
+    //        _isGameScreenFocused = r;
+    //}
 
 }

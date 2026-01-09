@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3572014a235d443bf9d0fb628e05ea, type: 3}
   m_Name: TTRPG_TEST ButtonSO
   m_EditorClassIdentifier: Assembly-CSharp::TTRPG_ButtonSO
-  textData: {fileID: 0}
+  textData: {fileID: 11400000, guid: 480c58f08ea42fd49af72e4b316e7c98, type: 2}

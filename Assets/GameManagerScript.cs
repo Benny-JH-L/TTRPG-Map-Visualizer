@@ -9,7 +9,6 @@ public class GameManagerScript : MonoBehaviour
     public static GameObject screenSpaceGameObject;
     private static string _debugStart = "Game Manager Script | ";
 
-    public CameraManager cameraManager;
     public TTRPG_SceneObjectBase selectedObject;
 
     public GameEventSO selectedObjectEvent;
@@ -17,11 +16,17 @@ public class GameManagerScript : MonoBehaviour
     public GameEventSO mouseRightClickEvent;
     public GameEventSO cameraChangedEvent;
 
-    private bool _isUIFocused;
-    private bool _isGameScreenFocused;
+    //private bool _isUIFocused;
+    //private bool _isGameScreenFocused;
 
     public CreatureSpawner creatureSpawner;
     public InanimateObjectSpawner inanimateObjectSpawner;
+
+    public UtilityStorage utilStorage;
+
+    // initialized in Start()
+    [SerializeField] private MouseTracker mouseTracker;
+    [SerializeField] private CameraManager cameraManager;
 
     // old
     //public GameEvent spawnPlayerEvent;
@@ -30,27 +35,40 @@ public class GameManagerScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _isUIFocused = false;
+        //_isUIFocused = false;
 
         // checks should be made to see if we have any null vars 
         if (creatureSpawner == null)
             ErrorOutput.printError(this, "creature spawner cannot be null");
+        if (inanimateObjectSpawner == null)
+            ErrorOutput.printError(this, "inanimate object spawner cannot be null");
+
+        //if (utilStorage == null)
+        //    ErrorOutput.printError(this, "UtilityStorage cannot be null");
+
+        utilStorage.CheckContents();
+        mouseTracker = utilStorage.mouseTracker;
+        cameraManager = utilStorage.cameraManager;
 
         //if (inanimateObjectSpawner == null)
         //    ErrorOutput.printError(this, "inanimate Object Spawner cannot be null");
 
     }
 
-    int count = 0;
     // Update is called once per frame
     void Update()
     {
         // check if the user is interacting with the UI or if the mouse is not over the `GameScreenSpace`
-        if (_isUIFocused || !_isGameScreenFocused)
+        if (mouseTracker.IsMouseOverUIElement())
         {
-            //Debug.Log($"mouse is interacting with UI OR mouse is not over `GameScreenSpace` | {MouseTracker.GetMousePos()}");
+            //DebugPrinter.printMessage(this, " - Update() - mouse is over UI element, returning...");
             return;
         }
+        //if (_isUIFocused || !_isGameScreenFocused)
+        //{
+        //    //Debug.Log($"mouse is interacting with UI OR mouse is not over `GameScreenSpace` | {MouseTracker.GetMousePos()}");
+        //    return;
+        //}
 
         CheckLeftMousePress();
         CheckSpawning();
@@ -186,15 +204,15 @@ public class GameManagerScript : MonoBehaviour
         return sceneObj;
     }
 
-    public void OnUIFocued(Component comp, object data)
-    {
-        if (data is bool r)
-            _isUIFocused = r;
-    }
+    //public void OnUIFocued(Component comp, object data)
+    //{
+    //    if (data is bool r)
+    //        _isUIFocused = r;
+    //}
 
-    public void OnGameScreenFocused(Component comp, object data)
-    {
-        if (data is bool r)
-            _isGameScreenFocused = r;
-    }
+    //public void OnGameScreenFocused(Component comp, object data)
+    //{
+    //    if (data is bool r)
+    //        _isGameScreenFocused = r;
+    //}
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 [System.Serializable]
 public class MouseTracker : MonoBehaviour
@@ -59,11 +60,20 @@ public class MouseTracker : MonoBehaviour
         return RectTransformUtility.RectangleContainsScreenPoint(screenSpaceGameObject.GetComponent<RectTransform>(), GetMousePosInScreen(), null); // use `null` as camera since `screenSpaceGameObject` (the canvas) is a Screen Space - Overlay
     }
 
+    /// <summary>
+    /// Checks if the mouse is over a TTRPG_SceneObjectBase.
+    /// </summary>
+    /// <returns>True if the mouse is over a TTRPG_SceneObjectBase and not over a UI element, False otherwise.</returns>
     public bool IsMouseOverSceneObject()
     {
+        if (IsMouseOverUIElement())
+        {
+            DebugPrinter.printMessage(this, " - IsMouseOverSceneObject() - mouse is over a UI element!");
+            return false;
+        }
+
         //foreach (GameObject gameObject in gameData.generalObjList)
         foreach (TTRPG_SceneObjectBase sceneObj in gameData.sceneObjectList)
-
         {
             Vector3 generalObjPos = sceneObj.transform.position;
             //DebugPrinter.printMessage(this, $"obj at pos: {generalObjPos}");
@@ -84,6 +94,15 @@ public class MouseTracker : MonoBehaviour
     }
 
     /// <summary>
+    /// Uses `EventSystem.current.IsPointerOverGameObject()` to check if the mouse is over a UI Element.
+    /// </summary>
+    /// <returns>True if the mouse is over a UI element, False otherwise.</returns>
+    public bool IsMouseOverUIElement()
+    {
+        return EventSystem.current.IsPointerOverGameObject();
+    }
+
+    /// <summary>
     /// Get's the Mouse position in the world.
     /// </summary>
     /// <returns>Vector3</returns>
@@ -97,7 +116,7 @@ public class MouseTracker : MonoBehaviour
     /// Use `GetMousePosInWorld()` instead if you need the mouse position in the world
     /// </summary>
     /// <returns>A Vector2 of the mouse position.</returns>
-    public static Vector2 GetMousePosInScreen()
+    public static Vector2 GetMousePosInScreen() // TODO: need to change this to non-static 
     {
         return Mouse.current.position.ReadValue();
     }

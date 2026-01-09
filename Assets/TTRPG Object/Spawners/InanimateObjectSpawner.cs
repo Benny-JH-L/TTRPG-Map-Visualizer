@@ -52,6 +52,11 @@ public class InanimateObjectSpawner : MonoBehaviour
             DebugPrinter.printMessage(this, $"Couldn't Spawn object (Collision detected) | pos: {mousePosInWorld}");
             return;
         }
+        if (mouseTracker.IsMouseOverUIElement())
+        {
+            DebugPrinter.printMessage(this, $"Couldn't Spawn object (Over UI element) | pos (world): {mousePosInWorld} | pos (screen): {MouseTracker.GetMousePosInScreen()}");
+            return;
+        }
 
         GameObject diskbase = diskBaseSpawner.Spawn(mousePosInWorld);
         diskbase.transform.SetParent(this.transform, true);                 // true -> stay in world pos
