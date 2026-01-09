@@ -9,12 +9,12 @@ public class ObjectMovementManager : MonoBehaviour
 
     private static string _debugStart = "Object Movement Manager | ";
     
-    public GameEventSO objectMovedEvent;
+    //public GameEventSO objectMovedEvent;
 
     public CameraManager cameraManager;
     public float movementFactor = 30f;
 
-    [SerializeField] private GameObject _selectedGameObject;
+    [SerializeField] private TTRPG_SceneObjectBase _selectedGameObject;
 
     [SerializeField] private bool _isUIFocused;
     [SerializeField] private bool _isGameScreenFocused;
@@ -33,6 +33,7 @@ public class ObjectMovementManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        _selectedGameObject = null;
         _isUIFocused = false;
         _isGameScreenFocused = false;
         _isMovingToMouseTarget = false;
@@ -151,8 +152,8 @@ public class ObjectMovementManager : MonoBehaviour
             _selectedRigidbody.MovePosition(newPosition);
 
             // Raise event with new position
-            Tuple<GameObject, Vector3> send = new Tuple<GameObject, Vector3>(_selectedGameObject, newPosition);
-            objectMovedEvent.Raise(this, send);
+            //Tuple<GameObject, Vector3> send = new Tuple<GameObject, Vector3>(_selectedGameObject, newPosition);
+            //objectMovedEvent.Raise(this, send);
         }
         // Fallback for non-rigidbody objects
         else
@@ -166,8 +167,8 @@ public class ObjectMovementManager : MonoBehaviour
 
             _selectedGameObject.transform.position = newPosition;
 
-            Tuple<GameObject, Vector3> send = new Tuple<GameObject, Vector3>(_selectedGameObject, newPosition);
-            objectMovedEvent.Raise(this, send);
+            //Tuple<GameObject, Vector3> send = new Tuple<GameObject, Vector3>(_selectedGameObject, newPosition);
+            //objectMovedEvent.Raise(this, send);
         }
 
         // old
@@ -327,11 +328,11 @@ public class ObjectMovementManager : MonoBehaviour
     {
         Debug.Log(_debugStart + " Selected Object Event");
 
-        if (data is GeneralObject)
+        if (data is TTRPG_SceneObjectBase)
         {
             Debug.Log(_debugStart + "Setting selected object");
 
-            _selectedGameObject = ((GeneralObject)data).gameObject;
+            _selectedGameObject = ((TTRPG_SceneObjectBase)data);
             _selectedRigidbody = _selectedGameObject.GetComponent<Rigidbody>();
 
             // Initialize target position

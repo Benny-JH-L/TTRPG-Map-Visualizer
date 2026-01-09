@@ -8,7 +8,7 @@ public class TabGroup : MonoBehaviour
     public static int DEFAULT_TAB_SELECT_INDEX = 0;         // for when an object is first selected, open the first menu
 
     public List<TabButton> tabButtons;
-    public GeneralObject selectedObject;
+    public TTRPG_SceneObjectBase selectedObject;
 
     // not used--
     public Color tabIdle;
@@ -164,7 +164,7 @@ public class TabGroup : MonoBehaviour
         // rn the tabs will appear with no object selected, i need to redo object creation before i implment 
         // the group tab appearing for the correct object class.
         return;
-        selectedObject = (GeneralObject)data;
+        selectedObject = (TTRPG_SceneObjectBase)data;
         //FinishTabSelect(component, selectedObject);
     }
 

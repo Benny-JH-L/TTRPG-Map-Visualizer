@@ -6,12 +6,16 @@ using UnityEngine.InputSystem;
 [System.Serializable]
 public class MouseTracker : MonoBehaviour
 {
+    private static string _debugStart = "MouseTracker | ";
+    public static GameData gameData;    // static for now
+
     public static GameObject screenSpaceGameObject; // UI component that occupies the screen space of the active game.
     public List<GameObject> gameObjectsOverScreenSpace;  // UI components that occupy the screen space over the `screenSpaceGameObject`
-    private static string _debugStart = "MouseTracker | ";
 
     public GameEventSO gameScreenFocused;         // True: mouse is inside GameScreenSpace, False otherwise. 
     private bool _mouseInsideGameScreenSpace;   // Used so `gameScreenFocused` isn't called every `Update()`
+    
+    [SerializeField] private CameraManager cameraManager;
 
     void Start()
     {
@@ -49,17 +53,51 @@ public class MouseTracker : MonoBehaviour
         foreach (GameObject go in gameObjectsOverScreenSpace)
         {
             // if the mouse position is over a UI component that is on top of the screen space, then we do not consider it inside the Camera Rect
-            if (go.activeSelf && RectTransformUtility.RectangleContainsScreenPoint(go.GetComponent<RectTransform>(), GetMousePos(), null))
+            if (go.activeSelf && RectTransformUtility.RectangleContainsScreenPoint(go.GetComponent<RectTransform>(), GetMousePosInScreen(), null))
                 return false;
         }
-        return RectTransformUtility.RectangleContainsScreenPoint(screenSpaceGameObject.GetComponent<RectTransform>(), GetMousePos(), null); // use `null` as camera since `screenSpaceGameObject` (the canvas) is a Screen Space - Overlay
+        return RectTransformUtility.RectangleContainsScreenPoint(screenSpaceGameObject.GetComponent<RectTransform>(), GetMousePosInScreen(), null); // use `null` as camera since `screenSpaceGameObject` (the canvas) is a Screen Space - Overlay
+    }
+
+    public bool IsMouseOverSceneObject()
+    {
+        //foreach (GameObject gameObject in gameData.generalObjList)
+        foreach (TTRPG_SceneObjectBase sceneObj in gameData.sceneObjectList)
+
+        {
+            Vector3 generalObjPos = sceneObj.transform.position;
+            //DebugPrinter.printMessage(this, $"obj at pos: {generalObjPos}");
+            //DebugPrinter.printMessage(this, $"mouse world pos: {GetMousePositionInWorld()}");
+
+            //float magnitudeFromSpawnPosToObjPos = (generalObjPos - spawnPosition).magnitude;
+            float magnitudeFromSpawnPosToObjPos = Vector3.Distance(generalObjPos, GetMousePositionInWorld());
+
+            //DebugPrinter.printMessage(this, $"magnitudeFromSpawnPosToObjPos: {magnitudeFromSpawnPosToObjPos}");
+            //DebugPrinter.printMessage(this, $"sceneObj.GetData.diskBaseRadius: {sceneObj.GetData.diskBaseRadius}");
+            //DebugPrinter.printMessage(this, $"sceneObj.data: {sceneObj.GetData}");
+
+            //if (magnitudeFromSpawnPosToObjPos <= generalObj.diskBaseRadius)
+            if (magnitudeFromSpawnPosToObjPos <= sceneObj.GetData.diskBaseRadius)
+                return true;
+        }
+        return false;
     }
 
     /// <summary>
-    /// Get's the Mouse position with `Mouse.current.position.ReadValue();`
+    /// Get's the Mouse position in the world.
+    /// </summary>
+    /// <returns>Vector3</returns>
+    public Vector3 GetMousePositionInWorld()
+    {
+        return cameraManager.GetMousePosInWorld();
+    }
+
+    /// <summary>
+    /// Get's the Mouse Screen Space position with `Mouse.current.position.ReadValue();`.
+    /// Use `GetMousePosInWorld()` instead if you need the mouse position in the world
     /// </summary>
     /// <returns>A Vector2 of the mouse position.</returns>
-    public static Vector2 GetMousePos()
+    public static Vector2 GetMousePosInScreen()
     {
         return Mouse.current.position.ReadValue();
     }

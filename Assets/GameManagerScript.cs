@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class GameManagerScript : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class GameManagerScript : MonoBehaviour
     private static string _debugStart = "Game Manager Script | ";
 
     public CameraManager cameraManager;
-    public Map map; // for testing
+    public TTRPG_SceneObjectBase selectedObject;
 
     public GameEventSO selectedObjectEvent;
     public GameEventSO deSelectedObjectEvent;
@@ -19,6 +20,9 @@ public class GameManagerScript : MonoBehaviour
     private bool _isUIFocused;
     private bool _isGameScreenFocused;
 
+    public CreatureSpawner creatureSpawner;
+    public InanimateObjectSpawner inanimateObjectSpawner;
+
     // old
     //public GameEvent spawnPlayerEvent;
     //public GameEvent spawnEnemyEvent;
@@ -27,6 +31,14 @@ public class GameManagerScript : MonoBehaviour
     void Start()
     {
         _isUIFocused = false;
+
+        // checks should be made to see if we have any null vars 
+        if (creatureSpawner == null)
+            ErrorOutput.printError(this, "creature spawner cannot be null");
+
+        //if (inanimateObjectSpawner == null)
+        //    ErrorOutput.printError(this, "inanimate Object Spawner cannot be null");
+
     }
 
     int count = 0;
@@ -49,71 +61,101 @@ public class GameManagerScript : MonoBehaviour
     /// </summary>
     private void CheckSpawning()
     {
+        //DebugPrinter.printMessage(this, "Checking Spawn");
         var tup = cameraManager.GetGameObjectAtMousePos();
 
         if (tup == null)  // check for non value
+        {
+            //DebugPrinter.printMessage(this, "null val... returning");
             return;
+        }
 
         Vector3 pos = tup.Item2;
 
         if (Keyboard.current.digit1Key.wasPressedThisFrame)
         {
-            Creature.Create(pos);
+            //Creature_OLD.Create(pos);
+            creatureSpawner.Spawn();
         }
-        else if (Keyboard.current.digit2Key.wasPressedThisFrame)
-        {
-            InanimateObject.Create(pos);
-            Debug.Log("NEED UI IMPLMENTATION!");
-        }
-        // testing
-        else if (Keyboard.current.digit3Key.wasPressedThisFrame)
-        {
-            map.AddLayer(1);
-        }
+        //else if (Keyboard.current.digit2Key.wasPressedThisFrame)
+        //{
+        //    InanimateObject.Create(pos);
+        //    Debug.Log("NEED UI IMPLMENTATION!");
+        //}
+        //// testing
+        //else if (Keyboard.current.digit3Key.wasPressedThisFrame)
+        //{
+        //    map.AddLayer(1);    // old implmentation that does not work
+        //}
     }
 
     /// <summary>
     /// Checks the mouse position if the left mouse button was pressed. 
-    /// If is there a GeneralObject over it `SelectedObject` event is raised.
-    /// Otherwise `DeselectedObject` event is raised.
+    /// Raises `DeselectedObject` event if: 
+    ///     1) pressed off the selected TTRPG_SceneObjectBase, 2) pressed the same TTRPG_SceneObjectBase twice.
+    /// Raises `SelectedObject` event if:
+    ///     1) pressed a TTRPG_SceneObjectBase and no TTRPG_SceneObjectBase was selected previously.
+    /// Raises BOTH events if:
+    ///     1) currently selected TTRPG_SceneObjectBase is different from the TTRPG_SceneObjectBase the mouse clicked.
     /// </summary>
     private void CheckLeftMousePress()
     {
         if (!Mouse.current.leftButton.wasPressedThisFrame)
             return;
 
-        GeneralObject generalObj = GetGeneralObjectAtMousePos();
+        TTRPG_SceneObjectBase sceneObjAtMousePos = GetSceneObjectAtMousePos();
 
-        if (generalObj == null)
+        if (selectedObject != null && sceneObjAtMousePos == null)     // pressed off the selected object
         {
-            Debug.Log($"{ _debugStart}Raising deSelectedObject Event | General Object (should be null): <{generalObj}>");
-            deSelectedObjectEvent.Raise(this, null); // `generalObj` is null
-            return;
+            DeselectObject();
         }
-
-        Debug.Log(_debugStart + "Raising SelectedObject Event | creature: " + generalObj);
-        selectedObjectEvent.Raise(this, generalObj);
-    }
-
-    /// <summary>
-    /// Selects the GeneralObject at the mouse position, if it exists.
-    /// </summary>
-    /// <returns>The GeneralObject the mouse is over, if it exists. Null otherwise.</returns>
-    private GeneralObject GetGeneralObjectAtMousePos()
-    {
-        return GetGeneralObjectAtMousePosHelper();
-    }
-
-    /// <summary>
-    /// Gets the GeneralObject the mouse is on top of.
-    /// Returns `null` if there are no GeneralObject's spawned, or the mouse is not directly atop of a GeneralObject.
-    /// </summary>
-    /// <returns>GeneralObject the mouse is over, null otherwise.</returns>
-    private GeneralObject GetGeneralObjectAtMousePosHelper()
-    {
-        if (gameData.generalObjectList.Count == 0)
+        else if (selectedObject != null && selectedObject == sceneObjAtMousePos)  // pressed the same object twice
         {
-            Debug.Log("General Object list is empty... Can not select any at mouse position...");
+            DeselectObject();
+        }
+        else if (selectedObject != null && sceneObjAtMousePos != null)            // pressed a different object while already selected an object
+        {
+            DeselectObject();                   // deselect the current object
+            SelectObject(sceneObjAtMousePos);   // select the new object
+        }
+        else if (selectedObject == null && sceneObjAtMousePos != null)            // no object selected previously
+        {
+            SelectObject(sceneObjAtMousePos);
+        }
+    }
+
+    /// <summary>
+    /// Raises `selectedObjectEvent` GameEvent.
+    /// </summary>
+    /// <param name="selectedObj"></param>
+    private void SelectObject(TTRPG_SceneObjectBase selectedObj)
+    {
+        DebugPrinter.printMessage(this, $"Raising SelectedObject Event | select TTRPG_SceneObjectBase: {selectedObj.name}");
+        selectedObjectEvent.Raise(this, selectedObj);
+        selectedObject = selectedObj;
+    }
+
+    /// <summary>
+    /// Raises `deSelectedObjectEvent` GameEvent.
+    /// </summary>
+    private void DeselectObject()
+    {
+        DebugPrinter.printMessage(this, $"Raising deSelectedObject Event | deselect TTRPG_SceneObjectBase: {selectedObject.name}");
+        deSelectedObjectEvent.Raise(this, selectedObject);
+        selectedObject = null;  // reset
+    }
+
+
+    /// <summary>
+    /// Gets the TTRPG_SceneObjectBase the mouse is on top of.
+    /// Returns `null` if there are no TTRPG_SceneObjectBase's spawned, or the mouse is not directly atop of a TTRPG_SceneObjectBase.
+    /// </summary>
+    /// <returns>TTRPG_SceneObjectBase the mouse is over, null otherwise.</returns>
+    private TTRPG_SceneObjectBase GetSceneObjectAtMousePos()
+    {
+        if (gameData.sceneObjectList.Count == 0)
+        {
+            DebugPrinter.printMessage(this, "Scene Object list is empty... Can not select any at mouse position...");
             return null;
         }
 
@@ -122,36 +164,26 @@ public class GameManagerScript : MonoBehaviour
         GameObject rayHitGameObject = x.Item1;
         Vector3 mousePos = x.Item2;
 
-        // check if the mouse pressed a GeneralObject
-        if (!rayHitGameObject.TryGetComponent<GeneralObject>(out GeneralObject generalObject))
+        if (rayHitGameObject == null)
         {
-            // if entered; `generalObject` var will be null (ie `TryGetComponent(...)` returned false
-            Debug.Log($"{_debugStart}Mouse position {mousePos} does not direcly overlap with any `GeneralObject` | Hit object name <{rayHitGameObject.name}>");
+            DebugPrinter.printMessage(this, $"Mouse position {mousePos} does not direcly overlap with any `TTRPG_SceneObjectBase`");
             return null;
         }
 
-        GeneralObject generalObjectClosestToMouse = null;
-        float cloestDistanceSoFar = float.MaxValue;
-        //Vector3 cloestDistanceSoFar = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
-
-        // Find the game object closest to the mouse's position
-        foreach (GeneralObject gameObject in gameData.generalObjectList)
+        // the mouse would have clicked the TTRPG_SceneObjectBase's disk base or appearance, so we need to get the parent to get the TTRPG_SceneObjectBase
+        TTRPG_SceneObjectBase sceneObj = null;
+        try
         {
-            //Vector3 center = gameObject.GetComponent<Collider>().bounds.center; // accounts for size shape and transformations (for more complex shapes)
-            //Vector3 center2 = gameObject.transform.position; // for simpler shapes? or for those without a collider
-
-            Vector3 gameObjectCenter = gameObject.GetComponent<Collider>().bounds.center;
-            float distance = (mousePos - gameObjectCenter).magnitude;   // distance of mouse position and game object
-            if (distance < cloestDistanceSoFar)
-            {
-                cloestDistanceSoFar = distance;
-                generalObjectClosestToMouse = gameObject;
-            }
+            sceneObj = rayHitGameObject.GetComponentInParent<TTRPG_SceneObjectBase>();
+            DebugPrinter.printMessage(this, $"`{sceneObj.name}` is under the mouse at position: {mousePos}");
+        }
+        catch (Exception e)
+        {
+            DebugPrinter.printMessage(this, e.Message + $" | `{rayHitGameObject.name}`'s parent does not contain `TTRPG_SceneObjectBase` component!");
         }
 
-        //Debug.Log("Gameobject<" + rayHitGameObject + "> under mouse pos is: " + generalObjectClosestToMouse.GetPosition());
-        Debug.Log($"{_debugStart}GeneralObject<{generalObjectClosestToMouse}> with pos <{generalObjectClosestToMouse.GetPosition()}> is under the mouse pos.");
-        return generalObjectClosestToMouse;
+        DebugPrinter.printMessage(this, $"returning: {(sceneObj == null ? "null" : $"`{sceneObj.name}`") }");
+        return sceneObj;
     }
 
     public void OnUIFocued(Component comp, object data)

@@ -13,15 +13,18 @@ public class Highlight : MonoBehaviour
     [Range(0f, 200f)]
     public float padding = 0.1f;
 
-    private static GameObject highlightRingPrefab;
-    private GameObject highlightRing;
-    private GeneralObject selectedObject;
+    [SerializeField] private GameObject highlightRingPrefab;    // prefab we instantiate from
+    [SerializeField] private GameObject highlightRing;          // object used to `hightlight`
+    //[SerializeField] private TTRPG_SceneObjectBase selectedObject;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (highlightRingPrefab == null)
+            ErrorOutput.printError(this, "highlightRingPrefab cannot be null");
+
         highlightRing = Instantiate(highlightRingPrefab);
-        deactivateRing();
+        DeactivateRing();
     }
 
     // Update is called once per frame
@@ -31,30 +34,41 @@ public class Highlight : MonoBehaviour
     //        updatePosition();
     //}
 
-    public static void Initialize(GameObject prefab)
-    {
-        highlightRingPrefab = prefab;
-    }
+    //public static void Initialize(GameObject prefab)
+    //{
+    //    highlightRingPrefab = prefab;
+    //}
 
     public void HighlightObject(Component comp, object data)
     {
-        if (data == null)
+        if (data is TTRPG_SceneObjectBase)
         {
-            Debug.Log(_debugStart + "this part of the code should thearetically shouyldn't be called");
-            deactivateRing();
-        }
-        else if (data is GeneralObject)   // will also need to resize the highlight ring to encompass the object!
-        {
-            Debug.Log(_debugStart + "Highlighting GeneralObject (Selected object event)");
-            selectedObject = (GeneralObject)data;
-            highlightRing.SetActive(true);
-            updatePosition();
+            TTRPG_SceneObjectBase sceneObj = (TTRPG_SceneObjectBase)data;
+            DebugPrinter.printMessage(this, $"highlighting TTRPG_SceneObjectBase at position: {sceneObj.transform.position}");
 
-            // TODO: Scale ring based on creature size
-            //float radius = selectedCreature.GetRadius();  // radius of the disk is 2.5ft or 0.762cm
-            //highlightRing.transform.localScale = Vector3.one * radius * 2f;
-            ScaleRingToObject();
+            // set the parent transform of highlight ring to `data`
+            highlightRing.transform.SetParent(sceneObj.transform, false);   // `false` so it moves to the new position
+            highlightRing.SetActive(true);
         }
+
+
+        //if (data == null)
+        //{
+        //    DebugPrinter.printMessage(this, "this part of the code should thearetically shouyldn't be called");
+        //    deactivateRing();
+        //}
+        //else if (data is GeneralObject_OLD)   // will also need to resize the highlight ring to encompass the object!
+        //{
+        //    Debug.Log(_debugStart + "Highlighting GeneralObject (Selected object event)");
+        //    selectedObject = (GeneralObject_OLD)data;
+        //    highlightRing.SetActive(true);
+        //    updatePosition();
+
+        //    // TODO: Scale ring based on creature size
+        //    //float radius = selectedCreature.GetRadius();  // radius of the disk is 2.5ft or 0.762cm
+        //    //highlightRing.transform.localScale = Vector3.one * radius * 2f;
+        //    ScaleRingToObject();
+        //}
     }
 
     private void ScaleRingToObject()
@@ -138,30 +152,31 @@ public class Highlight : MonoBehaviour
 
     public void OnObjectMove(Component comp, object data)
     {
-        if (data == null)   // no game object has been selected
-            return;
-        updatePosition();
+        //if (data == null)   // no game object has been selected
+        //    return;
+        //updatePosition();
 
-        // note: could update using the information in `data` it will contain Tuple<GameObject, Vector3>.
-        // // where Gameobject is the selected object (which we already know) and Vector3 is the moved amount
-        // // (which we can infer from selected object's transform.position)
+        //// note: could update using the information in `data` it will contain Tuple<GameObject, Vector3>.
+        //// // where Gameobject is the selected object (which we already know) and Vector3 is the moved amount
+        //// // (which we can infer from selected object's transform.position)
     }
 
     public void OnDeselectObject(Component comp, object data)
     {
         Debug.Log(_debugStart + "dehighlighting GeneralObject (deselect object event)");
-        deactivateRing();
+        DeactivateRing();
     }
 
-    private void updatePosition()
-    {
-        highlightRing.transform.position = selectedObject.transform.position;
-    }
+    //private void updatePosition()
+    //{
+    //    highlightRing.transform.position = selectedObject.transform.position;
+    //}
 
-    private void deactivateRing()
+    private void DeactivateRing()
     {
         highlightRing.SetActive(false);
-        selectedObject = null;
+        highlightRing.transform.parent = null;
+        highlightRing.transform.position = Vector3.zero;    // reset position (or else it will stay in place and keep the old position)
     }
 
 

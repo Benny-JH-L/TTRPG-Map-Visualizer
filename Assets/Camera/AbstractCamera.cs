@@ -10,7 +10,7 @@ public abstract class AbstractCamera : MonoBehaviour
 
     protected Vector3 origin = Vector3.zero;
 
-    public static CameraData cameraData;
+    public static CameraData cameraData;    // i could make seprate camera datas for the orbit and map cams, so instead of static it would be perinstance.
     //public static GameObject screenSpaceGameObject;  // space occupied by the actual game and not ScrenSpaceUI
     public static List<AbstractCamera> cameraList = new();
 
@@ -30,6 +30,9 @@ public abstract class AbstractCamera : MonoBehaviour
     /// </summary>
     public void Init()
     {
+        if (cameraData is null)
+            cameraData = (CameraData) ScriptableObject.CreateInstance<CameraData>();
+
         Setup();
         Configure();
 
@@ -163,9 +166,10 @@ public abstract class AbstractCamera : MonoBehaviour
     /// <returns></returns>
     public Vector3 GetMousePosInWorld()
     {
-        Ray ray = cam.ScreenPointToRay(MouseTracker.GetMousePos());
+        Ray ray = cam.ScreenPointToRay(MouseTracker.GetMousePosInScreen());
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
+            DebugPrinter.printMessage(this, $"hit pos: {hit.point}");
             return hit.point;
         }
         return Vector3.positiveInfinity;

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Initializer : MonoBehaviour
 {
     public GameData gameData;           // is created during runtime
-    public CameraData cameraData;       // is created during runtime
+    //public CameraData cameraData;       // is created during runtime -> done in abstract cam class
 
     public GameObject diskBasePrefab;
     public GameObject highlightRingPrefab;
@@ -23,19 +23,24 @@ public class Initializer : MonoBehaviour
     {
         Canvas.ForceUpdateCanvases();
 
-        Highlight.Initialize(highlightRingPrefab);
+        //Highlight.Initialize(highlightRingPrefab);
 
         gameData = (GameData) ScriptableObject.CreateInstance("GameData");  // not recommended to use `new
-        GeneralObject.gameData = gameData;
-        GeneralObject.diskPrefab = diskBasePrefab;
-        GeneralObject.spawnedObjectEvent = spawnedObjectEvent;
+        
+        CreatureSpawner.gameData = gameData;
+        MouseTracker.gameData = gameData;
+        TTRPG_SceneObjectBase.gameData = gameData;
+        
+        //GeneralObject_OLD.gameData = gameData;
+        //GeneralObject_OLD.diskPrefab = diskBasePrefab;
+        //GeneralObject_OLD.spawnedObjectEvent = spawnedObjectEvent;
 
         GameManagerScript.gameData = gameData;
         // and whoever else needing it
 
-        cameraData = (CameraData) ScriptableObject.CreateInstance<CameraData>();
-        CameraManager.cameraData = cameraData;
-        AbstractCamera.cameraData = cameraData;
+        //cameraData = (CameraData) ScriptableObject.CreateInstance<CameraData>();
+        //CameraManager.cameraData = cameraData;
+        //AbstractCamera.cameraData = cameraData;
         //AbstractCamera.screenSpaceGameObject = screenSpaceGameObject;
 
         Dictionary<string, CreatureTag> tagList = new();
@@ -49,8 +54,6 @@ public class Initializer : MonoBehaviour
         TTRPG_CoreStats.chaModChanged = chaModChanged;
 
         MouseTracker.screenSpaceGameObject = screenSpaceGameObject;
-
-        MapTile.mapTilePrefab = diskBasePrefab;
     }
 
 

@@ -10,7 +10,7 @@ public class CameraManager : MonoBehaviour
     //public GameEventListener onSelectedObject;
     //public GameEventListener onCameraProjectionChange;
     private static string _cameraDebugStart = "Camera Manager | ";
-    public static CameraData cameraData;
+    //public static CameraData cameraData;
 
     private MapCam _mapCam;
     private OrbitCam _orbitCam; // actually used | for game object
@@ -111,7 +111,7 @@ public class CameraManager : MonoBehaviour
         //string s = _currentCam is OrbitCam ? "ORBIT" : "MAP";
         //Debug.Log($"current cam: {s}");
 
-        Ray ray = _currentCam.GetCamera().ScreenPointToRay(MouseTracker.GetMousePos());
+        Ray ray = _currentCam.GetCamera().ScreenPointToRay(MouseTracker.GetMousePosInScreen());
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             //Debug.Log("Camera | Mouse hit <" + hit.collider.gameObject + "> at " + hit.point);
@@ -133,12 +133,12 @@ public class CameraManager : MonoBehaviour
 
     public void OnSelectedObject(Component sender, object data)
     {
-        if (data is GeneralObject)   // maybe have a condition to check whether or not we switch to player or go to map cam... (Eagel or creature view to moving..)
+        if (data is TTRPG_SceneObjectBase)   // maybe have a condition to check whether or not we switch to player or go to map cam... (Eagel or creature view to moving..)
         {
             Debug.Log($"{_cameraDebugStart}Switching to orbit cam");
-            GeneralObject creature = (GeneralObject)data;
+            TTRPG_SceneObjectBase obj = (TTRPG_SceneObjectBase)data;
 
-            _orbitCam.EnableCamera(creature.diskBase);
+            _orbitCam.EnableCamera(obj.diskBase);
             _currentCam = _orbitCam;
         }
     }
