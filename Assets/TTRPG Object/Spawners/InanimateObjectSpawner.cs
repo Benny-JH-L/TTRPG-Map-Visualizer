@@ -1,41 +1,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InanimateObjectSpawner : MonoBehaviour
+public class InanimateObjectSpawner : SpawnerBase<InanimateObj>
 {
-    [SerializeField] public static GameData gameData;   // static for now
-    public MouseTracker mouseTracker;
-    public Spawner diskBaseSpawner;
+    //[SerializeField] public static GameData gameData;   // static for now
+    //public MouseTracker mouseTracker;
+    public DiskBaseSpawner diskBaseSpawner;
+    public ModelApperanceSpawner modelApperanceSpawner;
     //public List<GameObject> creatureList;  // each GameObject will have a reference to the prefabs and creature data
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        if (gameData == null)
-            ErrorOutput.printError(this, "`gameData` cannot be `null`");
-        if (mouseTracker == null)
-            ErrorOutput.printError(this, "`mouseTracker` cannot be `null`");
-        if (diskBaseSpawner == null)
-            ErrorOutput.printError(this, "`diskBaseSpawner` cannot be `null`");
-
-        Init();
-    }
-
-    void Init()
-    {
-        Setup();
-        Configure();
-    }
-
-    void Setup()
-    {
-        if (gameData.sceneObjectList == null)
-            gameData.sceneObjectList = new List<TTRPG_SceneObjectBase>();
-    }
-
-    void Configure()
+    protected override void Setup()
     {
         // nothing...
+    }
+
+    protected override void Configure()
+    {
+        // nothing...
+    }
+
+    protected override void OnStart()
+    {
+        if (diskBaseSpawner == null)
+            ErrorOut.Throw(this, "`diskBaseSpawner` cannot be `null`");
+        if (modelApperanceSpawner == null)
+            ErrorOut.Throw(this, "`modelApperanceSpawner` cannot be `null`");
+    }
+
+    protected override void DoAfterSpawn(GameData gameData, GameObject gameObj)
+    {
+        if (gameData == null)
+            ErrorOut.Throw(this, "game data null");
+
+        if (gameObj.TryGetComponent<TTRPG_SceneObjectBase>(out TTRPG_SceneObjectBase sceneObj))
+        {
+            if (sceneObj == null)
+                ErrorOut.Throw(this, " - DoAfterSpawn() - sceneObj null");
+            gameData.sceneObjectList.Add(sceneObj);
+        }
     }
 
     // Update is called once per frame
@@ -44,35 +46,34 @@ public class InanimateObjectSpawner : MonoBehaviour
     // check for key press is done in GameManagerScript!
     //}
 
-    public void Spawn(GameObject appearance)
+    public void Spawn(GameData gameData, MouseTracker mouseTracker, Vector3 mousePosInWorld, GameObject appearance)
     {
-        Vector3 mousePosInWorld = mouseTracker.GetMousePositionInWorld();
+        //Vector3 mousePosInWorld = mouseTracker.GetMousePositionInWorld();
         if (mouseTracker.IsMouseOverSceneObject())
         {
-            DebugPrinter.printMessage(this, $"Couldn't Spawn object (Collision detected) | pos: {mousePosInWorld}");
+            DebugOut.Log(this, $"Couldn't Spawn object (Collision detected) | pos: {mousePosInWorld}");
             return;
         }
         if (mouseTracker.IsMouseOverUIElement())
         {
-            DebugPrinter.printMessage(this, $"Couldn't Spawn object (Over UI element) | pos (world): {mousePosInWorld} | pos (screen): {MouseTracker.GetMousePosInScreen()}");
+            DebugOut.Log(this, $"Couldn't Spawn object (Over UI element) | pos (world): {mousePosInWorld} | pos (screen): {MouseTracker.GetMousePosInScreen()}");
             return;
         }
 
         GameObject diskbase = diskBaseSpawner.Spawn(mousePosInWorld);
         diskbase.transform.SetParent(this.transform, true);                 // true -> stay in world pos
 
-        Vector3 tmpOffset = new(0f, 2f, 0f);    // need to properly calculate how big the appearance is and ensure it rests ontop of the disk
-        GameObject objAppearance = diskBaseSpawner.Spawn(appearance, mousePosInWorld + tmpOffset);
-        objAppearance.transform.SetParent(diskbase.transform, true);   // true -> stay in world pos
+        GameObject objModel = modelApperanceSpawner.Spawn(mousePosInWorld, appearance);
+        objModel.transform.SetParent(diskbase.transform, true);             // true -> stay in world pos
 
-        GameObject sceneObj = diskBaseSpawner.SpawnEmpty(mousePosInWorld);
-        InanimateObj inanObj = sceneObj.AddComponent<InanimateObj>();
-        inanObj.name = $"creature #{gameData.creatureList.Count}";
-        inanObj.appearanceGameObj = objAppearance;
+        GameObject sceneObj = BaseSpawn(gameData, mousePosInWorld);
+        InanimateObj inanObj = sceneObj.GetComponent<InanimateObj>();
+        DebugOut.Log(this, $"gameData.sceneObjectList.Count: {gameData.sceneObjectList.Count}");
+
+        inanObj.name = $"inanimate Obj #{gameData.sceneObjectList.Count - gameData.creatureList.Count - 1}";
+        inanObj.appearanceGameObj = objModel;
         inanObj.diskBase = diskbase;
-        inanObj.data = ScriptableObject.CreateInstance<CreatureData>();
+        inanObj.data = ScriptableObject.CreateInstance<InanimateObjectData>();
         inanObj.ConfirmInit();
-
-        gameData.sceneObjectList.Add(inanObj);
     }
 }

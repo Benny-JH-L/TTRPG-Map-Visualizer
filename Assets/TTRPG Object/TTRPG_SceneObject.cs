@@ -23,9 +23,9 @@ public abstract class TTRPG_SceneObject<T> : TTRPG_SceneObjectBase
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        DebugPrinter.printMessage(this, "Start() call START");
+        DebugOut.Log(this, " - Start() - START");
         ConfirmInit();
-        DebugPrinter.printMessage(this, "Start() call END");
+        DebugOut.Log(this, "- Start() - END");
     }
 
     protected private abstract void OnDestroy();
@@ -39,33 +39,33 @@ public abstract class TTRPG_SceneObject<T> : TTRPG_SceneObjectBase
 
         if (appearanceGameObj == null)
         {
-            ErrorOutput.printError(this, "`appearanceGameObj` cannot be null");
+            ErrorOut.Throw(this, "`appearanceGameObj` cannot be null");
             fail = true;
         }
 
         if (diskBase == null)
         {
-            ErrorOutput.printError(this, "`diskBase` cannot be null");
+            ErrorOut.Throw(this, "`diskBase` cannot be null");
             fail = true;
         }
 
         if (data == null)
         {
-            ErrorOutput.printError(this, "`data` cannot be null");
+            ErrorOut.Throw(this, "`data` cannot be null");
             fail = true;
         }
 
         if (!appearanceGameObj.transform.IsChildOf(diskBase.transform))
         {
             // if somehow the transform is not parented, fix it
-            DebugPrinter.printMessage(this, "`appearanceGameObj` transform was not child of `diskBase`, it has been fixed");
+            DebugOut.Log(this, "`appearanceGameObj` transform was not child of `diskBase`, it has been fixed");
             appearanceGameObj.transform.SetParent(diskBase.transform, true);
         }
 
         if (!diskBase.transform.IsChildOf(this.transform))
         {
             // if somehow the transform is not parented, fix it
-            DebugPrinter.printMessage(this, $"`diskBase` transform was not child of `{this.GetType()}`, it has been fixed");
+            DebugOut.Log(this, $"`diskBase` transform was not child of `{this.GetType()}`, it has been fixed");
             diskBase.transform.SetParent(this.transform, true);
         }
 
@@ -82,7 +82,7 @@ public abstract class TTRPG_SceneObject<T> : TTRPG_SceneObjectBase
         rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
 
         if (!fail)
-            DebugPrinter.printMessage(this, $"Successfully initialized this `TTRPG_SceneObject` with data `{data.GetType()}`...");
+            DebugOut.Log(this, $"Successfully initialized this `TTRPG_SceneObject` with data `{data.GetType()}`...");
     }
 
     /// <summary>

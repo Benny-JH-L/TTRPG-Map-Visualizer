@@ -1,13 +1,11 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class GameManagerScript : MonoBehaviour
 {
     public static GameData gameData;
     public static GameObject screenSpaceGameObject;
-    private static string _debugStart = "Game Manager Script | ";
 
     public TTRPG_SceneObjectBase selectedObject;
 
@@ -17,7 +15,7 @@ public class GameManagerScript : MonoBehaviour
     public GameEventSO cameraChangedEvent;
 
     //private bool _isUIFocused;
-    //private bool _isGameScreenFocused;
+    //private bool _isGameScreenFocused
 
     public CreatureSpawner creatureSpawner;
     public InanimateObjectSpawner inanimateObjectSpawner;
@@ -28,9 +26,10 @@ public class GameManagerScript : MonoBehaviour
     [SerializeField] private MouseTracker mouseTracker;
     [SerializeField] private CameraManager cameraManager;
 
-    // old
-    //public GameEvent spawnPlayerEvent;
-    //public GameEvent spawnEnemyEvent;
+
+    // for testing
+    public GameObject creatureAppearancePrefab;
+    public GameObject inanimateAppearancePrefab;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -39,10 +38,11 @@ public class GameManagerScript : MonoBehaviour
 
         // checks should be made to see if we have any null vars 
         if (creatureSpawner == null)
-            ErrorOutput.printError(this, "creature spawner cannot be null");
+            ErrorOut.Throw(this, "creature spawner cannot be null");
         if (inanimateObjectSpawner == null)
-            ErrorOutput.printError(this, "inanimate object spawner cannot be null");
-
+            ErrorOut.Throw(this, "inanimate object spawner cannot be null");
+        if (creatureAppearancePrefab == null)
+            ErrorOut.Throw(this, "creatureAppearancePrefab null");
         //if (utilStorage == null)
         //    ErrorOutput.printError(this, "UtilityStorage cannot be null");
 
@@ -88,18 +88,17 @@ public class GameManagerScript : MonoBehaviour
             return;
         }
 
-        Vector3 pos = tup.Item2;
+        Vector3 mouseWorldPos = tup.Item2;
 
         if (Keyboard.current.digit1Key.wasPressedThisFrame)
         {
             //Creature_OLD.Create(pos);
-            creatureSpawner.Spawn();
+            creatureSpawner.Spawn(gameData, mouseTracker, mouseWorldPos, creatureAppearancePrefab);
         }
-        //else if (Keyboard.current.digit2Key.wasPressedThisFrame)
-        //{
-        //    InanimateObject.Create(pos);
-        //    Debug.Log("NEED UI IMPLMENTATION!");
-        //}
+        else if (Keyboard.current.digit2Key.wasPressedThisFrame)
+        {
+            inanimateObjectSpawner.Spawn(gameData, mouseTracker, mouseWorldPos, inanimateAppearancePrefab);
+        }
         //// testing
         //else if (Keyboard.current.digit3Key.wasPressedThisFrame)
         //{
@@ -148,7 +147,7 @@ public class GameManagerScript : MonoBehaviour
     /// <param name="selectedObj"></param>
     private void SelectObject(TTRPG_SceneObjectBase selectedObj)
     {
-        DebugPrinter.printMessage(this, $"Raising SelectedObject Event | select TTRPG_SceneObjectBase: {selectedObj.name}");
+        DebugOut.Log(this, $"Raising SelectedObject Event | select TTRPG_SceneObjectBase: {selectedObj.name}");
         selectedObjectEvent.Raise(this, selectedObj);
         selectedObject = selectedObj;
     }
@@ -158,7 +157,7 @@ public class GameManagerScript : MonoBehaviour
     /// </summary>
     private void DeselectObject()
     {
-        DebugPrinter.printMessage(this, $"Raising deSelectedObject Event | deselect TTRPG_SceneObjectBase: {selectedObject.name}");
+        DebugOut.Log(this, $"Raising deSelectedObject Event | deselect TTRPG_SceneObjectBase: {selectedObject.name}");
         deSelectedObjectEvent.Raise(this, selectedObject);
         selectedObject = null;  // reset
     }
@@ -173,7 +172,7 @@ public class GameManagerScript : MonoBehaviour
     {
         if (gameData.sceneObjectList.Count == 0)
         {
-            DebugPrinter.printMessage(this, "Scene Object list is empty... Can not select any at mouse position...");
+            DebugOut.Log(this, "Scene Object list is empty... Can not select any at mouse position...");
             return null;
         }
 
@@ -184,7 +183,7 @@ public class GameManagerScript : MonoBehaviour
 
         if (rayHitGameObject == null)
         {
-            DebugPrinter.printMessage(this, $"Mouse position {mousePos} does not direcly overlap with any `TTRPG_SceneObjectBase`");
+            DebugOut.Log(this, $"Mouse position {mousePos} does not direcly overlap with any `TTRPG_SceneObjectBase`");
             return null;
         }
 
@@ -193,14 +192,14 @@ public class GameManagerScript : MonoBehaviour
         try
         {
             sceneObj = rayHitGameObject.GetComponentInParent<TTRPG_SceneObjectBase>();
-            DebugPrinter.printMessage(this, $"`{sceneObj.name}` is under the mouse at position: {mousePos}");
+            DebugOut.Log(this, $"`{sceneObj.name}` is under the mouse at position: {mousePos}");
         }
         catch (Exception e)
         {
-            DebugPrinter.printMessage(this, e.Message + $" | `{rayHitGameObject.name}`'s parent does not contain `TTRPG_SceneObjectBase` component!");
+            DebugOut.Log(this, e.Message + $" | `{rayHitGameObject.name}`'s parent does not contain `TTRPG_SceneObjectBase` component!");
         }
 
-        DebugPrinter.printMessage(this, $"returning: {(sceneObj == null ? "null" : $"`{sceneObj.name}`") }");
+        DebugOut.Log(this, $"returning: {(sceneObj == null ? "null" : $"`{sceneObj.name}`") }");
         return sceneObj;
     }
 

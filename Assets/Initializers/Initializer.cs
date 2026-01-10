@@ -27,8 +27,8 @@ public class Initializer : MonoBehaviour
 
         gameData = (GameData) ScriptableObject.CreateInstance("GameData");  // not recommended to use `new
         
-        CreatureSpawner.gameData = gameData;
-        InanimateObjectSpawner.gameData = gameData;
+        //CreatureSpawner.gameData = gameData;
+        //InanimateObjectSpawner.gameData = gameData;
         MouseTracker.gameData = gameData;
         TTRPG_SceneObjectBase.gameData = gameData;
         

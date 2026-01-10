@@ -16,8 +16,8 @@ public class UtilityStorage : MonoBehaviour
     {
         bool storageInOrder = true;
 
-        if (cameraManager == null) { ErrorOutput.printError(this, "camera manager NULL"); storageInOrder = false; }
-        if (mouseTracker == null) { ErrorOutput.printError(this, "mouse tracker NULL"); storageInOrder = false; }
+        if (cameraManager == null) { ErrorOut.Throw(this, "camera manager NULL"); storageInOrder = false; }
+        if (mouseTracker == null) { ErrorOut.Throw(this, "mouse tracker NULL"); storageInOrder = false; }
             
         return storageInOrder;
     }

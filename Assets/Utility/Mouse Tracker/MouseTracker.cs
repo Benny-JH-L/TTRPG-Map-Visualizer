@@ -7,20 +7,19 @@ using UnityEngine.EventSystems;
 [System.Serializable]
 public class MouseTracker : MonoBehaviour
 {
-    private static string _debugStart = "MouseTracker | ";
     public static GameData gameData;    // static for now
 
     public static GameObject screenSpaceGameObject; // UI component that occupies the screen space of the active game.
     public List<GameObject> gameObjectsOverScreenSpace;  // UI components that occupy the screen space over the `screenSpaceGameObject`
 
     public GameEventSO gameScreenFocused;         // True: mouse is inside GameScreenSpace, False otherwise. 
-    private bool _mouseInsideGameScreenSpace;   // Used so `gameScreenFocused` isn't called every `Update()`
+    //private bool _mouseInsideGameScreenSpace;   // Used so `gameScreenFocused` isn't called every `Update()`
     
     [SerializeField] private CameraManager cameraManager;
 
     void Start()
     {
-        _mouseInsideGameScreenSpace = false;
+        //_mouseInsideGameScreenSpace = false;
     }
 
     void Update()
@@ -29,18 +28,18 @@ public class MouseTracker : MonoBehaviour
 
         bool result = IsMousePositionInsideCameraRect();    
 
-        if (result && !_mouseInsideGameScreenSpace)         // mouse moved inside GameScreenSpace
-        {
-            gameScreenFocused.Raise(this, true);
-            _mouseInsideGameScreenSpace = true;
-            Debug.Log($"{_debugStart}gameScreenFocused TRUE");
-        }
-        else if (!result && _mouseInsideGameScreenSpace)    // mouse moved outside of GameScreenSpace
-        {
-            gameScreenFocused.Raise(this, false);
-            _mouseInsideGameScreenSpace = false;
-            Debug.Log($"{_debugStart}gameScreenFocused FALSE");
-        }
+        //if (result && !_mouseInsideGameScreenSpace)         // mouse moved inside GameScreenSpace
+        //{
+        //    //gameScreenFocused.Raise(this, true);
+        //    //_mouseInsideGameScreenSpace = true;
+        //    Debug.Log($"{_debugStart}gameScreenFocused TRUE");
+        //}
+        //else if (!result && _mouseInsideGameScreenSpace)    // mouse moved outside of GameScreenSpace
+        //{
+        //    //gameScreenFocused.Raise(this, false);
+        //    //_mouseInsideGameScreenSpace = false;
+        //    Debug.Log($"{_debugStart}gameScreenFocused FALSE");
+        //}
     }
 
     /// <summary>
@@ -68,7 +67,7 @@ public class MouseTracker : MonoBehaviour
     {
         if (IsMouseOverUIElement())
         {
-            DebugPrinter.printMessage(this, " - IsMouseOverSceneObject() - mouse is over a UI element!");
+            DebugOut.Log(this, " - IsMouseOverSceneObject() - mouse is over a UI element!");
             return false;
         }
 
