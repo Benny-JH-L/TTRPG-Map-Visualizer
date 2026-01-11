@@ -63,7 +63,7 @@ public class CreatureSpawner : SpawnerBase<Creature>
         diskbase.transform.SetParent(this.transform, true);                 // true -> stay in world pos
 
         GameObject creatureModel = modelApperanceSpawner.Spawn(mousePosInWorld, appearancePrefab);
-        creatureModel.transform.SetParent(diskbase.transform, true);        // true -> stay in world pos
+        creatureModel.transform.SetParent(diskbase.transform, true);        // true -> stay in world pos    (could make it `this.transform` too..)
 
         GameObject creatureObj = BaseSpawn(gameData, mousePosInWorld);
         Creature creature = creatureObj.GetComponent<Creature>();

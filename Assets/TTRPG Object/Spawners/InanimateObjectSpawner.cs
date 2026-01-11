@@ -1,13 +1,9 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InanimateObjectSpawner : SpawnerBase<InanimateObj>
 {
-    //[SerializeField] public static GameData gameData;   // static for now
-    //public MouseTracker mouseTracker;
     public DiskBaseSpawner diskBaseSpawner;
     public ModelApperanceSpawner modelApperanceSpawner;
-    //public List<GameObject> creatureList;  // each GameObject will have a reference to the prefabs and creature data
 
     protected override void Setup()
     {
@@ -64,7 +60,7 @@ public class InanimateObjectSpawner : SpawnerBase<InanimateObj>
         diskbase.transform.SetParent(this.transform, true);                 // true -> stay in world pos
 
         GameObject objModel = modelApperanceSpawner.Spawn(mousePosInWorld, appearance);
-        objModel.transform.SetParent(diskbase.transform, true);             // true -> stay in world pos
+        objModel.transform.SetParent(diskbase.transform, true);             // true -> stay in world pos    (could make it `this.transform` too..)
 
         GameObject sceneObj = BaseSpawn(gameData, mousePosInWorld);
         InanimateObj inanObj = sceneObj.GetComponent<InanimateObj>();
