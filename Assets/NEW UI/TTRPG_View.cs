@@ -66,7 +66,7 @@ public class TTRPG_View : AbstractUI
     {
         // rn the tabs will appear with no object selected, i need to redo object creation before i implment 
         // the group tab appearing for the correct object class.
-        return;
+        //return;
         Debug.Log($"{_debugStart}OnSelectedObject");
 
         OnTabSelected(this, data);
@@ -76,7 +76,7 @@ public class TTRPG_View : AbstractUI
     {
         // rn the tabs will appear with no object selected, i need to redo object creation before i implment 
         // the group tab appearing for the correct object class.
-        return;
+        //return;
         Debug.Log($"{_debugStart}OnDeselectedObject");
         OnTabDeselected(this, data);
     }
