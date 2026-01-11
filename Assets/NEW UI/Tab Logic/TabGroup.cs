@@ -47,8 +47,8 @@ public class TabGroup : TabGroupBase
     {
         if (selectedTab != null)
         {
-            selectedTab.swapToObject.SetActive(false);  // deactivate the old tab GameObject
-            selectedTab.Deselect();
+            //selectedTab.swapToObject.SetActive(false);  // done in Deselect() now
+            selectedTab.Deselect();                 // deactivate the old tab GameObject
 
             // check if the same tab was pressed
             if (ReferenceEquals(selectedTab, button))
@@ -61,24 +61,9 @@ public class TabGroup : TabGroupBase
         }
 
         // Set the new active tab GameObject
-        button.swapToObject.SetActive(true);
         selectedTab = button;
-
-        //// Set the active tab
-        ////int index = button.transform.GetSiblingIndex(); // wont work for me since all the tabs are in their own containers
-        //int index = selectedTab.assignedIndex;
-        //for (int i = 0; i < objectsToSwap.Count; i++)
-        //{
-        //    if (i == index)
-        //    {
-        //        objectsToSwap[i].SetActive(true);
-        //    }
-        //    else
-        //        objectsToSwap[i].SetActive(false);
-        //}
-
-        selectedTab.Select();
         ResetTabs();
+        selectedTab.Select();
         selectedTab.background.color = tabActive;
 
         // finish the rest of this code exectuio under FinishTabSelect()
@@ -121,76 +106,6 @@ public class TabGroup : TabGroupBase
             button.background.color = button.originalColor;
         }
     }
-
-    //public void OnSelectedObject(Component component, object data)
-    //{
-    //    if (data is Creature creature)
-    //    {
-    //        DebugOut.Log(this, "selected creature!");
-    //        //animator.SetTrigger("Reveal (Character)");
-    //        CheckAnimatorsTrigger("Reveal (Character)");    // reveal tab
-    //    }
-    //    else if (data is InanimateObj obj)
-    //    {
-    //        DebugOut.Log(this, "selected inanimate obj");
-    //        //animator.SetTrigger("Reveal (Inanimate obj)");
-    //        CheckAnimatorsTrigger("Reveal (Inanimate obj)");    // reveal tab
-    //    }
-    //    OnTabSelected(tabButtons[DEFAULT_TAB_SELECT_INDEX]);    // open the default tab --> need to figure out how to open the proper tab for creature and inanimate obj
-
-    //    // rn the tabs will appear with no object selected, i need to redo object creation before i implment 
-    //    // the group tab appearing for the correct object class.
-    //    return;
-    //    selectedObject = (TTRPG_SceneObjectBase)data;
-    //    //FinishTabSelect(component, selectedObject);
-    //}
-    //// have 1 tab group class that over loops all the tabs, but then separate the creature and inanimage obj with empty game objects or smth
-    //// then the triggers can have uniform names (reavel, hide, etc.)
-    //// and fixes the issues of 2 tabgroups wanting to close and open the other tab components they do not have
-
-    //public void OnDeselectedObject(Component component, object data)
-    //{
-    //    if (data is Creature) // `data` will be the same as `selectedObject`
-    //    {
-    //        //animator.SetTrigger("Hide (Character)");
-    //        CheckAnimatorsTrigger("Hide (Character)");    // hide tab
-
-    //    }
-    //    else if (data is InanimateObj)
-    //    {
-    //        //animator.SetTrigger("Hide (Inanimate obj)");
-    //        CheckAnimatorsTrigger("Hide (Inanimate obj)");    // hide tab
-    //    }
-
-    //    DeactivateAllTabs();
-    //    // unselect the tab
-    //    ResetTabs();
-    //    selectedTab.Deselect();
-    //    selectedTab = null;
-
-    //    //else if (data is InanimateObj)
-    //    //    animator.Set
-
-    //    //selectedObject = null;
-    //    // rn the tabs will appear with no object selected, i need to redo object creation before i implment 
-    //    // the group tab appearing for the correct object class.
-    //    return;
-    //    selectedObject = null;
-    //    selectedTab.Deselect();
-    //}
-
-    ///// <summary>
-    ///// Sends the `triggerName` to AnimatorHelper instances.
-    ///// </summary>
-    ///// <param name="triggerName"></param>
-    //private void CheckAnimatorsTrigger(string triggerName)
-    //{
-    //    DebugOut.Log(this, $"Sending trigger: `{triggerName} to animators`");
-    //    foreach (AnimatorHelper helper in animatorList)
-    //    {
-    //        helper.CheckAnimationTrigger(triggerName);
-    //    }
-    //}
 }
 
 

@@ -49,14 +49,25 @@ public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandl
         tabGroup.OnTabExit(this);
     }
 
+    /// <summary>
+    /// Sets the `swapToObject` activate state to true and raises GameEvent `onTabSelected`
+    /// </summary>
     public void Select()
     {
+        swapToObject.SetActive(true);
+
         if (onTabSelected != null)
             onTabSelected.Raise(tabGroup, this);
     }
 
+
+    /// <summary>
+    /// Sets the `swapToObject` activate state to false and raises GameEvent `onTabDeselected`
+    /// </summary>
     public void Deselect()
     {
+        swapToObject.SetActive(false);
+
         if (onTabDeselected != null)
             onTabDeselected.Raise(tabGroup, this);
     }
