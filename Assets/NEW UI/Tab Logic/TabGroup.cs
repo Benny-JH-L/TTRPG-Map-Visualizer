@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TabGroup : TabGroupBase
@@ -18,7 +17,6 @@ public class TabGroup : TabGroupBase
     {
         // nothing...
     }
-
 
     /// <summary>
     /// While the cursor is hovering over a TabButton it will be highlighted.
@@ -109,7 +107,9 @@ public class TabGroup : TabGroupBase
         //}
     }
 
-    // resets the colors to their original
+    /// <summary>
+    /// resets the colors to their original color
+    /// </summary>
     protected override void ResetTabs()
     {
         foreach (TabButton button in tabButtons)

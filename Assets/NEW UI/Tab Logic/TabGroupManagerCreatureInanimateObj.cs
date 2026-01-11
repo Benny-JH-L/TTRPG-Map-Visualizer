@@ -5,7 +5,7 @@ public class TabGroupManagerCreatureInanimateObj : MonoBehaviour
     public TabGroup creatureGrpTab;
     public TabGroup inanimateObjGrpTab;
     [SerializeField] private TabGroup _selectedGrp;
-    [SerializeField] private TTRPG_SceneObjectBase _prevSelectedObject;
+    //[SerializeField] private TTRPG_SceneObjectBase _prevSelectedObject;
 
 
     void Start()
@@ -49,7 +49,7 @@ public class TabGroupManagerCreatureInanimateObj : MonoBehaviour
             WarningOut.Log(this, "`data` is not an InanimateObj or Creature... returning"); // will be the case when there are other classes that extend TTRPG_SceneObjectBase!
             return;
         }
-        _prevSelectedObject = (TTRPG_SceneObjectBase)data;
+        //_prevSelectedObject = (TTRPG_SceneObjectBase)data;
 
         _selectedGrp.ActivateTabGroup();
         _selectedGrp.OnTabSelected(_selectedGrp.tabButtons[0]);   // select some arbitrary tab (note: see yellow text under `Tab Group Manager` for future solution)

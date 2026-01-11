@@ -10,7 +10,6 @@ public abstract class TabGroupBase : MonoBehaviour
 
     void Start()
     {
-        tabButtons = new List<TabButton>();
         selectedTab = null;
         animatorHelper = GetComponent<AnimatorHelper>();
 
@@ -25,6 +24,7 @@ public abstract class TabGroupBase : MonoBehaviour
             tabButtons = new List<TabButton>();
 
         tabButtons.Add(button);
+        DebugOut.Log(this, $"{button.name} subscribed to '{this.name}'");
     }
 
     /// <summary>
@@ -48,13 +48,13 @@ public abstract class TabGroupBase : MonoBehaviour
     protected abstract void ResetTabs();
 
     /// <summary>
-    /// Goes through the list of `tabButtons` and sets their active state to false.
+    /// Goes through the list of `tabButtons` and sets their and `swapToObject` active states to false.
     /// </summary>
     protected void DeactivateAllTabs()
     {
         foreach (TabButton button in tabButtons)
         {
-            //button.swapToObject.SetActive(false);
+            button.swapToObject.SetActive(false);
             button.gameObject.SetActive(false);
         }
     }
@@ -76,7 +76,7 @@ public abstract class TabGroupBase : MonoBehaviour
     {
         foreach (TabButton button in tabButtons)
         {
-            //button.swapToObject.SetActive(false);
+            button.swapToObject.SetActive(false);   // ensure that none of the tabs' `swapToObject` are active
             button.gameObject.SetActive(true);
         }
     }
