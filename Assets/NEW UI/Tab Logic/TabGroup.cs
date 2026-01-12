@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Note: uses color for now
+/// </summary>
 public class TabGroup : TabGroupBase
 {
     // not used--

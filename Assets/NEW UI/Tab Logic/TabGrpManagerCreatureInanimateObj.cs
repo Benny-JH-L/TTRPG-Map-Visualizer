@@ -1,21 +1,18 @@
 using UnityEngine;
 
-public class TabGroupManagerCreatureInanimateObj : MonoBehaviour
+public class TabGrpManagerCreatureInanimateObj : TabGroupManagerBase
 {
     public TabGroup creatureGrpTab;
     public TabGroup inanimateObjGrpTab;
-    [SerializeField] private TabGroup _selectedGrp;
     //[SerializeField] private TTRPG_SceneObjectBase _prevSelectedObject;
 
 
-    void Start()
+    protected override void OnStart()
     {
         if (creatureGrpTab == null)
             ErrorOut.Throw(this, "creatureGrpTab null");
         if (inanimateObjGrpTab == null)
             ErrorOut.Throw(this, "inanimateObjGrpTab null");
-
-        _selectedGrp = null;
     }
 
     public void OnSelectedObject(Component component, object data)
@@ -54,9 +51,6 @@ public class TabGroupManagerCreatureInanimateObj : MonoBehaviour
         _selectedGrp.ActivateTabGroup();
         _selectedGrp.OnTabSelected(_selectedGrp.tabButtons[0]);   // select some arbitrary tab (note: see yellow text under `Tab Group Manager` for future solution)
     }
-    // have 1 tab group class that over loops all the tabs, but then separate the creature and inanimage obj with empty game objects or smth
-    // then the triggers can have uniform names (reavel, hide, etc.)
-    // and fixes the issues of 2 tabgroups wanting to close and open the other tab components they do not have
 
     public void OnDeselectedObject(Component component, object data)
     {
@@ -82,7 +76,7 @@ public class TabGroupManagerCreatureInanimateObj : MonoBehaviour
             DebugOut.Log(this, "hiding Creature");
 
             //animator.SetTrigger("Hide (Character)");
-            _selectedGrp.CheckAnimationTrigger("Hide (Character)");    // hide tab
+            _selectedGrp.CheckAnimationTrigger("Hide (Character)");    // hide tab Note: the triggers can be uniform in naming/the same now :)
 
         }
         else if (data is InanimateObj)

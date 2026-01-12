@@ -11,7 +11,7 @@ public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandl
     public GameObject swapToObject;     // when this tab button is selected (clicked), this object should be switched too
     
     public Image background;
-    public Color originalColor;
+    public Color originalColor;         // note: uses color for now
 
     public int assignedIndex = UNASSIGNED_INDEX;    // wont be used
 
