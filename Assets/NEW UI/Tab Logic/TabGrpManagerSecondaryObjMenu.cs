@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-public class TabGrpManagerSecondaryMenu : TabGroupManagerBase
+public class TabGrpManagerSecondaryObjMenu : TabGroupManagerBase
 {
     public TabGroup tabGroup;
     public AnimatorHelper secondaryMenuAnimatorHelper;   // has animations for the secondary menu area

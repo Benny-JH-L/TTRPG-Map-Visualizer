@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TabGrpManagerCreatureInanimateObj : TabGroupManagerBase
+public class TabGrpManagerMainObjMenu : TabGroupManagerBase
 {
     public TabGroup creatureGrpTab;
     public TabGroup inanimateObjGrpTab;
