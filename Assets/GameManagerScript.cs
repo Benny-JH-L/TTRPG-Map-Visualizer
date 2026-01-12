@@ -148,8 +148,8 @@ public class GameManagerScript : MonoBehaviour
     private void SelectObject(TTRPG_SceneObjectBase selectedObj)
     {
         DebugOut.Log(this, $"Raising SelectedObject Event | select TTRPG_SceneObjectBase: {selectedObj.name}");
-        selectedObjectEvent.Raise(this, selectedObj);
         selectedObject = selectedObj;
+        selectedObjectEvent.Raise(this, selectedObj);
     }
 
     /// <summary>
@@ -158,8 +158,9 @@ public class GameManagerScript : MonoBehaviour
     private void DeselectObject()
     {
         DebugOut.Log(this, $"Raising deSelectedObject Event | deselect TTRPG_SceneObjectBase: {selectedObject.name}");
-        deSelectedObjectEvent.Raise(this, selectedObject);
+        TTRPG_SceneObjectBase old = selectedObject;
         selectedObject = null;  // reset
+        deSelectedObjectEvent.Raise(this, old);
     }
 
 
@@ -188,18 +189,12 @@ public class GameManagerScript : MonoBehaviour
         }
 
         // the mouse would have clicked the TTRPG_SceneObjectBase's disk base or appearance, so we need to get the parent to get the TTRPG_SceneObjectBase
-        TTRPG_SceneObjectBase sceneObj = null;
-        try
-        {
-            sceneObj = rayHitGameObject.GetComponentInParent<TTRPG_SceneObjectBase>();
-            DebugOut.Log(this, $"`{sceneObj.name}` is under the mouse at position: {mousePos}");
-        }
-        catch (Exception e)
-        {
-            DebugOut.Log(this, e.Message + $" | `{rayHitGameObject.name}`'s parent does not contain `TTRPG_SceneObjectBase` component!");
-        }
+        TTRPG_SceneObjectBase sceneObj = rayHitGameObject.GetComponentInParent<TTRPG_SceneObjectBase>();
 
-        DebugOut.Log(this, $"returning: {(sceneObj == null ? "null" : $"`{sceneObj.name}`") }");
+        if (sceneObj == null)
+            DebugOut.Log(this, $" | `{rayHitGameObject.name}`'s parent does not contain `TTRPG_SceneObjectBase` component!");
+
+        DebugOut.Log(this, $"returning: {(sceneObj == null ? "`null`" : $"`{sceneObj.name}`") }");
         return sceneObj;
     }
 
