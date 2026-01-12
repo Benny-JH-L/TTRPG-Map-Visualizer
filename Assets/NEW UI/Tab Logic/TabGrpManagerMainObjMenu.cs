@@ -30,7 +30,7 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
             DebugOut.Log(this, "selected creature!");
             inanimateObjGrpTab.ExitTabGroup();
 
-            creatureGrpTab.CheckAnimationTrigger("Reveal (Character)");          // reveal tab
+            creatureGrpTab.CheckAnimationTrigger("Reveal");          // reveal tab
             _selectedGrp = creatureGrpTab;
         }
         else if (data is InanimateObj)
@@ -38,7 +38,7 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
             DebugOut.Log(this, "selected inanimate obj!");
             creatureGrpTab.ExitTabGroup();
 
-            inanimateObjGrpTab.CheckAnimationTrigger("Reveal (Inanimate obj)");  // reveal tab
+            inanimateObjGrpTab.CheckAnimationTrigger("Reveal");  // reveal tab
             _selectedGrp = inanimateObjGrpTab;
         }
         else
@@ -76,7 +76,7 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
             DebugOut.Log(this, "hiding Creature");
 
             //animator.SetTrigger("Hide (Character)");
-            _selectedGrp.CheckAnimationTrigger("Hide (Character)");    // hide tab Note: the triggers can be uniform in naming/the same now :)
+            _selectedGrp.CheckAnimationTrigger("Hide");    // hide tab
 
         }
         else if (data is InanimateObj)
@@ -84,7 +84,7 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
             DebugOut.Log(this, "hiding Inanimate obj");
 
             //animator.SetTrigger("Hide (Inanimate obj)");
-            _selectedGrp.CheckAnimationTrigger("Hide (Inanimate obj)");    // hide tab
+            _selectedGrp.CheckAnimationTrigger("Hide");    // hide tab
         }
 
         _selectedGrp.ExitTabGroup();

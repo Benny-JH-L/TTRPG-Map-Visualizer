@@ -36,7 +36,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Reveal (Inanimate obj)
+    m_ConditionEvent: Reveal
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1077878625761806805}
@@ -110,13 +110,13 @@ AnimatorController:
   m_Name: Tab Group (Inanimate Object)
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: Reveal (Inanimate obj)
+  - m_Name: Reveal
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: Hide (Inanimate obj)
+  - m_Name: Hide
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -171,7 +171,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Hide (Inanimate obj)
+    m_ConditionEvent: Hide
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -746948013601208012}

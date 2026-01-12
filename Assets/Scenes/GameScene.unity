@@ -8624,7 +8624,6 @@ GameObject:
   - component: {fileID: 663101885}
   - component: {fileID: 663101884}
   - component: {fileID: 663101883}
-  - component: {fileID: 663101882}
   - component: {fileID: 663101881}
   - component: {fileID: 663101880}
   m_Layer: 5
@@ -8741,18 +8740,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!225 &663101882
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 663101875}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!114 &663101883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28975,7 +28962,7 @@ GameObject:
   - component: {fileID: 2107241710}
   - component: {fileID: 2107241713}
   m_Layer: 5
-  m_Name: Container (Secondary Menu Manager)
+  m_Name: Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
