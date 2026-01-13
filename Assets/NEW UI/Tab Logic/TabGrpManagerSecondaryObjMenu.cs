@@ -22,7 +22,7 @@ public class TabGrpManagerSecondaryObjMenu : TabGroupManagerBase
         if (_selectedGrp != null)
         {
             doingAnimation = true;
-            DebugOut.Log(this, "triggering Reveal!");
+            DebugOut.Log(this, $"triggering Reveal! at time: {Time.timeAsDouble}");
             tabGroup.ActivateTabGroup();
             tabGroup.OnTabSelected(tabGroup.tabButtons[0]);     // select some arbitrary tab
 
@@ -36,7 +36,7 @@ public class TabGrpManagerSecondaryObjMenu : TabGroupManagerBase
         if (_selectedGrp != null)
         {
             doingAnimation = true;
-            DebugOut.Log(this, "triggering hide!");
+            DebugOut.Log(this, $"triggering hide! at time: {Time.timeAsDouble}");
             tabGroup.CheckAnimationTrigger("Hide");
             secondaryMenuAnimatorHelper.CheckAnimationTrigger("Hide");
         }
@@ -47,7 +47,7 @@ public class TabGrpManagerSecondaryObjMenu : TabGroupManagerBase
     /// </summary>
     public void FinishReveal()
     {
-        DebugOut.Log(this, "finishing Reveal!");
+        DebugOut.Log(this, $"finishing Reveal at time: {Time.timeAsDouble}!");
         doingAnimation = false;
 
     }
@@ -58,7 +58,7 @@ public class TabGrpManagerSecondaryObjMenu : TabGroupManagerBase
     /// </summary>
     public void FinishHide()
     {
-        DebugOut.Log(this, "finishing hide!");
+        DebugOut.Log(this, $"finishing hide at time: {Time.timeAsDouble}!");
 
         tabGroup.ExitTabGroup();
         _selectedGrp = null;

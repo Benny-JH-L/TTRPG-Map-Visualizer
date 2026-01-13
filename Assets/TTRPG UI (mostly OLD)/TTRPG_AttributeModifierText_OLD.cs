@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TTRPG_AttributeModifierText : TTRPG_Text
+public class TTRPG_AttributeModifierText : TTRPG_Text_OLD
 {
     public void OnAttributeChange(Component comp, object data)
     {

@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TTRPG_Text : AbstractUI
+public class TTRPG_Text_OLD : AbstractUI
 {
     public TextDataSO textData;
 

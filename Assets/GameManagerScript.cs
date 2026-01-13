@@ -31,6 +31,11 @@ public class GameManagerScript : MonoBehaviour
     public GameObject creatureAppearancePrefab;
     public GameObject inanimateAppearancePrefab;
 
+    [SerializeField] private double timeSinceLastLeftClick;
+    [SerializeField] private MessagePrompter msgPrompter;
+    [SerializeField] [Range(10,100)] private int yOffsetForPrompt = 25;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -50,6 +55,7 @@ public class GameManagerScript : MonoBehaviour
         mouseTracker = utilStorage.mouseTracker;
         cameraManager = utilStorage.cameraManager;
 
+        timeSinceLastLeftClick = -999f;
         //if (inanimateObjectSpawner == null)
         //    ErrorOutput.printError(this, "inanimate Object Spawner cannot be null");
 
@@ -120,7 +126,26 @@ public class GameManagerScript : MonoBehaviour
         if (!Mouse.current.leftButton.wasPressedThisFrame)
             return;
 
+        double timeOfLeftClick = Time.timeAsDouble;
+        DebugOut.Log(this, $"Time Of LAST Click: {timeSinceLastLeftClick} | Time Of CURR Left Click: {timeOfLeftClick} | Diff (curr - Last): {timeOfLeftClick - timeSinceLastLeftClick}");
         TTRPG_SceneObjectBase sceneObjAtMousePos = GetSceneObjectAtMousePos();
+
+        // if the time difference from since the last click to the current one LESS THAN or equal to 510ms, return!
+        // --> gives UI animations that take half a second to finish (if a Scene object was selected)
+        if (timeOfLeftClick - timeSinceLastLeftClick <= 0.51 && (selectedObject != null || sceneObjAtMousePos != null))   
+        {
+            DebugOut.Log(this, "left clicked too fast, returning...");
+            //msgPrompter.Prompt("Please Wait...");
+
+            Vector2 pos = MouseTracker.GetMousePosInScreen();
+            pos.y += yOffsetForPrompt;
+            msgPrompter.Prompt("Please Wait...", pos);
+            return;
+        }
+
+        // set new time
+        timeSinceLastLeftClick = timeOfLeftClick;
+
 
         if (selectedObject != null && sceneObjAtMousePos == null)     // pressed off the selected object
         {
@@ -191,10 +216,11 @@ public class GameManagerScript : MonoBehaviour
         // the mouse would have clicked the TTRPG_SceneObjectBase's disk base or appearance, so we need to get the parent to get the TTRPG_SceneObjectBase
         TTRPG_SceneObjectBase sceneObj = rayHitGameObject.GetComponentInParent<TTRPG_SceneObjectBase>();
 
+        string pre = "- GetSceneObjectAtMousePos() - ";
         if (sceneObj == null)
-            DebugOut.Log(this, $" | `{rayHitGameObject.name}`'s parent does not contain `TTRPG_SceneObjectBase` component!");
+            pre = $"`{rayHitGameObject.name}`'s parent does not contain `TTRPG_SceneObjectBase` component!";
 
-        DebugOut.Log(this, $"returning: {(sceneObj == null ? "`null`" : $"`{sceneObj.name}`") }");
+        DebugOut.Log(this, $"{pre} returning: {(sceneObj == null ? "`null`" : $"`{sceneObj.name}`") }");
         return sceneObj;
     }
 

@@ -5,8 +5,7 @@ using UnityEngine;
 /// </summary>
 public class CameraViewportUpdater : AbstractUI
 {
-    private static string _debugStart = "CameraViewportUpdater | ";
-    [SerializeField] private RectTransform screenSpaceGameObject;   // will be a UI GameObject, area that the camera's will render
+    [SerializeField] public RectTransform screenSpaceGameObject;   // will be a UI GameObject, area that the camera's will render
 
     private void OnRectTransformDimensionsChange()
     {
@@ -19,7 +18,7 @@ public class CameraViewportUpdater : AbstractUI
     {
         if (screenSpaceGameObject == null)
         {
-            Debug.LogError($"{_debugStart}requires a target RectTransform to work.");
+            DebugOut.Log(this, "requires a target RectTransform to work.");
             return;
         }
 

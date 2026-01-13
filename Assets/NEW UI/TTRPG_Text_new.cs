@@ -4,7 +4,7 @@ using UnityEngine;
 public class TTRPG_Text_New : AbstractUI
 {
     public TTRPG_TextSO textData;
-    private TextMeshProUGUI tmpUGUI;
+    [SerializeField] private TextMeshProUGUI tmpUGUI;
 
     public override void Configure()
     {
@@ -15,5 +15,10 @@ public class TTRPG_Text_New : AbstractUI
     public override void Setup()
     {
         tmpUGUI = GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public void SetText(string txt)
+    {
+        tmpUGUI.text = txt;
     }
 }
