@@ -6,7 +6,22 @@ public class AnimatorHelper : MonoBehaviour
     [SerializeField] private Animator animator;     // animations for what ever 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    //void Start()
+    //{
+    //    animator = GetComponent<Animator>();
+
+    //    string msg = "Parameters:\n";
+    //    foreach (var param in animator.parameters)
+    //    {
+    //        msg += $"{param.type} : '{param.name}'\n";
+    //    }
+
+    //    if (animator.parameterCount == 0)
+    //        msg += "<empty param list>";
+    //    DebugOut.Log(this, msg);
+    //}
+
+    private void Awake()    //  occures before Start() -- is needed
     {
         animator = GetComponent<Animator>();
 
@@ -27,6 +42,6 @@ public class AnimatorHelper : MonoBehaviour
     /// <param name="name"></param>
     public void CheckAnimationTrigger(string triggerName)
     {
-        animator.SetTrigger(triggerName);   
+        animator.SetTrigger(triggerName);
     }
 }
