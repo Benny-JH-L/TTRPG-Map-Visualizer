@@ -115,7 +115,7 @@ public class MouseTracker : MonoBehaviour
     /// Use `GetMousePosInWorld()` instead if you need the mouse position in the world
     /// </summary>
     /// <returns>A Vector2 of the mouse position.</returns>
-    public static Vector2 GetMousePosInScreen() // TODO: need to change this to non-static 
+    public Vector2 GetMousePosInScreen()
     {
         return Mouse.current.position.ReadValue();
     }

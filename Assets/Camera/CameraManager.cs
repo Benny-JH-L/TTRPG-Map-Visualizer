@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +14,7 @@ public class CameraManager : MonoBehaviour
     private MapCam _mapCam;
     private OrbitCam _orbitCam; // actually used | for game object
     private AbstractCamera _currentCam;
+    public MouseTracker mouseTracker;
 
     //public bool _isUIFocused;   // only public so inspector can see it
     //private bool _isGameScreenFocused; // most likely do not need anymore
@@ -26,6 +26,9 @@ public class CameraManager : MonoBehaviour
 
         if (_mapCam == _orbitCam)
             ErrorOut.Throw(this, " - Awake() - Map and Orbit cam cannot be the same object!");
+
+        if (mouseTracker == null)
+            ErrorOut.Throw(this, "mouseTracker null");
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -115,7 +118,7 @@ public class CameraManager : MonoBehaviour
         //string s = _currentCam is OrbitCam ? "ORBIT" : "MAP";
         //Debug.Log($"current cam: {s}");
 
-        Ray ray = _currentCam.GetCamera().ScreenPointToRay(MouseTracker.GetMousePosInScreen());
+        Ray ray = _currentCam.GetCamera().ScreenPointToRay(mouseTracker.GetMousePosInScreen());
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             //Debug.Log("Camera | Mouse hit <" + hit.collider.gameObject + "> at " + hit.point);

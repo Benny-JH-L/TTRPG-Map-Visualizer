@@ -14,8 +14,7 @@ public class MapCam : AbstractCamera
 
     public override void Setup()
     {
-        cam = GetComponent<Camera>();
-
+        // nothing...
     }
 
     public override void Configure()

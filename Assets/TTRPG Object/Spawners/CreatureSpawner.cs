@@ -55,7 +55,7 @@ public class CreatureSpawner : SpawnerBase<Creature>
         }
         if (mouseTracker.IsMouseOverUIElement())
         {
-            DebugOut.Log(this, $"Couldn't Spawn object (Over UI element) | pos (world): {mousePosInWorld} | pos (screen): {MouseTracker.GetMousePosInScreen()}");
+            DebugOut.Log(this, $"Couldn't Spawn object (Over UI element) | pos (world): {mousePosInWorld} | pos (screen): {mouseTracker.GetMousePosInScreen()}");
             return;
         }
 

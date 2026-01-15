@@ -20,7 +20,6 @@ public class OrbitCam : AbstractCamera
     public override void Setup()
     {
         orbitTarget = null;
-        cam = GetComponent<Camera>();
         currentRotatX = 0;
         currentRotatY = 0;
         orbitDistance = 0;

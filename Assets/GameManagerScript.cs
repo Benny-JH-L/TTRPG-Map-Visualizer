@@ -137,7 +137,7 @@ public class GameManagerScript : MonoBehaviour
             DebugOut.Log(this, "left clicked too fast, returning...");
             //msgPrompter.Prompt("Please Wait...");
 
-            Vector2 pos = MouseTracker.GetMousePosInScreen();
+            Vector2 pos = mouseTracker.GetMousePosInScreen();
             pos.y += yOffsetForPrompt;
             msgPrompter.Prompt("Please Wait...", pos);
             return;

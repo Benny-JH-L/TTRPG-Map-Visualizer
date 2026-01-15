@@ -14,10 +14,12 @@ public abstract class AbstractCamera : MonoBehaviour
     //public static GameObject screenSpaceGameObject;  // space occupied by the actual game and not ScrenSpaceUI
     public static List<AbstractCamera> cameraList = new();
 
+    [SerializeField] private CameraManager _camManager;
+
     /// <summary>
     /// camera instance used.
     /// </summary>
-    protected Camera cam;
+    [SerializeField] protected Camera cam;
 
     private void Awake()
     {
@@ -30,8 +32,15 @@ public abstract class AbstractCamera : MonoBehaviour
     /// </summary>
     public void Init()
     {
-        if (cameraData is null)
-            cameraData = (CameraData) ScriptableObject.CreateInstance<CameraData>();
+        _camManager = GetComponentInParent<CameraManager>();
+        cam = GetComponent<Camera>();
+
+        if (cameraData == null)
+            cameraData = ScriptableObject.CreateInstance<CameraData>();
+        if (cam == null)
+            ErrorOut.Throw(this, "cam null!");
+        if (_camManager == null)
+            ErrorOut.Throw(this, "camera manager null");
 
         Setup();
         Configure();
@@ -166,7 +175,7 @@ public abstract class AbstractCamera : MonoBehaviour
     /// <returns>Vector3</returns>
     public Vector3 GetMousePosInWorld()
     {
-        Ray ray = cam.ScreenPointToRay(MouseTracker.GetMousePosInScreen());
+        Ray ray = cam.ScreenPointToRay(_camManager.mouseTracker.GetMousePosInScreen());
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             //DebugOut.Log(this, $"hit pos: {hit.point}");
