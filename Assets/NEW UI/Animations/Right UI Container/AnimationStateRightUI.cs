@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AnimationStateRightUI : MonoBehaviour
+public class AnimationStateRightUI : MonoBehaviour  // need to deprecate this!
 {
     public GameEventSO onRightUIClosedAnimationFinished;
 

@@ -1,10 +1,11 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
 public class Highlight : MonoBehaviour
 {
-    private static string _debugStart = "Highlight class | ";
+    //private static string _debugStart = "Highlight class | ";
     // GameEventListeners are in GameObjects in the scene
     // GameEventListener<SpawnedObject> -??
     // GameEventListener<selectedObjectEvent>
@@ -39,16 +40,48 @@ public class Highlight : MonoBehaviour
     //    highlightRingPrefab = prefab;
     //}
 
-    public void HighlightObject(Component comp, object data)
+    public void SelectedObjectChanged(Component comp, object data)
     {
-        if (data is TTRPG_SceneObjectBase sceneObj)
+        if (data is ChangedObject changedObject)
         {
-            DebugOut.Log(this, $"highlighting TTRPG_SceneObjectBase at position: {sceneObj.transform.position}");
-
-            // set the parent transform of highlight ring to `data`
-            highlightRing.transform.SetParent(sceneObj.transform, false);   // `false` so it moves to the new position
-            highlightRing.SetActive(true);
+            TTRPG_SceneObjectBase selectedObj = changedObject.newSelectedObj;
+            // dehighlight when `newSelectedObj` is null
+            if (selectedObj == null)
+            {
+                DebugOut.Log(this, "dehighlighting TTRPG_SceneObjectBase");
+                DeactivateRing();
+            }
+            // highlight the new object
+            else
+            {
+                DebugOut.Log(this, "highlighting TTRPG_SceneObjectBase");
+                HighlightObject(selectedObj);
+            }
         }
+        else
+        {
+            WarningOut.Log(this, " - OnSelectedObjectChanged() - data is not ChangedObject");
+        }
+    }
+
+    private void HighlightObject(TTRPG_SceneObjectBase sceneObj) 
+    {
+
+        DebugOut.Log(this, $"highlighting TTRPG_SceneObjectBase at position: {sceneObj.transform.position}");
+
+        // set the parent transform of highlight ring to `sceneObj`
+        highlightRing.transform.SetParent(sceneObj.transform, false);   // `false` so it moves to the new position
+        highlightRing.SetActive(true);
+        
+
+        //if (data is TTRPG_SceneObjectBase sceneObj)
+        //{
+        //    DebugOut.Log(this, $"highlighting TTRPG_SceneObjectBase at position: {sceneObj.transform.position}");
+
+        //    // set the parent transform of highlight ring to `data`
+        //    highlightRing.transform.SetParent(sceneObj.transform, false);   // `false` so it moves to the new position
+        //    highlightRing.SetActive(true);
+        //}
 
 
         //if (data == null)
@@ -69,6 +102,12 @@ public class Highlight : MonoBehaviour
         //    ScaleRingToObject();
         //}
     }
+
+    //public void Dehighlight()
+    //{
+    //    DebugOut.Log(this, "dehighlighting TTRPG_SceneObjectBase");
+    //    DeactivateRing();
+    //}
 
     private void ScaleRingToObject()
     {
@@ -149,32 +188,6 @@ public class Highlight : MonoBehaviour
 }
 
 
-    /// <summary>
-    /// deprecated
-    /// </summary>
-    /// <param name="comp"></param>
-    /// <param name="data"></param>
-    public void OnObjectMove(Component comp, object data)
-    {
-        //if (data == null)   // no game object has been selected
-        //    return;
-        //updatePosition();
-
-        //// note: could update using the information in `data` it will contain Tuple<GameObject, Vector3>.
-        //// // where Gameobject is the selected object (which we already know) and Vector3 is the moved amount
-        //// // (which we can infer from selected object's transform.position)
-    }
-
-    public void OnDeselectObject(Component comp, object data)
-    {
-        Debug.Log(_debugStart + "dehighlighting GeneralObject (deselect object event)");
-        DeactivateRing();
-    }
-
-    //private void updatePosition()
-    //{
-    //    highlightRing.transform.position = selectedObject.transform.position;
-    //}
 
     private void DeactivateRing()
     {

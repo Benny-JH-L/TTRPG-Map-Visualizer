@@ -23,11 +23,18 @@ public class TTRPG_View : AbstractUI
 
     public void OnTabSelected(Component component, object data)
     {
-        if (data is not TabButton && component != this)
+        if (component != this && data is not TabButton)
         {
             // debug print
+            DebugOut.Log(this, "maybe bruh?...");
             return;
         }
+        if (data is TabButton)
+        {
+            DebugOut.Log(this, "triggered by TabButton...");
+
+        }
+
         Debug.Log($"{_debugStart}OnTabSelected");
 
         leftAnimator.SetTrigger("Shrink Left UI");
@@ -44,10 +51,16 @@ public class TTRPG_View : AbstractUI
     /// <param name="data"></param>
     public void OnTabDeselected(Component component, object data)
     {
-        if (data is not TabButton && component != this)
+        if (component != this && data is not TabButton)
         {
             // debug print
+            DebugOut.Log(this, "maybe bruh?...");
             return;
+        }
+        if (data is TabButton)
+        {
+            DebugOut.Log(this, "triggered by TabButton...");
+
         }
 
         Debug.Log($"{_debugStart}OnTabDeselected");
@@ -56,6 +69,29 @@ public class TTRPG_View : AbstractUI
 
         rightAnimator.SetTrigger("Close Right UI");
         Debug.Log($"{_debugStart}Closed Right UI");
+    }
+
+    public void OnSelectedObjectChanged(Component component, object data)
+    {
+        DebugOut.Log(this, "- OnSelectedObjectChanged() - ");
+        if (data is ChangedObject changedObject)
+        {
+            // hide main meny panel
+            if (changedObject.newSelectedObj == null)
+            {
+                OnTabDeselected(this, data);
+            }
+            // reveal main menu panel when; noththing was selected previously and selected a new non-null TTRPG_SceneObjectBase object  
+            else if (changedObject.prevSelectedObj == null) // changedObject.newSelectedObj != null too
+            {
+                OnTabSelected(this, data);
+            }
+        }
+        else
+        {
+            WarningOut.Log(this, " - OnSelectedObjectChanged() - data is not ChangedObject... returning");
+            return;
+        }
     }
 
     // the bottom two functions work its just that when i press on the

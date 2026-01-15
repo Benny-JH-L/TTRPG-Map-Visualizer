@@ -138,24 +138,43 @@ public class CameraManager : MonoBehaviour
         return _currentCam.GetMousePosInWorld();
     }
 
-    public void OnSelectedObject(Component sender, object data)
+    public void OnSelectedObjectChanged(Component sender, object data)
     {
-        if (data is TTRPG_SceneObjectBase)   // maybe have a condition to check whether or not we switch to player or go to map cam... (Eagel or creature view to moving..)
+        DebugOut.Log(this, "OnSelectedObjectChanged");
+        if (data is ChangedObject changedObject)
         {
-            //Debug.Log($"{_cameraDebugStart}Switching to orbit cam");
+            // enable map camera
+            if (changedObject.newSelectedObj == null)
+            {
+                _mapCam.EnableCamera();
+                _currentCam = _mapCam;
+                return;
+            }
+            // enable orbit camera
             DebugOut.Log(this, "Switching to orbit cam");
-
-            TTRPG_SceneObjectBase obj = (TTRPG_SceneObjectBase)data;
-            _orbitCam.EnableCamera(obj.diskBase);
+            _orbitCam.EnableCamera(changedObject.newSelectedObj.appearanceGameObj); // orbit target is the GameObject `appearanceGameObj`
             _currentCam = _orbitCam;
         }
     }
 
-    public void OnDeselectObject(Component sender, object data)
-    {
-        _mapCam.EnableCamera();
-        _currentCam = _mapCam;
-    }
+    //public void OnSelectedObject(Component sender, object data)
+    //{
+    //    if (data is TTRPG_SceneObjectBase)   // maybe have a condition to check whether or not we switch to player or go to map cam... (Eagel or creature view to moving..)
+    //    {
+    //        //Debug.Log($"{_cameraDebugStart}Switching to orbit cam");
+    //        DebugOut.Log(this, "Switching to orbit cam");
+
+    //        TTRPG_SceneObjectBase obj = (TTRPG_SceneObjectBase)data;
+    //        _orbitCam.EnableCamera(obj.appearanceGameObj);
+    //        _currentCam = _orbitCam;
+    //    }
+    //}
+
+    //public void OnDeselectObject(Component sender, object data)
+    //{
+    //    _mapCam.EnableCamera();
+    //    _currentCam = _mapCam;
+    //}
 
     /// <summary>
     /// Gets the active camera in the scene.
@@ -178,7 +197,7 @@ public class CameraManager : MonoBehaviour
     //        _isGameScreenFocused = r;
     //}
 
-    public void OnGeneralObjectDestroyed(Component comp, object data)
+    public void OnGeneralObjectDestroyed(Component comp, object data)   // idk if i'll use this
     {
         // if the orbit cam is enabled and the object is destroyed, switch to map cam.
         if (_orbitCam.IsCamEnabled())

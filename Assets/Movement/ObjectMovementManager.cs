@@ -335,51 +335,89 @@ public class ObjectMovementManager : MonoBehaviour
     //    //Tuple<GameObject, Vector3> send = new Tuple<GameObject, Vector3>(gameObject, newPos);
     //    //objectMovedEvent.Raise(this, send);
     //}
-    
-    /// <summary>
-    /// Sets the selected game object for movement.
-    /// </summary>
-    /// <param name="comp"></param>
-    /// <param name="data"></param>
-    public void OnSelectedObject(Component comp, object data)
+
+    public void OnSelectedObjectChanged(Component comp, object data)
     {
-        Debug.Log(_debugStart + " Selected Object Event");
-
-        if (data is TTRPG_SceneObjectBase sceneObj)
+        if (data is ChangedObject changedObject)
         {
-            Debug.Log(_debugStart + "Setting selected object");
-
-            _selectedGameObject = sceneObj;
-            _selectedRigidbody = _selectedGameObject.GetComponent<Rigidbody>();
-
-            // Initialize target position
-            if (_selectedRigidbody != null)
+            TTRPG_SceneObjectBase selectedObj = changedObject.newSelectedObj;
+            if (selectedObj != null)
             {
-                _targetPosition = _selectedRigidbody.position;
+                DebugOut.Log(this, "Setting selected object");
+
+                _selectedGameObject = selectedObj;
+                _selectedRigidbody = _selectedGameObject.GetComponent<Rigidbody>();
+
+                // Initialize target position
+                if (_selectedRigidbody != null)
+                {
+                    _targetPosition = _selectedRigidbody.position;
+                }
+                else
+                {
+                    _targetPosition = _selectedGameObject.transform.position;
+                }
+
+                _smoothVelocity = Vector3.zero;
+                _isMovingToMouseTarget = false;
             }
             else
             {
-                _targetPosition = _selectedGameObject.transform.position;
+                DebugOut.Log(this, "deselected Object Event");
+                _selectedGameObject = null;
+                _selectedRigidbody = null;
+                _smoothVelocity = Vector3.zero;
+                _isMovingToMouseTarget = false;
             }
-
-            _smoothVelocity = Vector3.zero;
-            _isMovingToMouseTarget = false;
         }
+        else
+            WarningOut.Log(this, "data is not ChangedObject");
     }
+    
+    ///// <summary>
+    ///// Sets the selected game object for movement.
+    ///// </summary>
+    ///// <param name="comp"></param>
+    ///// <param name="data"></param>
+    //public void OnSelectedObject(Component comp, object data)
+    //{
+    //    Debug.Log(_debugStart + " Selected Object Event");
+
+    //    if (data is TTRPG_SceneObjectBase sceneObj)
+    //    {
+    //        Debug.Log(_debugStart + "Setting selected object");
+
+    //        _selectedGameObject = sceneObj;
+    //        _selectedRigidbody = _selectedGameObject.GetComponent<Rigidbody>();
+
+    //        // Initialize target position
+    //        if (_selectedRigidbody != null)
+    //        {
+    //            _targetPosition = _selectedRigidbody.position;
+    //        }
+    //        else
+    //        {
+    //            _targetPosition = _selectedGameObject.transform.position;
+    //        }
+
+    //        _smoothVelocity = Vector3.zero;
+    //        _isMovingToMouseTarget = false;
+    //    }
+    //}
 
     /// <summary>
     /// Deselect's game object for movement.
     /// </summary>
     /// <param name="comp"></param>
     /// <param name="data"></param>
-    public void OnDeselectObject(Component comp, object data)
-    {
-        Debug.Log(_debugStart + "deselected Object Event");
-        _selectedGameObject = null;
-        _selectedRigidbody = null;
-        _smoothVelocity = Vector3.zero;
-        _isMovingToMouseTarget = false;
-    }
+    //public void OnDeselectObject(Component comp, object data)
+    //{
+    //    Debug.Log(_debugStart + "deselected Object Event");
+    //    _selectedGameObject = null;
+    //    _selectedRigidbody = null;
+    //    _smoothVelocity = Vector3.zero;
+    //    _isMovingToMouseTarget = false;
+    //}
 
     //public void OnUIFocued(Component comp, object data)
     //{
