@@ -22738,7 +22738,7 @@ MonoBehaviour:
   selectedObject: {fileID: 0}
   mouseRightClickEvent: {fileID: 11400000, guid: f23fd92540dd6f6478f8dccd349b2e63, type: 2}
   cameraChangedEvent: {fileID: 11400000, guid: 6dedc0908d97e5a4d8294b8b96a387e8, type: 2}
-  selectedObjectChanged: {fileID: 11400000, guid: 06a63cdc339722242beffface22f8c29, type: 2}
+  selectedObjectChangedEvent: {fileID: 11400000, guid: 06a63cdc339722242beffface22f8c29, type: 2}
   creatureSpawner: {fileID: 1714179494}
   inanimateObjectSpawner: {fileID: 1057278269}
   utilStorage: {fileID: 56113221}
