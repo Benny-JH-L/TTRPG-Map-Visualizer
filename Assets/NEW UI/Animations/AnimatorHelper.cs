@@ -23,7 +23,8 @@ public class AnimatorHelper : MonoBehaviour
 
     private void Awake()    //  occures before Start() -- is needed
     {
-        animator = GetComponent<Animator>();
+        if (animator == null)
+            animator = GetComponent<Animator>();
 
         string msg = "Parameters:\n";
         foreach (var param in animator.parameters)

@@ -5,15 +5,26 @@ using UnityEngine;
 /// </summary>
 public abstract class TabGroupManagerBase : MonoBehaviour
 {
-    [SerializeField] protected TabGroup _selectedGrp;
+    [SerializeField] protected TabGroup _selectedTabGrp;
     //[SerializeField] private TTRPG_SceneObjectBase _prevSelectedObject;
 
 
     void Start()
     {
-        _selectedGrp = null;
+        _selectedTabGrp = null;
         OnStart();
     }
 
     protected abstract void OnStart();
+
+
+    /// <summary>
+    /// for `Hiding` animations that need to call this when they finish
+    /// </summary>
+    public abstract void OnHideAnimationFinish();
+
+    /// <summary>
+    /// for `Reveal` animations that need to call this when they finish
+    /// </summary>
+    public abstract void OnRevealAnimationFinish();
 }

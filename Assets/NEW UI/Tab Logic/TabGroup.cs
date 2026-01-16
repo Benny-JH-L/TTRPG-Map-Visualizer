@@ -16,9 +16,15 @@ public class TabGroup : TabGroupBase
     //[Range(-0.01f, -0.3f)]
     //public float tabActiveBrightness = -0.01f;
 
+    [SerializeField] private TabGroupManagerBase tabGroupManager;   // the manager for this tab group (if it exists as its parent)
     protected override void OnStart()
     {
-        // nothing...
+        tabGroupManager = GetComponentInParent<TabGroupManagerBase>();
+
+        if (tabGroupManager == null )
+        {
+            WarningOut.Log(this, $"`{this.name}` does not have a tab group manager as it's parent!");
+        }
     }
 
     /// <summary>
@@ -57,7 +63,7 @@ public class TabGroup : TabGroupBase
             if (ReferenceEquals(selectedTab, button))
             {
                 // same tab was pressed, then UI should close the right UI container and expand the left UI container (in TTRPG_View from Deselect() callback)
-                DebugOut.Log(this, $"Same Tab selected | index: {button.assignedIndex}");
+                DebugOut.Log(this, $"Same Tab selected");
                 selectedTab = null;     // reset
                 return;
             }
@@ -108,6 +114,32 @@ public class TabGroup : TabGroupBase
             // or keep color same color
             button.background.color = button.originalColor;
         }
+    }
+
+    /// <summary>
+    /// Call this function when a AnimationEvent (set in animation clip) for `Hide` is finished
+    /// </summary>
+    public override void OnHideAnimationFinish()
+    {
+        if (tabGroupManager != null)
+        {
+            tabGroupManager.OnHideAnimationFinish();
+        }
+        else
+            WarningOut.Log(this, "cannot do `tabGroupManager.OnHideAnimationFinish()` bc tabGroupManager is null");
+    }
+
+    /// <summary>
+    /// Call this function when a AnimationEvent (set in animation clip) for `Reveal` is finished
+    /// </summary>
+    public override void OnRevealAnimationFinish()
+    {
+        if (tabGroupManager != null)
+        {
+            tabGroupManager.OnRevealAnimationFinish();
+        }
+        else
+            WarningOut.Log(this, "cannot do `tabGroupManager.OnRevealAnimationFinish()` bc tabGroupManager is null");
     }
 }
 

@@ -1,11 +1,12 @@
-using System;
 using UnityEngine;
 
 public class TabGrpManagerMainObjMenu : TabGroupManagerBase
 {
-    public TabGroup creatureGrpTab;
-    public TabGroup inanimateObjGrpTab;
-    [SerializeField] private TTRPG_SceneObjectBase _selectedObject;
+    [SerializeField] private TabGroup creatureGrpTab;
+    [SerializeField] private TabGroup inanimateObjGrpTab;
+    [SerializeField] private TabGroup _tabGrpToExit;    // tab group to exit out of (helps prevent race condition between `finish animations` functions when they needed to access _selectedTabGrp)
+
+
 
     protected override void OnStart()
     {
@@ -13,6 +14,10 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
             ErrorOut.Throw(this, "creatureGrpTab null");
         if (inanimateObjGrpTab == null)
             ErrorOut.Throw(this, "inanimateObjGrpTab null");
+
+        creatureGrpTab.ExitTabGroup();
+        inanimateObjGrpTab.ExitTabGroup();
+        _tabGrpToExit = null;
     }
 
     public void OnSelectedObjectChanged(Component component, object data)
@@ -27,6 +32,8 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
             prevSelectedObj = changedObject.prevSelectedObj;
             newSelectedObj = changedObject.newSelectedObj;
             areBothChangedObjectsNotNull = prevSelectedObj != null && newSelectedObj != null;
+
+            DebugOut.Log(this, $"prev obj selc type: {prevSelectedObj} | new obj selc type {newSelectedObj}");
         }
         else
         {
@@ -42,12 +49,12 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
         * Then select its default tab for that menu.
         */
 
-        if (!areBothChangedObjectsNotNull)
-        {
-            // close the main menu panel --> need another animator
-        }
+        //if (!areBothChangedObjectsNotNull)
+        //{
+        //    // close the main menu panel --> need another animator | idk if i want this...
+        //}
         // don't do anything when the same object type was selected again
-        else if (areBothChangedObjectsNotNull && changedObject.newSelectedObj.GetType() == changedObject.prevSelectedObj.GetType())
+        if (areBothChangedObjectsNotNull && changedObject.newSelectedObj.GetType() == changedObject.prevSelectedObj.GetType())
         {
             DebugOut.Log(this, "selected same TTRPG_SceneObjectBase type, returning...");
             return;
@@ -61,19 +68,20 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
                 DebugOut.Log(this, "hiding Creature tab");
 
                 //animator.SetTrigger("Hide (Character)");
-                _selectedGrp.CheckAnimationTrigger("Hide");    // hide tab
-
+                _selectedTabGrp.CheckAnimationTrigger("Hide");    // hide tab
             }
             else if (prevSelectedObj is InanimateObj)
             {
                 DebugOut.Log(this, "hiding Inanimate obj tab");
 
                 //animator.SetTrigger("Hide (Inanimate obj)");
-                _selectedGrp.CheckAnimationTrigger("Hide");    // hide tab
+                _selectedTabGrp.CheckAnimationTrigger("Hide");    // hide tab
             }
 
-            _selectedGrp.ExitTabGroup();
-            _selectedGrp = null;
+            _tabGrpToExit = _selectedTabGrp;
+            // done as a animation event?
+            //_selectedGrp.ExitTabGroup();  // instantly stops/inturrupts the `Hide` animations!
+            //_selectedGrp = null;
         }
 
         // newly selected object; reveal the new main menu panel tab (if not null)
@@ -84,14 +92,14 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
                 DebugOut.Log(this, "revealing creature tab!");
 
                 creatureGrpTab.CheckAnimationTrigger("Reveal");          // reveal tab
-                _selectedGrp = creatureGrpTab;
+                _selectedTabGrp = creatureGrpTab;
             }
             else if (newSelectedObj is InanimateObj)
             {
                 DebugOut.Log(this, "revealing inanimate obj tab!");
 
                 inanimateObjGrpTab.CheckAnimationTrigger("Reveal");  // reveal tab
-                _selectedGrp = inanimateObjGrpTab;
+                _selectedTabGrp = inanimateObjGrpTab;
             }
             else
             {
@@ -102,9 +110,24 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
             // hide the previously selected object's tab and reveal the main menu tab of the newly selected TTRPG_SceneObjectBase
 
             //_prevSelectedObject = (TTRPG_SceneObjectBase)data;
-            _selectedGrp.ActivateTabGroup();
-            _selectedGrp.OnTabSelected(_selectedGrp.tabButtons[0]);   // select some arbitrary tab (note: see yellow text under `Tab Group Manager` for future solution)
+
+            _selectedTabGrp.ActivateTabGroup();
+            _selectedTabGrp.OnTabSelected(_selectedTabGrp.tabButtons[0]);   // select some arbitrary tab (note: see yellow text under `Tab Group Manager` for future solution)
         }
+    }
+
+    public override void OnHideAnimationFinish()
+    {
+        DebugOut.Log(this, "finishing hide");
+        //_selectedGrp.ExitTabGroup();
+        //_selectedGrp = null;
+        _tabGrpToExit.ExitTabGroup();
+        _tabGrpToExit = null;
+    }
+
+    public override void OnRevealAnimationFinish()
+    {
+        // do nothing
     }
 
     public void OnSelectedObject(Component component, object data)
@@ -123,7 +146,7 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
             inanimateObjGrpTab.ExitTabGroup();
 
             creatureGrpTab.CheckAnimationTrigger("Reveal");          // reveal tab
-            _selectedGrp = creatureGrpTab;
+            _selectedTabGrp = creatureGrpTab;
         }
         else if (data is InanimateObj)
         {
@@ -131,7 +154,7 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
             creatureGrpTab.ExitTabGroup();
 
             inanimateObjGrpTab.CheckAnimationTrigger("Reveal");  // reveal tab
-            _selectedGrp = inanimateObjGrpTab;
+            _selectedTabGrp = inanimateObjGrpTab;
         }
         else
         {
@@ -140,8 +163,8 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
         }
         //_prevSelectedObject = (TTRPG_SceneObjectBase)data;
 
-        _selectedGrp.ActivateTabGroup();
-        _selectedGrp.OnTabSelected(_selectedGrp.tabButtons[0]);   // select some arbitrary tab (note: see yellow text under `Tab Group Manager` for future solution)
+        _selectedTabGrp.ActivateTabGroup();
+        _selectedTabGrp.OnTabSelected(_selectedTabGrp.tabButtons[0]);   // select some arbitrary tab (note: see yellow text under `Tab Group Manager` for future solution)
     }
 
     public void OnDeselectedObject(Component component, object data)
@@ -168,7 +191,7 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
             DebugOut.Log(this, "hiding Creature");
 
             //animator.SetTrigger("Hide (Character)");
-            _selectedGrp.CheckAnimationTrigger("Hide");    // hide tab
+            _selectedTabGrp.CheckAnimationTrigger("Hide");    // hide tab
 
         }
         else if (data is InanimateObj)
@@ -176,10 +199,10 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
             DebugOut.Log(this, "hiding Inanimate obj");
 
             //animator.SetTrigger("Hide (Inanimate obj)");
-            _selectedGrp.CheckAnimationTrigger("Hide");    // hide tab
+            _selectedTabGrp.CheckAnimationTrigger("Hide");    // hide tab
         }
 
-        _selectedGrp.ExitTabGroup();
-        _selectedGrp = null;
+        _selectedTabGrp.ExitTabGroup();
+        _selectedTabGrp = null;
     }
 }

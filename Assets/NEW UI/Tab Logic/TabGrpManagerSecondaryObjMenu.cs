@@ -26,7 +26,7 @@ public class TabGrpManagerSecondaryObjMenu : TabGroupManagerBase
             // show the secondary menu tab & panel only when there was no selected object previously
             if (selectedObj != null && prevSelectedObj == null)
             {
-                _selectedGrp = tabGroup;
+                _selectedTabGrp = tabGroup;
                 doingAnimation = true;
 
                 DebugOut.Log(this, $"triggering Reveal! at time: {Time.timeAsDouble}");
@@ -77,26 +77,32 @@ public class TabGrpManagerSecondaryObjMenu : TabGroupManagerBase
     //    }
     //}
 
-    /// <summary>
-    /// Called by the "reveal" animation when it finishes
-    /// </summary>
-    public void FinishReveal()
-    {
-        DebugOut.Log(this, $"finishing Reveal at time: {Time.timeAsDouble}!");
-        doingAnimation = false;
-
-    }
-
+    ///// <summary>
+    ///// Called by the "reveal" animation when it finishes
+    ///// </summary>
+    //public void FinishReveal()
+    //{
+    //    DebugOut.Log(this, $"finishing Reveal at time: {Time.timeAsDouble}!");
+        
+    //    doingAnimation = false;
+    //}
 
     /// <summary>
     /// Called by the "hide" animation when it finishes
     /// </summary>
-    public void FinishHide()
+    public override void OnHideAnimationFinish()
     {
         DebugOut.Log(this, $"finishing hide at time: {Time.timeAsDouble}!");
 
         tabGroup.ExitTabGroup();
-        _selectedGrp = null;
+        _selectedTabGrp = null;
         doingAnimation = false;
+    }
+
+    public override void OnRevealAnimationFinish()
+    {
+        // do nothing
+        DebugOut.Log(this, $"finishing reveal at time: {Time.timeAsDouble}!");
+
     }
 }

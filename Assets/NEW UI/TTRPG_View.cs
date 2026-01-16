@@ -3,12 +3,11 @@ using UnityEngine;
 
 public class TTRPG_View : AbstractUI
 {
-    private static string _debugStart = "[TTRPG_View]";
     public GameObject leftUI;
     public GameObject rightUI;
     
-    public Animator leftAnimator;
-    public Animator rightAnimator;
+    public AnimatorHelper leftUIAnimatorHelper;
+    public AnimatorHelper mainMenuAnimatorHelper;
     public override void Configure()
     {
         // should have to do nothing...
@@ -17,8 +16,8 @@ public class TTRPG_View : AbstractUI
 
     public override void Setup()
     {
-        leftAnimator = leftUI.GetComponent<Animator>();
-        rightAnimator = rightUI.GetComponent<Animator>();
+        leftUIAnimatorHelper = leftUI.GetComponent<AnimatorHelper>();
+        mainMenuAnimatorHelper = rightUI.GetComponent<AnimatorHelper>();
     }
 
     public void OnTabSelected(Component component, object data)
@@ -35,13 +34,12 @@ public class TTRPG_View : AbstractUI
 
         }
 
-        Debug.Log($"{_debugStart}OnTabSelected");
+        DebugOut.Log(this, $"OnTabSelected");
+        leftUIAnimatorHelper.CheckAnimationTrigger("Shrink Left UI");
+        DebugOut.Log(this, $"shrinked left UI");
 
-        leftAnimator.SetTrigger("Shrink Left UI");
-        Debug.Log($"{_debugStart}shrinked left UI");
-
-        rightAnimator.SetTrigger("Open Right UI");
-        Debug.Log($"{_debugStart}Opened right UI");
+        mainMenuAnimatorHelper.CheckAnimationTrigger("Open Right UI");
+        DebugOut.Log(this, $"Opened right UI");
     }
 
     /// <summary>
@@ -63,12 +61,12 @@ public class TTRPG_View : AbstractUI
 
         }
 
-        Debug.Log($"{_debugStart}OnTabDeselected");
-        leftAnimator.SetTrigger("Expand Left UI");
-        Debug.Log($"{_debugStart}Expanded Left UI");
+        DebugOut.Log(this, $"OnTabDeselected");
+        leftUIAnimatorHelper.CheckAnimationTrigger("Expand Left UI");
+        DebugOut.Log(this, $"Expanded Left UI");
 
-        rightAnimator.SetTrigger("Close Right UI");
-        Debug.Log($"{_debugStart}Closed Right UI");
+        mainMenuAnimatorHelper.CheckAnimationTrigger("Close Right UI");
+        DebugOut.Log(this, $"Closed Right UI");
     }
 
     public void OnSelectedObjectChanged(Component component, object data)
@@ -76,7 +74,7 @@ public class TTRPG_View : AbstractUI
         DebugOut.Log(this, "- OnSelectedObjectChanged() - ");
         if (data is ChangedObject changedObject)
         {
-            // hide main meny panel
+            // hide main menu panel
             if (changedObject.newSelectedObj == null)
             {
                 OnTabDeselected(this, data);
@@ -94,26 +92,26 @@ public class TTRPG_View : AbstractUI
         }
     }
 
+
     // the bottom two functions work its just that when i press on the
     // right UI tabs it also `deselects` the game object (and then calls the deselectTab)
     // because i have to include the tabs as "UI" components...
+    //public void OnSelectedObject(Component component, object data)
+    //{
+    //    // rn the tabs will appear with no object selected, i need to redo object creation before i implment 
+    //    // the group tab appearing for the correct object class.
+    //    //return;
+    //    DebugOut.Log(this, $"OnSelectedObject");
 
-    public void OnSelectedObject(Component component, object data)
-    {
-        // rn the tabs will appear with no object selected, i need to redo object creation before i implment 
-        // the group tab appearing for the correct object class.
-        //return;
-        Debug.Log($"{_debugStart}OnSelectedObject");
+    //    OnTabSelected(this, data);
+    //}
 
-        OnTabSelected(this, data);
-    }
-
-    public void OnDeselectedObject(Component component, object data)
-    {
-        // rn the tabs will appear with no object selected, i need to redo object creation before i implment 
-        // the group tab appearing for the correct object class.
-        //return;
-        Debug.Log($"{_debugStart}OnDeselectedObject");
-        OnTabDeselected(this, data);
-    }
+    //public void OnDeselectedObject(Component component, object data)
+    //{
+    //    // rn the tabs will appear with no object selected, i need to redo object creation before i implment 
+    //    // the group tab appearing for the correct object class.
+    //    //return;
+    //    DebugOut.Log(this, $"OnDeselectedObject");
+    //    OnTabDeselected(this, data);
+    //}
 }

@@ -48,6 +48,16 @@ public abstract class TabGroupBase : MonoBehaviour
     protected abstract void ResetTabs();
 
     /// <summary>
+    /// `Hide` animations that need to call this when they finish, optional!
+    /// </summary>
+    public abstract void OnHideAnimationFinish();
+
+    /// <summary>
+    /// `Reveal` animations that need to call this when they finish, optional!
+    /// </summary>
+    public abstract void OnRevealAnimationFinish();
+
+    /// <summary>
     /// Goes through the list of `tabButtons` and sets their and `swapToObject` active states to false.
     /// </summary>
     protected void DeactivateAllTabs()
@@ -88,6 +98,8 @@ public abstract class TabGroupBase : MonoBehaviour
     public void CheckAnimationTrigger(string triggerName)
     {
         DebugOut.Log(this, $"Sending trigger: `{triggerName}` to animator");
+        if (animatorHelper == null)
+            ErrorOut.Throw(this, "animation helper null");
         animatorHelper.CheckAnimationTrigger(triggerName);
     }
 }

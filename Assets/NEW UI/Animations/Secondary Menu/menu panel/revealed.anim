@@ -43,7 +43,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Interactable
-    path: Container
+    path: Rect Mask 2D/Container
     classID: 225
     script: {fileID: 0}
     flags: 0
@@ -56,7 +56,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 1163095736
+      path: 2070094448
       attribute: 4287062452
       script: {fileID: 0}
       typeID: 225
@@ -112,7 +112,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Interactable
-    path: Container
+    path: Rect Mask 2D/Container
     classID: 225
     script: {fileID: 0}
     flags: 0

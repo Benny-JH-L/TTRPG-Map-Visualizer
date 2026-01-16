@@ -4,17 +4,14 @@ using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Image))]
 public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
-{
-    public static int UNASSIGNED_INDEX = -1;    // wont be used
-    
+{    
     public TabGroup tabGroup;
     public GameObject swapToObject;     // when this tab button is selected (clicked), this object should be switched too
     
     public Image background;
     public Color originalColor;         // note: uses color for now
 
-    public int assignedIndex = UNASSIGNED_INDEX;    // wont be used
-
+    // not sure what to use these for, maybe to trigger special effects?
     public GameEventSO onTabSelected;
     public GameEventSO onTabDeselected;
 
@@ -23,10 +20,6 @@ public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandl
         if (swapToObject == null)
         {
             ErrorOut.Throw(this, "swapToObj null");
-        }
-        if (assignedIndex == UNASSIGNED_INDEX)
-        {
-            ErrorOut.Throw(this, $"INDEX FOR TAB BUTTON IS `{UNASSIGNED_INDEX}` (unassigned)!");
         }
 
         background = GetComponent<Image>();     // or set manually
