@@ -16,31 +16,66 @@ public class TabGrpManagerSecondaryObjMenu : TabGroupManagerBase
         doingAnimation = false;
     }
 
-    public void OnSelectedObject(Component component, object data)
+    public void OnSelectedObjectChanged(Component component, object data)
     {
-        _selectedGrp = tabGroup;
-        if (_selectedGrp != null)
+        if (data is ChangedObject changedObject)
         {
-            doingAnimation = true;
-            DebugOut.Log(this, $"triggering Reveal! at time: {Time.timeAsDouble}");
-            tabGroup.ActivateTabGroup();
-            tabGroup.OnTabSelected(tabGroup.tabButtons[0]);     // select some arbitrary tab
+            TTRPG_SceneObjectBase selectedObj = changedObject.newSelectedObj;
+            TTRPG_SceneObjectBase prevSelectedObj = changedObject.prevSelectedObj;
 
-            tabGroup.CheckAnimationTrigger("Reveal");
-            secondaryMenuAnimatorHelper.CheckAnimationTrigger("Reveal");
+            // show the secondary menu tab & panel only when there was no selected object previously
+            if (selectedObj != null && prevSelectedObj == null)
+            {
+                _selectedGrp = tabGroup;
+                doingAnimation = true;
+
+                DebugOut.Log(this, $"triggering Reveal! at time: {Time.timeAsDouble}");
+                tabGroup.ActivateTabGroup();
+                tabGroup.OnTabSelected(tabGroup.tabButtons[0]);     // select some arbitrary tab
+
+                tabGroup.CheckAnimationTrigger("Reveal");
+                secondaryMenuAnimatorHelper.CheckAnimationTrigger("Reveal");
+            }
+            // hide the secondary menu tab & panel when there is no selected object
+            else if (selectedObj == null)
+            {
+                doingAnimation = true;
+                DebugOut.Log(this, $"triggering hide! at time: {Time.timeAsDouble}");
+                tabGroup.CheckAnimationTrigger("Hide");
+                secondaryMenuAnimatorHelper.CheckAnimationTrigger("Hide");
+            }
+        }
+        else
+        {
+            WarningOut.Log(this, " - OnSelectedObjectChanged() - data is not ChangedObject"); // will be the case when there are other classes that inherit (extend) TTRPG_SceneObjectBase!
         }
     }
 
-    public void OnDeselectedObject(Component component, object data)
-    {
-        if (_selectedGrp != null)
-        {
-            doingAnimation = true;
-            DebugOut.Log(this, $"triggering hide! at time: {Time.timeAsDouble}");
-            tabGroup.CheckAnimationTrigger("Hide");
-            secondaryMenuAnimatorHelper.CheckAnimationTrigger("Hide");
-        }
-    }
+    //public void OnSelectedObject(Component component, object data)
+    //{
+    //    _selectedGrp = tabGroup;
+    //    if (_selectedGrp != null)
+    //    {
+    //        doingAnimation = true;
+    //        DebugOut.Log(this, $"triggering Reveal! at time: {Time.timeAsDouble}");
+    //        tabGroup.ActivateTabGroup();
+    //        tabGroup.OnTabSelected(tabGroup.tabButtons[0]);     // select some arbitrary tab
+
+    //        tabGroup.CheckAnimationTrigger("Reveal");
+    //        secondaryMenuAnimatorHelper.CheckAnimationTrigger("Reveal");
+    //    }
+    //}
+
+    //public void OnDeselectedObject(Component component, object data)
+    //{
+    //    if (_selectedGrp != null)
+    //    {
+    //        doingAnimation = true;
+    //        DebugOut.Log(this, $"triggering hide! at time: {Time.timeAsDouble}");
+    //        tabGroup.CheckAnimationTrigger("Hide");
+    //        secondaryMenuAnimatorHelper.CheckAnimationTrigger("Hide");
+    //    }
+    //}
 
     /// <summary>
     /// Called by the "reveal" animation when it finishes

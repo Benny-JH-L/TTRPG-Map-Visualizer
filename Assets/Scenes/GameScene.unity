@@ -3420,10 +3420,7 @@ GameObject:
   m_Component:
   - component: {fileID: 299341089}
   - component: {fileID: 299341090}
-  - component: {fileID: 299341091}
-  - component: {fileID: 299341092}
-  - component: {fileID: 299341094}
-  - component: {fileID: 299341095}
+  - component: {fileID: 299341097}
   - component: {fileID: 299341096}
   m_Layer: 0
   m_Name: Camera Manager
@@ -3461,118 +3458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd9f42f1a709a1c4f83db32d44e64419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &299341091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 299341088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 7491a919ddcc23648b0e097fc1a3047e, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 299341090}
-        m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
-        m_MethodName: OnSelectedObject
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &299341092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 299341088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 95f1f4092c5b9594eadf6a639c93772b, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 299341090}
-        m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
-        m_MethodName: OnDeselectObject
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &299341094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 299341088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 7ddd845901d6f4f47943fde4567b7bb3, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 299341090}
-        m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
-        m_MethodName: OnUIFocued
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &299341095
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 299341088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 674ba3ed110e3ff4bbf9ac34b9c83edb, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 299341090}
-        m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
-        m_MethodName: OnGameScreenFocused
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  mouseTracker: {fileID: 1716619930}
 --- !u!114 &299341096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3592,6 +3478,34 @@ MonoBehaviour:
       - m_Target: {fileID: 299341090}
         m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
         m_MethodName: OnGeneralObjectDestroyed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &299341097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299341088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
+  gameEvent: {fileID: 11400000, guid: 06a63cdc339722242beffface22f8c29, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 299341090}
+        m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
+        m_MethodName: OnSelectedObjectChanged
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8053,9 +7967,7 @@ GameObject:
   m_Component:
   - component: {fileID: 625209513}
   - component: {fileID: 625209512}
-  - component: {fileID: 625209511}
-  - component: {fileID: 625209514}
-  - component: {fileID: 625209515}
+  - component: {fileID: 625209516}
   m_Layer: 0
   m_Name: Highlighter
   m_TagString: Untagged
@@ -8063,34 +7975,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &625209511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 625209510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 7491a919ddcc23648b0e097fc1a3047e, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 625209512}
-        m_TargetAssemblyTypeName: Highlight, Assembly-CSharp
-        m_MethodName: HighlightObject
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &625209512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8121,7 +8005,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &625209514
+--- !u!114 &625209516
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8132,42 +8016,14 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: aeb1a39f4e1240a4598b283b40e86909, type: 2}
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
+  gameEvent: {fileID: 11400000, guid: 06a63cdc339722242beffface22f8c29, type: 2}
   response:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 625209512}
         m_TargetAssemblyTypeName: Highlight, Assembly-CSharp
-        m_MethodName: OnObjectMove
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &625209515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 625209510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 95f1f4092c5b9594eadf6a639c93772b, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 625209512}
-        m_TargetAssemblyTypeName: Highlight, Assembly-CSharp
-        m_MethodName: OnDeselectObject
+        m_MethodName: SelectedObjectChanged
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8676,8 +8532,7 @@ GameObject:
   - component: {fileID: 663101877}
   - component: {fileID: 663101879}
   - component: {fileID: 663101885}
-  - component: {fileID: 663101884}
-  - component: {fileID: 663101883}
+  - component: {fileID: 663101886}
   - component: {fileID: 663101881}
   - component: {fileID: 663101880}
   m_Layer: 5
@@ -8794,62 +8649,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &663101883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 663101875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
-  gameEvent: {fileID: 11400000, guid: 95f1f4092c5b9594eadf6a639c93772b, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 663101885}
-        m_TargetAssemblyTypeName: TabGrpManagerSecondaryMenu, Assembly-CSharp
-        m_MethodName: OnDeselectedObject
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &663101884
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 663101875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
-  gameEvent: {fileID: 11400000, guid: 7491a919ddcc23648b0e097fc1a3047e, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 663101885}
-        m_TargetAssemblyTypeName: TabGrpManagerSecondaryMenu, Assembly-CSharp
-        m_MethodName: OnSelectedObject
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &663101885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8866,6 +8665,34 @@ MonoBehaviour:
   tabGroup: {fileID: 1733962296}
   secondaryMenuAnimatorHelper: {fileID: 663101880}
   doingAnimation: 0
+--- !u!114 &663101886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663101875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
+  gameEvent: {fileID: 11400000, guid: 06a63cdc339722242beffface22f8c29, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 663101885}
+        m_TargetAssemblyTypeName: TabGrpManagerSecondaryObjMenu, Assembly-CSharp
+        m_MethodName: OnSelectedObjectChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &670112835 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6961656308204020915, guid: ad6575ab25bf664448290d8c4ef8b454, type: 3}
@@ -9791,7 +9618,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 758921187}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b66977e54d0ff12418897acd7dcfb35f, type: 3}
   m_Name: 
@@ -10526,10 +10353,7 @@ GameObject:
   m_Component:
   - component: {fileID: 812659950}
   - component: {fileID: 812659949}
-  - component: {fileID: 812659948}
-  - component: {fileID: 812659951}
-  - component: {fileID: 812659952}
-  - component: {fileID: 812659953}
+  - component: {fileID: 812659954}
   m_Layer: 0
   m_Name: Object Movement Manager
   m_TagString: Untagged
@@ -10537,34 +10361,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &812659948
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 812659947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 7491a919ddcc23648b0e097fc1a3047e, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 812659949}
-        m_TargetAssemblyTypeName: ObjectMovementManager, Assembly-CSharp
-        m_MethodName: OnSelectedObject
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &812659949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10599,7 +10395,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &812659951
+--- !u!114 &812659954
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10610,70 +10406,14 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 95f1f4092c5b9594eadf6a639c93772b, type: 2}
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
+  gameEvent: {fileID: 11400000, guid: 06a63cdc339722242beffface22f8c29, type: 2}
   response:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 812659949}
         m_TargetAssemblyTypeName: ObjectMovementManager, Assembly-CSharp
-        m_MethodName: OnDeselectObject
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &812659952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 812659947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 7ddd845901d6f4f47943fde4567b7bb3, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 812659949}
-        m_TargetAssemblyTypeName: ObjectMovementManager, Assembly-CSharp
-        m_MethodName: OnUIFocued
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &812659953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 812659947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 674ba3ed110e3ff4bbf9ac34b9c83edb, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 812659949}
-        m_TargetAssemblyTypeName: ObjectMovementManager, Assembly-CSharp
-        m_MethodName: OnGameScreenFocused
+        m_MethodName: OnSelectedObjectChanged
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12272,6 +12012,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad94b6707c706ba41b0797aea8841e5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _camManager: {fileID: 0}
+  cam: {fileID: 0}
   orbitTarget: {fileID: 0}
 --- !u!1 &1042848943
 GameObject:
@@ -14310,9 +14052,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1204143057}
-  - component: {fileID: 1204143059}
-  - component: {fileID: 1204143060}
   - component: {fileID: 1204143061}
+  - component: {fileID: 1204143062}
   m_Layer: 5
   m_Name: Tab Group
   m_TagString: Untagged
@@ -14341,62 +14082,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1204143059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1204143056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
-  gameEvent: {fileID: 11400000, guid: 7491a919ddcc23648b0e097fc1a3047e, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1204143061}
-        m_TargetAssemblyTypeName: TabGroupManagerCreatureInanimateObj, Assembly-CSharp
-        m_MethodName: OnSelectedObject
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1204143060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1204143056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
-  gameEvent: {fileID: 11400000, guid: 95f1f4092c5b9594eadf6a639c93772b, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1204143061}
-        m_TargetAssemblyTypeName: TabGroupManagerCreatureInanimateObj, Assembly-CSharp
-        m_MethodName: OnDeselectedObject
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1204143061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14412,6 +14097,35 @@ MonoBehaviour:
   _selectedGrp: {fileID: 0}
   creatureGrpTab: {fileID: 1369711360}
   inanimateObjGrpTab: {fileID: 1864547473}
+  _selectedObject: {fileID: 0}
+--- !u!114 &1204143062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204143056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
+  gameEvent: {fileID: 11400000, guid: 06a63cdc339722242beffface22f8c29, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1204143061}
+        m_TargetAssemblyTypeName: TabGrpManagerMainObjMenu, Assembly-CSharp
+        m_MethodName: OnSelectedObjectChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1211381717
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15090,6 +14804,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f0056134a6cae045950ac6957ad72e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _camManager: {fileID: 0}
+  cam: {fileID: 0}
   _currWorldPos: {x: Infinity, y: Infinity, z: Infinity}
   _prevWorldPos: {x: Infinity, y: Infinity, z: Infinity}
 --- !u!1 &1236275068
@@ -17975,7 +17691,6 @@ GameObject:
   - component: {fileID: 1369711360}
   - component: {fileID: 1369711359}
   - component: {fileID: 1369711356}
-  - component: {fileID: 1369711354}
   m_Layer: 5
   m_Name: Creature Tab
   m_TagString: Untagged
@@ -18091,34 +17806,6 @@ MonoBehaviour:
   m_FlexibleWidth: 0
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &1369711354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1369711346}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
-  gameEvent: {fileID: 11400000, guid: 78528307ccbd0bb4bb7348b62a42ba54, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TabGroup, Assembly-CSharp
-        m_MethodName: FinishTabSelect
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!225 &1369711355
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -18456,7 +18143,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1394775981}
   - component: {fileID: 1394775980}
-  - component: {fileID: 1394775979}
   m_Layer: 0
   m_Name: UICreatureInitializer (OLD)
   m_TagString: Untagged
@@ -18464,34 +18150,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1394775979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1394775978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 7491a919ddcc23648b0e097fc1a3047e, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1394775980}
-        m_TargetAssemblyTypeName: UICreatureInitializer, Assembly-CSharp
-        m_MethodName: OnSelectedObject
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1394775980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23058,8 +22716,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1737147173}
   - component: {fileID: 1737147172}
-  - component: {fileID: 1737147174}
-  - component: {fileID: 1737147175}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -23080,10 +22736,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedObject: {fileID: 0}
-  selectedObjectEvent: {fileID: 11400000, guid: 7491a919ddcc23648b0e097fc1a3047e, type: 2}
-  deSelectedObjectEvent: {fileID: 11400000, guid: 95f1f4092c5b9594eadf6a639c93772b, type: 2}
   mouseRightClickEvent: {fileID: 11400000, guid: f23fd92540dd6f6478f8dccd349b2e63, type: 2}
   cameraChangedEvent: {fileID: 11400000, guid: 6dedc0908d97e5a4d8294b8b96a387e8, type: 2}
+  selectedObjectChangedEvent: {fileID: 11400000, guid: 06a63cdc339722242beffface22f8c29, type: 2}
   creatureSpawner: {fileID: 1714179494}
   inanimateObjectSpawner: {fileID: 1057278269}
   utilStorage: {fileID: 56113221}
@@ -23093,6 +22748,7 @@ MonoBehaviour:
   inanimateAppearancePrefab: {fileID: 919132149155446097, guid: d515749c1c5bf1f4085ab096f0fef988, type: 3}
   timeSinceLastLeftClick: 0
   msgPrompter: {fileID: 342914642}
+  yOffsetForPrompt: 25
 --- !u!4 &1737147173
 Transform:
   m_ObjectHideFlags: 0
@@ -23108,62 +22764,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1737147174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1737147171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 7ddd845901d6f4f47943fde4567b7bb3, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1737147172}
-        m_TargetAssemblyTypeName: GameManagerScript, Assembly-CSharp
-        m_MethodName: OnUIFocued
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1737147175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1737147171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 674ba3ed110e3ff4bbf9ac34b9c83edb, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1737147172}
-        m_TargetAssemblyTypeName: GameManagerScript, Assembly-CSharp
-        m_MethodName: OnGameScreenFocused
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1001 &1737438368
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24411,7 +24011,6 @@ GameObject:
   - component: {fileID: 1864547464}
   - component: {fileID: 1864547472}
   - component: {fileID: 1864547471}
-  - component: {fileID: 1864547463}
   - component: {fileID: 1864547468}
   - component: {fileID: 1864547473}
   m_Layer: 5
@@ -24443,34 +24042,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.00000096, y: -540}
   m_SizeDelta: {x: 0.00000192, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1864547463
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1864547460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
-  gameEvent: {fileID: 11400000, guid: 78528307ccbd0bb4bb7348b62a42ba54, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TabGroup, Assembly-CSharp
-        m_MethodName: FinishTabSelect
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1864547464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26389,10 +25960,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1958364358}
   - component: {fileID: 1958364363}
+  - component: {fileID: 1958364364}
   - component: {fileID: 1958364362}
   - component: {fileID: 1958364361}
-  - component: {fileID: 1958364360}
-  - component: {fileID: 1958364359}
   m_Layer: 5
   m_Name: View Logic
   m_TagString: Untagged
@@ -26419,62 +25989,6 @@ RectTransform:
   m_AnchoredPosition: {x: 2560, y: -719.71204}
   m_SizeDelta: {x: 0, y: 1439.4241}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1958364359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1958364357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
-  gameEvent: {fileID: 11400000, guid: 95f1f4092c5b9594eadf6a639c93772b, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1958364363}
-        m_TargetAssemblyTypeName: TTRPG_View, Assembly-CSharp
-        m_MethodName: OnDeselectedObject
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1958364360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1958364357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
-  gameEvent: {fileID: 11400000, guid: 7491a919ddcc23648b0e097fc1a3047e, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1958364363}
-        m_TargetAssemblyTypeName: TTRPG_View, Assembly-CSharp
-        m_MethodName: OnSelectedObject
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1958364361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26547,6 +26061,34 @@ MonoBehaviour:
   rightUI: {fileID: 758921187}
   leftAnimator: {fileID: 1981330393}
   rightAnimator: {fileID: 758921192}
+--- !u!114 &1958364364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958364357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b6ce0f79e4978845a6ac7eb5d78df18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
+  gameEvent: {fileID: 11400000, guid: 06a63cdc339722242beffface22f8c29, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1958364363}
+        m_TargetAssemblyTypeName: TTRPG_View, Assembly-CSharp
+        m_MethodName: OnSelectedObjectChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1962528963
 PrefabInstance:
   m_ObjectHideFlags: 0

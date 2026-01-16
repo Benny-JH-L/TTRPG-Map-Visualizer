@@ -9,10 +9,9 @@ public class GameManagerScript : MonoBehaviour
 
     public TTRPG_SceneObjectBase selectedObject;
 
-    public GameEventSO selectedObjectEvent;
-    public GameEventSO deSelectedObjectEvent;
     public GameEventSO mouseRightClickEvent;
     public GameEventSO cameraChangedEvent;
+    public GameEventSO selectedObjectChangedEvent;
 
     //private bool _isUIFocused;
     //private bool _isGameScreenFocused
@@ -128,8 +127,15 @@ public class GameManagerScript : MonoBehaviour
 
         double timeOfLeftClick = Time.timeAsDouble;
         DebugOut.Log(this, $"Time Of LAST Click: {timeSinceLastLeftClick} | Time Of CURR Left Click: {timeOfLeftClick} | Diff (curr - Last): {timeOfLeftClick - timeSinceLastLeftClick}");
+        
         TTRPG_SceneObjectBase sceneObjAtMousePos = GetSceneObjectAtMousePos();
 
+        // prevent's rapid mouse clicks on nothing (no TTRPG_SceneObjectBase) to `freeze` next click
+        if (sceneObjAtMousePos == null && selectedObject == null)
+        {
+            DebugOut.Log(this, " - CheckLeftMousePress() - both `sceneObjAtMousePos` and `selectedObject` are null , returning...");
+            return; 
+        }
         // if the time difference from since the last click to the current one LESS THAN or equal to 510ms, return!
         // --> gives UI animations that take half a second to finish (if a Scene object was selected)
         if (timeOfLeftClick - timeSinceLastLeftClick <= 0.51 && (selectedObject != null || sceneObjAtMousePos != null))   
@@ -146,48 +152,54 @@ public class GameManagerScript : MonoBehaviour
         // set new time
         timeSinceLastLeftClick = timeOfLeftClick;
 
+        // don't trigger `SelectedObjectChanged` event when both selected object and TTRPG_SceneObjectBase obj under mouse are null
+        if (selectedObject == null && sceneObjAtMousePos == null)
+        {
+            DebugOut.Log(this, "nothing selected & didn't click over TTRPG_SceneObjectBase, returning...");
+            return;
+        }
 
-        if (selectedObject != null && sceneObjAtMousePos == null)     // pressed off the selected object
-        {
-            DeselectObject();
-        }
-        else if (selectedObject != null && selectedObject == sceneObjAtMousePos)  // pressed the same object twice
-        {
-            DeselectObject();
-        }
-        else if (selectedObject != null && sceneObjAtMousePos != null)            // pressed a different object while already selected an object
-        {
-            DeselectObject();                   // deselect the current object
-            SelectObject(sceneObjAtMousePos);   // select the new object
-        }
-        else if (selectedObject == null && sceneObjAtMousePos != null)            // no object selected previously
-        {
-            SelectObject(sceneObjAtMousePos);
-        }
+        ChangedObject changedObj; // `selectedObject` will be our previous value, and `sceneObjAtMousePos` will be the new one
+        if (!ReferenceEquals(selectedObject, sceneObjAtMousePos))
+            changedObj = new(selectedObject, sceneObjAtMousePos);
+        // same object was selected!
+        else
+            changedObj = new(selectedObject, null);
+        SelectedObjectChanged(changedObj);  // trigger event and set new `selectedObject`
     }
 
     /// <summary>
-    /// Raises `selectedObjectEvent` GameEvent.
+    /// Sets the new `selectedObject` variable and raises `selectedObjectEvent` GameEvent 
     /// </summary>
-    /// <param name="selectedObj"></param>
-    private void SelectObject(TTRPG_SceneObjectBase selectedObj)
+    /// <param name="changedObj"></param>
+    private void SelectedObjectChanged(ChangedObject changedObj)
     {
-        DebugOut.Log(this, $"Raising SelectedObject Event | select TTRPG_SceneObjectBase: {selectedObj.name}");
-        selectedObject = selectedObj;
-        selectedObjectEvent.Raise(this, selectedObj);
+        DebugOut.Log(this, $"Raising SelectedObjectChanged Event | {changedObj.ToString()}");
+        selectedObject = changedObj.newSelectedObj;
+        selectedObjectChangedEvent.Raise(this, changedObj);
     }
 
-    /// <summary>
-    /// Raises `deSelectedObjectEvent` GameEvent.
-    /// </summary>
-    private void DeselectObject()
-    {
-        DebugOut.Log(this, $"Raising deSelectedObject Event | deselect TTRPG_SceneObjectBase: {selectedObject.name}");
-        TTRPG_SceneObjectBase old = selectedObject;
-        selectedObject = null;  // reset
-        deSelectedObjectEvent.Raise(this, old);
-    }
+    ///// <summary>
+    ///// Raises `selectedObjectEvent` GameEvent. -- replaced by `selectedObjectChanged`
+    ///// </summary>
+    ///// <param name="selectedObj"></param>
+    //private void SelectObject(TTRPG_SceneObjectBase selectedObj)
+    //{
+    //    DebugOut.Log(this, $"Raising SelectedObject Event | select TTRPG_SceneObjectBase: {selectedObj.name}");
+    //    selectedObject = selectedObj;
+    //    selectedObjectEvent.Raise(this, selectedObj);
+    //}
 
+    ///// <summary>
+    ///// Raises `deSelectedObjectEvent` GameEvent. -- replaced by `selectedObjectChanged`
+    ///// </summary>
+    //private void DeselectObject()
+    //{
+    //    DebugOut.Log(this, $"Raising deSelectedObject Event | deselect TTRPG_SceneObjectBase: {selectedObject.name}");
+    //    TTRPG_SceneObjectBase old = selectedObject;
+    //    selectedObject = null;  // reset
+    //    deSelectedObjectEvent.Raise(this, old);
+    //}
 
     /// <summary>
     /// Gets the TTRPG_SceneObjectBase the mouse is on top of.
