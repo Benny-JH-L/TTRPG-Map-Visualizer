@@ -1,5 +1,5 @@
 ﻿
-struct ChangedObject
+public struct ChangedObject
 {
     public TTRPG_SceneObjectBase prevSelectedObj; // previously selected object
     public TTRPG_SceneObjectBase newSelectedObj;  // current/new selected object
@@ -17,3 +17,14 @@ struct ChangedObject
     }
 }
 
+public struct ChangedTabButton
+{
+    public TabButton prevTabButton; // previously selected TabButton
+    public TabButton newTabButton;  // newly selected TabButton
+
+    public ChangedTabButton(TabButton prevButton, TabButton newButton)
+    {
+        prevTabButton = prevButton;
+        newTabButton = newButton;
+    }
+}

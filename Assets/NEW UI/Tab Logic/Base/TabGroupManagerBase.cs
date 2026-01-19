@@ -18,6 +18,12 @@ public abstract class TabGroupManagerBase : MonoBehaviour
 
     protected abstract void OnStart();
 
+    /// <summary>
+    /// what to do when a tab is selected.
+    /// </summary>
+    /// <param name="data"></param>
+    public abstract void OnTabSelected(ChangedTabButton data);
+
 
     /// <summary>
     /// for `Hiding` animations that need to call this when they finish

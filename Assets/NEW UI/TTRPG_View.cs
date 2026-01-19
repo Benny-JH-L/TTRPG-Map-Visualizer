@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class TTRPG_View : AbstractUI
@@ -8,9 +8,13 @@ public class TTRPG_View : AbstractUI
     
     public AnimatorHelper leftUIAnimatorHelper;
     public AnimatorHelper mainMenuAnimatorHelper;
+
+    [SerializeField] private bool isMainMenuClosed;
+
     public override void Configure()
     {
         // should have to do nothing...
+        isMainMenuClosed = true;
     }
 
 
@@ -20,7 +24,44 @@ public class TTRPG_View : AbstractUI
         mainMenuAnimatorHelper = rightUI.GetComponent<AnimatorHelper>();
     }
 
-    public void OnTabSelected(Component component, object data)
+    /// <summary>
+    /// Opens the Main Menu (if it is not already open) and shrinks the left UI.
+    /// </summary>
+    public void OpenMainMenu()
+    {
+        DebugOut.Log(this, $"- OpenMainMenu() - ", debugDisabled);
+
+        if (!isMainMenuClosed)   // return when its already opened
+        {
+            DebugOut.Log(this, $"already opened!", debugDisabled);
+            return; 
+        }
+
+        leftUIAnimatorHelper.CheckAnimationTrigger("Shrink Left UI");
+        mainMenuAnimatorHelper.CheckAnimationTrigger("Open Right UI");
+        isMainMenuClosed = false;
+    }
+
+    /// <summary>
+    /// Closes the Main Menu (if its not closed already) and expands the left UI.
+    /// </summary>
+    public void CloseMainMenu()
+    {
+        DebugOut.Log(this, $"- CloseMainMenu() - ", debugDisabled);
+
+        if (isMainMenuClosed)   // return when its already opened
+        {
+            DebugOut.Log(this, $"already closed!", debugDisabled);
+            return;
+        }
+
+
+        leftUIAnimatorHelper.CheckAnimationTrigger("Expand Left UI");
+        mainMenuAnimatorHelper.CheckAnimationTrigger("Close Right UI");
+        isMainMenuClosed = true;
+    }
+
+    public void OnTabSelected(Component component, object data) // not called by game listeners
     {
         if (component != this && data is not TabButton)
         {
@@ -35,11 +76,9 @@ public class TTRPG_View : AbstractUI
         }
 
         DebugOut.Log(this, $"OnTabSelected", debugDisabled);
-        leftUIAnimatorHelper.CheckAnimationTrigger("Shrink Left UI");
-        DebugOut.Log(this, $"shrinked left UI", debugDisabled);
-
-        mainMenuAnimatorHelper.CheckAnimationTrigger("Open Right UI");
-        DebugOut.Log(this, $"Opened right UI", debugDisabled);
+        //leftUIAnimatorHelper.CheckAnimationTrigger("Shrink Left UI");
+        //mainMenuAnimatorHelper.CheckAnimationTrigger("Open Right UI");
+        OpenMainMenu();
     }
 
     /// <summary>
@@ -47,7 +86,7 @@ public class TTRPG_View : AbstractUI
     /// </summary>
     /// <param name="component"></param>
     /// <param name="data"></param>
-    public void OnTabDeselected(Component component, object data)
+    public void OnTabDeselected(Component component, object data) // not called by game listeners
     {
         if (component != this && data is not TabButton)
         {
@@ -62,11 +101,9 @@ public class TTRPG_View : AbstractUI
         }
 
         DebugOut.Log(this, $"OnTabDeselected", debugDisabled);
-        leftUIAnimatorHelper.CheckAnimationTrigger("Expand Left UI");
-        DebugOut.Log(this, $"Expanded Left UI", debugDisabled);
-
-        mainMenuAnimatorHelper.CheckAnimationTrigger("Close Right UI");
-        DebugOut.Log(this, $"Closed Right UI", debugDisabled);
+        //leftUIAnimatorHelper.CheckAnimationTrigger("Expand Left UI");
+        //mainMenuAnimatorHelper.CheckAnimationTrigger("Close Right UI");
+        CloseMainMenu();
     }
 
     public void OnSelectedObjectChanged(Component component, object data)

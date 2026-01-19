@@ -54,6 +54,7 @@ public class TabGroup : TabGroupBase
 
     public override void OnTabSelected(TabButton button)
     {
+        DebugOut.Log(this, "selected button", debugDisabled);
         if (selectedTab != null)
         {
             //selectedTab.swapToObject.SetActive(false);  // done in Deselect() now
@@ -64,12 +65,15 @@ public class TabGroup : TabGroupBase
             {
                 // same tab was pressed, then UI should close the right UI container and expand the left UI container (in TTRPG_View from Deselect() callback)
                 DebugOut.Log(this, $"Same Tab selected", debugDisabled);
+                //SameTabSelected(button);
+                tabGroupManager.OnTabSelected(new ChangedTabButton {prevTabButton = selectedTab, newTabButton = null});
                 selectedTab = null;     // reset
                 return;
             }
         }
 
         // Set the new active tab GameObject
+        tabGroupManager.OnTabSelected(new ChangedTabButton { prevTabButton = selectedTab, newTabButton = button });
         selectedTab = button;
         ResetTabs();
         selectedTab.Select();

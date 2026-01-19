@@ -43,7 +43,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Interactable
-    path: Rect Mask 2D/Container
+    path: Rect Mask 2D + Secondary Menus/Secondary Menus
     classID: 225
     script: {fileID: 0}
     flags: 0
@@ -112,7 +112,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Interactable
-    path: Rect Mask 2D/Container
+    path: Rect Mask 2D + Secondary Menus/Secondary Menus
     classID: 225
     script: {fileID: 0}
     flags: 0

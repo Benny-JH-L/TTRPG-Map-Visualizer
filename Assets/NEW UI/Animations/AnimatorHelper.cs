@@ -4,6 +4,7 @@ using UnityEngine;
 public class AnimatorHelper : MonoBehaviour
 {
     [SerializeField] private Animator animator;     // animations for what ever 
+    public GameEventSO gameEvent;
     public bool debugDisabled = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -45,5 +46,15 @@ public class AnimatorHelper : MonoBehaviour
     public void CheckAnimationTrigger(string triggerName)
     {
         animator.SetTrigger(triggerName);
+    }
+
+    /// <summary>
+    /// Triggers the assigned GameEvent if it is not null.
+    /// </summary>
+    public void TriggerGameEvent()
+    {
+        if (gameEvent == null)
+            return;
+        gameEvent.Raise(this, null);
     }
 }
