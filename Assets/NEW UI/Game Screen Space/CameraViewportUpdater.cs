@@ -18,7 +18,7 @@ public class CameraViewportUpdater : AbstractUI
     {
         if (screenSpaceGameObject == null)
         {
-            DebugOut.Log(this, "requires a target RectTransform to work.");
+            DebugOut.Log(this, "requires a target RectTransform to work.", debugDisabled);
             return;
         }
 

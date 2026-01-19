@@ -7,6 +7,7 @@ public abstract class TabGroupBase : MonoBehaviour
     [SerializeField] protected AnimatorHelper animatorHelper;    // contain animation for this tab (ex. appearing, disapearing, etc.)
     public List<TabButton> tabButtons;          // note: public for now...
     public TabButton selectedTab;               // tab buttons will contain what GameObject to swap to
+    public bool debugDisabled = false;
 
     void Start()
     {
@@ -24,7 +25,7 @@ public abstract class TabGroupBase : MonoBehaviour
             tabButtons = new List<TabButton>();
 
         tabButtons.Add(button);
-        DebugOut.Log(this, $"{button.name} subscribed to '{this.name}'");
+        DebugOut.Log(this, $"{button.name} subscribed to '{this.name}'", debugDisabled);
     }
 
     /// <summary>
@@ -97,7 +98,7 @@ public abstract class TabGroupBase : MonoBehaviour
     /// <param name="triggerName"></param>
     public void CheckAnimationTrigger(string triggerName)
     {
-        DebugOut.Log(this, $"Sending trigger: `{triggerName}` to animator");
+        DebugOut.Log(this, $"Sending trigger: `{triggerName}` to animator", debugDisabled);
         if (animatorHelper == null)
             ErrorOut.Throw(this, "animation helper null");
         animatorHelper.CheckAnimationTrigger(triggerName);

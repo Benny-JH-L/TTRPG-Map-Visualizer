@@ -47,12 +47,12 @@ public class InanimateObjectSpawner : SpawnerBase<InanimateObj>
         //Vector3 mousePosInWorld = mouseTracker.GetMousePositionInWorld();
         if (mouseTracker.IsMouseOverSceneObject())
         {
-            DebugOut.Log(this, $"Couldn't Spawn object (Collision detected) | pos: {mousePosInWorld}");
+            DebugOut.Log(this, $"Couldn't Spawn object (Collision detected) | pos: {mousePosInWorld}", debugDisabled);
             return;
         }
         if (mouseTracker.IsMouseOverUIElement())
         {
-            DebugOut.Log(this, $"Couldn't Spawn object (Over UI element) | pos (world): {mousePosInWorld} | pos (screen): {mouseTracker.GetMousePosInScreen()}");
+            DebugOut.Log(this, $"Couldn't Spawn object (Over UI element) | pos (world): {mousePosInWorld} | pos (screen): {mouseTracker.GetMousePosInScreen()}", debugDisabled);
             return;
         }
 
@@ -64,7 +64,7 @@ public class InanimateObjectSpawner : SpawnerBase<InanimateObj>
 
         GameObject sceneObj = BaseSpawn(gameData, mousePosInWorld);
         InanimateObj inanObj = sceneObj.GetComponent<InanimateObj>();
-        DebugOut.Log(this, $"gameData.sceneObjectList.Count: {gameData.sceneObjectList.Count}");
+        DebugOut.Log(this, $"gameData.sceneObjectList.Count: {gameData.sceneObjectList.Count}", debugDisabled);
 
         inanObj.name = $"inanimate Obj #{gameData.sceneObjectList.Count - gameData.creatureList.Count - 1}";
         inanObj.appearanceGameObj = objModel;

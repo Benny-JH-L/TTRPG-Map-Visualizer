@@ -4,7 +4,7 @@ public class InanimateObj : TTRPG_SceneObject<GeneralObjectData>
 {
     private protected override void OnDestroy()
     {
-        DebugOut.Log(this, $"`{this.name}` was destroyed");
+        DebugOut.Log(this, $"`{this.name}` was destroyed", debugDisabled);
         gameData.sceneObjectList.Remove(this);
 
         DestroySelf();

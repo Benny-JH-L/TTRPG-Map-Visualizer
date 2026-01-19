@@ -7,6 +7,8 @@ public class GameManagerScript : MonoBehaviour
     public static GameData gameData;
     public static GameObject screenSpaceGameObject;
 
+    public bool debugDisabled = false;
+
     public TTRPG_SceneObjectBase selectedObject;
 
     public GameEventSO mouseRightClickEvent;
@@ -126,21 +128,21 @@ public class GameManagerScript : MonoBehaviour
             return;
 
         double timeOfLeftClick = Time.timeAsDouble;
-        DebugOut.Log(this, $"Time Of LAST Click: {timeSinceLastLeftClick} | Time Of CURR Left Click: {timeOfLeftClick} | Diff (curr - Last): {timeOfLeftClick - timeSinceLastLeftClick}");
+        DebugOut.Log(this, $"Time Of LAST Click: {timeSinceLastLeftClick} | Time Of CURR Left Click: {timeOfLeftClick} | Diff (curr - Last): {timeOfLeftClick - timeSinceLastLeftClick}", debugDisabled);
         
         TTRPG_SceneObjectBase sceneObjAtMousePos = GetSceneObjectAtMousePos();
 
         // prevent's rapid mouse clicks on nothing (no TTRPG_SceneObjectBase) to `freeze` next click
         if (sceneObjAtMousePos == null && selectedObject == null)
         {
-            DebugOut.Log(this, " - CheckLeftMousePress() - both `sceneObjAtMousePos` and `selectedObject` are null , returning...");
+            DebugOut.Log(this, " - CheckLeftMousePress() - both `sceneObjAtMousePos` and `selectedObject` are null , returning...", debugDisabled);
             return; 
         }
         // if the time difference from since the last click to the current one LESS THAN or equal to 510ms, return!
         // --> gives UI animations that take half a second to finish (if a Scene object was selected)
         if (timeOfLeftClick - timeSinceLastLeftClick <= 0.51 && (selectedObject != null || sceneObjAtMousePos != null))   
         {
-            DebugOut.Log(this, "left clicked too fast, returning...");
+            DebugOut.Log(this, "left clicked too fast, returning...", debugDisabled);
             //msgPrompter.Prompt("Please Wait...");
 
             Vector2 pos = mouseTracker.GetMousePosInScreen();
@@ -155,7 +157,7 @@ public class GameManagerScript : MonoBehaviour
         // don't trigger `SelectedObjectChanged` event when both selected object and TTRPG_SceneObjectBase obj under mouse are null
         if (selectedObject == null && sceneObjAtMousePos == null)
         {
-            DebugOut.Log(this, "nothing selected & didn't click over TTRPG_SceneObjectBase, returning...");
+            DebugOut.Log(this, "nothing selected & didn't click over TTRPG_SceneObjectBase, returning...", debugDisabled);
             return;
         }
 
@@ -174,7 +176,7 @@ public class GameManagerScript : MonoBehaviour
     /// <param name="changedObj"></param>
     private void SelectedObjectChanged(ChangedObject changedObj)
     {
-        DebugOut.Log(this, $"Raising SelectedObjectChanged Event | {changedObj.ToString()}");
+        DebugOut.Log(this, $"Raising SelectedObjectChanged Event | {changedObj.ToString()}", debugDisabled);
         selectedObject = changedObj.newSelectedObj;
         selectedObjectChangedEvent.Raise(this, changedObj);
     }
@@ -210,7 +212,7 @@ public class GameManagerScript : MonoBehaviour
     {
         if (gameData.sceneObjectList.Count == 0)
         {
-            DebugOut.Log(this, "Scene Object list is empty... Can not select any at mouse position...");
+            DebugOut.Log(this, "Scene Object list is empty... Can not select any at mouse position...", debugDisabled);
             return null;
         }
 
@@ -221,7 +223,7 @@ public class GameManagerScript : MonoBehaviour
 
         if (rayHitGameObject == null)
         {
-            DebugOut.Log(this, $"Mouse position {mousePos} does not direcly overlap with any `TTRPG_SceneObjectBase`");
+            DebugOut.Log(this, $"Mouse position {mousePos} does not direcly overlap with any `TTRPG_SceneObjectBase`", debugDisabled);
             return null;
         }
 
@@ -232,7 +234,7 @@ public class GameManagerScript : MonoBehaviour
         if (sceneObj == null)
             pre = $"`{rayHitGameObject.name}`'s parent does not contain `TTRPG_SceneObjectBase` component!";
 
-        DebugOut.Log(this, $"{pre} returning: {(sceneObj == null ? "`null`" : $"`{sceneObj.name}`") }");
+        DebugOut.Log(this, $"{pre} returning: {(sceneObj == null ? "`null`" : $"`{sceneObj.name}`") }", debugDisabled);
         return sceneObj;
     }
 

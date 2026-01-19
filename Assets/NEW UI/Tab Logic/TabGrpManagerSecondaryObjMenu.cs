@@ -29,7 +29,7 @@ public class TabGrpManagerSecondaryObjMenu : TabGroupManagerBase
                 _selectedTabGrp = tabGroup;
                 doingAnimation = true;
 
-                DebugOut.Log(this, $"triggering Reveal! at time: {Time.timeAsDouble}");
+                DebugOut.Log(this, $"triggering Reveal! at time: {Time.timeAsDouble}", debugDisabled);
                 tabGroup.ActivateTabGroup();
                 tabGroup.OnTabSelected(tabGroup.tabButtons[0]);     // select some arbitrary tab
 
@@ -40,7 +40,7 @@ public class TabGrpManagerSecondaryObjMenu : TabGroupManagerBase
             else if (selectedObj == null)
             {
                 doingAnimation = true;
-                DebugOut.Log(this, $"triggering hide! at time: {Time.timeAsDouble}");
+                DebugOut.Log(this, $"triggering hide! at time: {Time.timeAsDouble}", debugDisabled);
                 tabGroup.CheckAnimationTrigger("Hide");
                 secondaryMenuAnimatorHelper.CheckAnimationTrigger("Hide");
             }
@@ -92,7 +92,7 @@ public class TabGrpManagerSecondaryObjMenu : TabGroupManagerBase
     /// </summary>
     public override void OnHideAnimationFinish()
     {
-        DebugOut.Log(this, $"finishing hide at time: {Time.timeAsDouble}!");
+        DebugOut.Log(this, $"finishing hide at time: {Time.timeAsDouble}!", debugDisabled);
 
         tabGroup.ExitTabGroup();
         _selectedTabGrp = null;
@@ -102,7 +102,7 @@ public class TabGrpManagerSecondaryObjMenu : TabGroupManagerBase
     public override void OnRevealAnimationFinish()
     {
         // do nothing
-        DebugOut.Log(this, $"finishing reveal at time: {Time.timeAsDouble}!");
+        DebugOut.Log(this, $"finishing reveal at time: {Time.timeAsDouble}!", debugDisabled);
 
     }
 }

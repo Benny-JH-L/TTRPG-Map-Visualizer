@@ -4,6 +4,7 @@ using UnityEngine;
 public class AnimatorHelper : MonoBehaviour
 {
     [SerializeField] private Animator animator;     // animations for what ever 
+    public bool debugDisabled = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     //void Start()
@@ -34,7 +35,7 @@ public class AnimatorHelper : MonoBehaviour
 
         if (animator.parameterCount == 0)
             msg += "<empty param list>";
-        DebugOut.Log(this, msg);
+        DebugOut.Log(this, msg, debugDisabled);
     }
 
     /// <summary>

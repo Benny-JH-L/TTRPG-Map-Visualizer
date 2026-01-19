@@ -50,12 +50,12 @@ public class CreatureSpawner : SpawnerBase<Creature>
         //Vector3 mousePosInWorld = mouseTracker.GetMousePositionInWorld();
         if (mouseTracker.IsMouseOverSceneObject())
         {
-            DebugOut.Log(this, $"Couldn't Spawn object (Collision detected) | pos: {mousePosInWorld}");
+            DebugOut.Log(this, $"Couldn't Spawn object (Collision detected) | pos: {mousePosInWorld}", debugDisabled);
             return;
         }
         if (mouseTracker.IsMouseOverUIElement())
         {
-            DebugOut.Log(this, $"Couldn't Spawn object (Over UI element) | pos (world): {mousePosInWorld} | pos (screen): {mouseTracker.GetMousePosInScreen()}");
+            DebugOut.Log(this, $"Couldn't Spawn object (Over UI element) | pos (world): {mousePosInWorld} | pos (screen): {mouseTracker.GetMousePosInScreen()}", debugDisabled);
             return;
         }
 

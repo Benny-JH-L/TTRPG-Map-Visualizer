@@ -9,6 +9,7 @@ public abstract class TTRPG_SceneObjectBase : MonoBehaviour
 
     public GameObject appearanceGameObj;  // the look of the object
     public GameObject diskBase;           // base the `appearanceGameObj` is on top of
+    public bool debugDisabled = false;
 
     public abstract GeneralObjectData GetData { get; }  // ensures that every `TTRPG_SceneObjectBase` has a `GeneralObjectData` or its subclass.
 }
@@ -23,9 +24,9 @@ public abstract class TTRPG_SceneObject<T> : TTRPG_SceneObjectBase
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        DebugOut.Log(this, " - Start() - START");
+        DebugOut.Log(this, " - Start() - START", debugDisabled);
         ConfirmInit();
-        DebugOut.Log(this, "- Start() - END");
+        DebugOut.Log(this, "- Start() - END", debugDisabled);
     }
 
     protected private abstract void OnDestroy();
@@ -58,14 +59,14 @@ public abstract class TTRPG_SceneObject<T> : TTRPG_SceneObjectBase
         if (!appearanceGameObj.transform.IsChildOf(diskBase.transform))
         {
             // if somehow the transform is not parented, fix it
-            DebugOut.Log(this, "`appearanceGameObj` transform was not child of `diskBase`, it has been fixed");
+            DebugOut.Log(this, "`appearanceGameObj` transform was not child of `diskBase`, it has been fixed", debugDisabled);
             appearanceGameObj.transform.SetParent(diskBase.transform, true);
         }
 
         if (!diskBase.transform.IsChildOf(this.transform))
         {
             // if somehow the transform is not parented, fix it
-            DebugOut.Log(this, $"`diskBase` transform was not child of `{this.GetType()}`, it has been fixed");
+            DebugOut.Log(this, $"`diskBase` transform was not child of `{this.GetType()}`, it has been fixed", debugDisabled);
             diskBase.transform.SetParent(this.transform, true);
         }
 
@@ -82,7 +83,7 @@ public abstract class TTRPG_SceneObject<T> : TTRPG_SceneObjectBase
         rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
 
         if (!fail)
-            DebugOut.Log(this, $"Successfully initialized this `TTRPG_SceneObject` with data `{data.GetType()}`...");
+            DebugOut.Log(this, $"Successfully initialized this `TTRPG_SceneObject` with data `{data.GetType()}`...", debugDisabled);
     }
 
     /// <summary>

@@ -17,6 +17,7 @@ public class Highlight : MonoBehaviour
     [SerializeField] private GameObject highlightRingPrefab;    // prefab we instantiate from
     [SerializeField] private GameObject highlightRing;          // object used to `hightlight`
     //[SerializeField] private TTRPG_SceneObjectBase selectedObject;
+    public bool debugDisabled = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -48,13 +49,13 @@ public class Highlight : MonoBehaviour
             // dehighlight when `newSelectedObj` is null
             if (selectedObj == null)
             {
-                DebugOut.Log(this, "dehighlighting TTRPG_SceneObjectBase");
+                DebugOut.Log(this, "dehighlighting TTRPG_SceneObjectBase", debugDisabled);
                 DeactivateRing();
             }
             // highlight the new object
             else
             {
-                DebugOut.Log(this, "highlighting TTRPG_SceneObjectBase");
+                DebugOut.Log(this, "highlighting TTRPG_SceneObjectBase", debugDisabled);
                 HighlightObject(selectedObj);
             }
         }
@@ -67,7 +68,7 @@ public class Highlight : MonoBehaviour
     private void HighlightObject(TTRPG_SceneObjectBase sceneObj) 
     {
 
-        DebugOut.Log(this, $"highlighting TTRPG_SceneObjectBase at position: {sceneObj.transform.position}");
+        DebugOut.Log(this, $"highlighting TTRPG_SceneObjectBase at position: {sceneObj.transform.position}", debugDisabled);
 
         // set the parent transform of highlight ring to `sceneObj`
         highlightRing.transform.SetParent(sceneObj.transform, false);   // `false` so it moves to the new position

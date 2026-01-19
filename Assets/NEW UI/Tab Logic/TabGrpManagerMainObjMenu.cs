@@ -33,7 +33,7 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
             newSelectedObj = changedObject.newSelectedObj;
             areBothChangedObjectsNotNull = prevSelectedObj != null && newSelectedObj != null;
 
-            DebugOut.Log(this, $"prev obj selc type: {prevSelectedObj} | new obj selc type {newSelectedObj}");
+            DebugOut.Log(this, $"prev obj selc type: {prevSelectedObj} | new obj selc type {newSelectedObj}", debugDisabled);
         }
         else
         {
@@ -56,7 +56,7 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
         // don't do anything when the same object type was selected again
         if (areBothChangedObjectsNotNull && changedObject.newSelectedObj.GetType() == changedObject.prevSelectedObj.GetType())
         {
-            DebugOut.Log(this, "selected same TTRPG_SceneObjectBase type, returning...");
+            DebugOut.Log(this, "selected same TTRPG_SceneObjectBase type, returning...", debugDisabled);
             return;
         }
 
@@ -65,14 +65,14 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
         {
             if (prevSelectedObj is Creature)
             {
-                DebugOut.Log(this, "hiding Creature tab");
+                DebugOut.Log(this, "hiding Creature tab", debugDisabled);
 
                 //animator.SetTrigger("Hide (Character)");
                 _selectedTabGrp.CheckAnimationTrigger("Hide");    // hide tab
             }
             else if (prevSelectedObj is InanimateObj)
             {
-                DebugOut.Log(this, "hiding Inanimate obj tab");
+                DebugOut.Log(this, "hiding Inanimate obj tab", debugDisabled);
 
                 //animator.SetTrigger("Hide (Inanimate obj)");
                 _selectedTabGrp.CheckAnimationTrigger("Hide");    // hide tab
@@ -89,14 +89,14 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
         {
             if (newSelectedObj is Creature)
             {
-                DebugOut.Log(this, "revealing creature tab!");
+                DebugOut.Log(this, "revealing creature tab!", debugDisabled);
 
                 creatureGrpTab.CheckAnimationTrigger("Reveal");          // reveal tab
                 _selectedTabGrp = creatureGrpTab;
             }
             else if (newSelectedObj is InanimateObj)
             {
-                DebugOut.Log(this, "revealing inanimate obj tab!");
+                DebugOut.Log(this, "revealing inanimate obj tab!", debugDisabled);
 
                 inanimateObjGrpTab.CheckAnimationTrigger("Reveal");  // reveal tab
                 _selectedTabGrp = inanimateObjGrpTab;
@@ -118,7 +118,7 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
 
     public override void OnHideAnimationFinish()
     {
-        DebugOut.Log(this, "finishing hide");
+        DebugOut.Log(this, "finishing hide", debugDisabled);
         //_selectedGrp.ExitTabGroup();
         //_selectedGrp = null;
         _tabGrpToExit.ExitTabGroup();
@@ -142,7 +142,7 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
          */
         if (data is Creature)
         {
-            DebugOut.Log(this, "selected creature!");
+            DebugOut.Log(this, "selected creature!", debugDisabled);
             inanimateObjGrpTab.ExitTabGroup();
 
             creatureGrpTab.CheckAnimationTrigger("Reveal");          // reveal tab
@@ -150,7 +150,7 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
         }
         else if (data is InanimateObj)
         {
-            DebugOut.Log(this, "selected inanimate obj!");
+            DebugOut.Log(this, "selected inanimate obj!", debugDisabled);
             creatureGrpTab.ExitTabGroup();
 
             inanimateObjGrpTab.CheckAnimationTrigger("Reveal");  // reveal tab
@@ -177,7 +177,7 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
          * (note if the same TTRPG_SceneObjectBase is selected then we do not want to hide the tab!) --> this is not possible, unless `data` is sent as null from GameManagerScript!
          * Then select its default tab.
          */
-        DebugOut.Log(this, "deselecting..");
+        DebugOut.Log(this, "deselecting..", debugDisabled);
         // `data` will be of type TTRPG_SceneObjectbase
         //if (data.GetType() == _prevSelectedObject.GetType()) --> doesn't work if for ex, we click the map... (tabs percist when no obj is selected)
         //{
@@ -188,7 +188,7 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
 
         if (data is Creature)
         {
-            DebugOut.Log(this, "hiding Creature");
+            DebugOut.Log(this, "hiding Creature", debugDisabled);
 
             //animator.SetTrigger("Hide (Character)");
             _selectedTabGrp.CheckAnimationTrigger("Hide");    // hide tab
@@ -196,7 +196,7 @@ public class TabGrpManagerMainObjMenu : TabGroupManagerBase
         }
         else if (data is InanimateObj)
         {
-            DebugOut.Log(this, "hiding Inanimate obj");
+            DebugOut.Log(this, "hiding Inanimate obj", debugDisabled);
 
             //animator.SetTrigger("Hide (Inanimate obj)");
             _selectedTabGrp.CheckAnimationTrigger("Hide");    // hide tab

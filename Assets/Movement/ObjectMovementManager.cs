@@ -7,8 +7,8 @@ public class ObjectMovementManager : MonoBehaviour
 {
     //GameEventListener<SelectedObject>;
 
-    private static string _debugStart = "Object Movement Manager | ";
-    
+    public bool debugDisabled = false;
+
     //public GameEventSO objectMovedEvent;
 
     public float movementFactor = 30f;
@@ -343,7 +343,7 @@ public class ObjectMovementManager : MonoBehaviour
             TTRPG_SceneObjectBase selectedObj = changedObject.newSelectedObj;
             if (selectedObj != null)
             {
-                DebugOut.Log(this, "Setting selected object");
+                DebugOut.Log(this, "Setting selected object", debugDisabled);
 
                 _selectedGameObject = selectedObj;
                 _selectedRigidbody = _selectedGameObject.GetComponent<Rigidbody>();
@@ -363,7 +363,7 @@ public class ObjectMovementManager : MonoBehaviour
             }
             else
             {
-                DebugOut.Log(this, "deselected Object Event");
+                DebugOut.Log(this, "deselected Object Event", debugDisabled);
                 _selectedGameObject = null;
                 _selectedRigidbody = null;
                 _smoothVelocity = Vector3.zero;

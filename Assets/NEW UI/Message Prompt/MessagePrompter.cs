@@ -10,6 +10,7 @@ public class MessagePrompter : MonoBehaviour
     //[SerializeField] public List<GameObject> promptContainers;     // cap size
     [SerializeField] [Range(3,5)] private int maxPrompts = 3;     // cap size
     [SerializeField] [Range(50, 100)] private int defaultPosYOffset = 50;     // y-offset for default prompt location
+    public bool debugDisabled = false;
 
     void Start()
     {
@@ -28,7 +29,7 @@ public class MessagePrompter : MonoBehaviour
     public void Prompt(string messsage)
     {
         Rect activeScreenRect = cameraViewPortUpdater.screenSpaceGameObject.rect;
-        DebugOut.Log(this, $"activeScreenRect: {activeScreenRect}");
+        DebugOut.Log(this, $"activeScreenRect: {activeScreenRect}", debugDisabled);
 
         Vector2 centerOfActiveScreen = new(
             activeScreenRect.width * 0.5f,      // gets the center x position of the rect
@@ -50,7 +51,7 @@ public class MessagePrompter : MonoBehaviour
         PromptContainer container = containerGameObject.GetComponent<PromptContainer>();
         container.Prompt(message);   
 
-        DebugOut.Log(this, $"spawning prompt at pos: {pos}");
+        DebugOut.Log(this, $"spawning prompt at pos: {pos}", debugDisabled);
 
         // when we've reached the capped # of prompts shown on the screen we remove the oldest one
         if (promptContainers.Count == maxPrompts)
@@ -63,7 +64,7 @@ public class MessagePrompter : MonoBehaviour
             Destroy(toDestroy.gameObject);
             //Destroy(toDestroy);
 
-            DebugOut.Log(this, "removing oldest prompt...");
+            DebugOut.Log(this, "removing oldest prompt...", debugDisabled);
         }
         //promptContainers.Enqueue(container);
         promptContainers.Add(container);

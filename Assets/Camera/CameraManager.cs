@@ -15,6 +15,7 @@ public class CameraManager : MonoBehaviour
     private OrbitCam _orbitCam; // actually used | for game object
     private AbstractCamera _currentCam;
     public MouseTracker mouseTracker;
+    public bool debugDisabled = false;
 
     //public bool _isUIFocused;   // only public so inspector can see it
     //private bool _isGameScreenFocused; // most likely do not need anymore
@@ -40,7 +41,7 @@ public class CameraManager : MonoBehaviour
 
         if (_currentCam != null && _currentCam.IsCamEnabled())
         {
-            DebugOut.Log(this, "Map cam enabled!");
+            DebugOut.Log(this, "Map cam enabled!", debugDisabled);
         }
     }
 
@@ -96,10 +97,10 @@ public class CameraManager : MonoBehaviour
 
         if (_mapCam.IsCamEnabled())
             //Debug.Log($"{_cameraDebugStart}Map cam enabled");
-            DebugOut.Log(this, "Map cam enabled");
+            DebugOut.Log(this, "Map cam enabled", debugDisabled);
         else if (_orbitCam.IsCamEnabled())
             //Debug.Log($"{_cameraDebugStart}Orbit cam enabled");
-            DebugOut.Log(this, "Orbit cam enabled");
+            DebugOut.Log(this, "Orbit cam enabled", debugDisabled);
 
     }
 
@@ -140,7 +141,7 @@ public class CameraManager : MonoBehaviour
 
     public void OnSelectedObjectChanged(Component sender, object data)
     {
-        DebugOut.Log(this, "OnSelectedObjectChanged");
+        DebugOut.Log(this, "OnSelectedObjectChanged", debugDisabled);
         if (data is ChangedObject changedObject)
         {
             // enable map camera
@@ -151,7 +152,7 @@ public class CameraManager : MonoBehaviour
                 return;
             }
             // enable orbit camera
-            DebugOut.Log(this, "Switching to orbit cam");
+            DebugOut.Log(this, "Switching to orbit cam", debugDisabled);
             _orbitCam.EnableCamera(changedObject.newSelectedObj.appearanceGameObj); // orbit target is the GameObject `appearanceGameObj`
             _currentCam = _orbitCam;
         }

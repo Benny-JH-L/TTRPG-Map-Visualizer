@@ -16,6 +16,7 @@ public class MouseTracker : MonoBehaviour
     //private bool _mouseInsideGameScreenSpace;   // Used so `gameScreenFocused` isn't called every `Update()`
     
     [SerializeField] private CameraManager cameraManager;
+    public bool debugDisabled = false;
 
     void Start()
     {
@@ -67,7 +68,7 @@ public class MouseTracker : MonoBehaviour
     {
         if (IsMouseOverUIElement())
         {
-            DebugOut.Log(this, " - IsMouseOverSceneObject() - mouse is over a UI element!");
+            DebugOut.Log(this, " - IsMouseOverSceneObject() - mouse is over a UI element!", debugDisabled);
             return false;
         }
 

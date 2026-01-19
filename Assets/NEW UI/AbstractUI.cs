@@ -3,6 +3,8 @@ using UnityEngine;
 //[DefaultExecutionOrder(-999)]
 public abstract class AbstractUI : MonoBehaviour
 {
+    public bool debugDisabled = false;
+
     private void Awake()
     {
         Init();

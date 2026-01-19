@@ -7,7 +7,7 @@ public class Creature : TTRPG_SceneObject<CreatureData>
 {
     private protected override void OnDestroy()
     {
-        DebugOut.Log(this, $"`{this.name}` was destroyed");
+        DebugOut.Log(this, $"`{this.name}` was destroyed", debugDisabled);
         gameData.creatureList.Remove(this);
         gameData.sceneObjectList.Remove(this);
 

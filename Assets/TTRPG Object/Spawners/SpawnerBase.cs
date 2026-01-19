@@ -6,6 +6,7 @@ public abstract class SpawnerBase<T> : MonoBehaviour
     [SerializeField] protected Vector3 spawnYOffset = new(0f, 0.5f, 0f);    // need to add a y-offset to the position or else the object will sometimes launch into the air (collides with the ground)
     [SerializeField] protected GameObject prefabToSpawn;
     //[SerializeField] protected List<GameObject> spawnList;                   // will contain only `prefabToSpawn`
+    public bool debugDisabled = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

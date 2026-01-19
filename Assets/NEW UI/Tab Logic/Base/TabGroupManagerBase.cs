@@ -7,6 +7,7 @@ public abstract class TabGroupManagerBase : MonoBehaviour
 {
     [SerializeField] protected TabGroup _selectedTabGrp;
     //[SerializeField] private TTRPG_SceneObjectBase _prevSelectedObject;
+    public bool debugDisabled = false;
 
 
     void Start()

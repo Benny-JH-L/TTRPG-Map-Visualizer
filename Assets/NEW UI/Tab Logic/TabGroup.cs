@@ -63,7 +63,7 @@ public class TabGroup : TabGroupBase
             if (ReferenceEquals(selectedTab, button))
             {
                 // same tab was pressed, then UI should close the right UI container and expand the left UI container (in TTRPG_View from Deselect() callback)
-                DebugOut.Log(this, $"Same Tab selected");
+                DebugOut.Log(this, $"Same Tab selected", debugDisabled);
                 selectedTab = null;     // reset
                 return;
             }

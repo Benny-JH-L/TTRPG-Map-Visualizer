@@ -25,21 +25,21 @@ public class TTRPG_View : AbstractUI
         if (component != this && data is not TabButton)
         {
             // debug print
-            DebugOut.Log(this, "maybe bruh?...");
+            DebugOut.Log(this, "maybe bruh?...", debugDisabled);
             return;
         }
         if (data is TabButton)
         {
-            DebugOut.Log(this, "triggered by TabButton...");
+            DebugOut.Log(this, "triggered by TabButton...", debugDisabled);
 
         }
 
-        DebugOut.Log(this, $"OnTabSelected");
+        DebugOut.Log(this, $"OnTabSelected", debugDisabled);
         leftUIAnimatorHelper.CheckAnimationTrigger("Shrink Left UI");
-        DebugOut.Log(this, $"shrinked left UI");
+        DebugOut.Log(this, $"shrinked left UI", debugDisabled);
 
         mainMenuAnimatorHelper.CheckAnimationTrigger("Open Right UI");
-        DebugOut.Log(this, $"Opened right UI");
+        DebugOut.Log(this, $"Opened right UI", debugDisabled);
     }
 
     /// <summary>
@@ -52,26 +52,26 @@ public class TTRPG_View : AbstractUI
         if (component != this && data is not TabButton)
         {
             // debug print
-            DebugOut.Log(this, "maybe bruh?...");
+            DebugOut.Log(this, "maybe bruh?...", debugDisabled);
             return;
         }
         if (data is TabButton)
         {
-            DebugOut.Log(this, "triggered by TabButton...");
+            DebugOut.Log(this, "triggered by TabButton...", debugDisabled);
 
         }
 
-        DebugOut.Log(this, $"OnTabDeselected");
+        DebugOut.Log(this, $"OnTabDeselected", debugDisabled);
         leftUIAnimatorHelper.CheckAnimationTrigger("Expand Left UI");
-        DebugOut.Log(this, $"Expanded Left UI");
+        DebugOut.Log(this, $"Expanded Left UI", debugDisabled);
 
         mainMenuAnimatorHelper.CheckAnimationTrigger("Close Right UI");
-        DebugOut.Log(this, $"Closed Right UI");
+        DebugOut.Log(this, $"Closed Right UI", debugDisabled);
     }
 
     public void OnSelectedObjectChanged(Component component, object data)
     {
-        DebugOut.Log(this, "- OnSelectedObjectChanged() - ");
+        DebugOut.Log(this, "- OnSelectedObjectChanged() - ", debugDisabled);
         if (data is ChangedObject changedObject)
         {
             // hide main menu panel

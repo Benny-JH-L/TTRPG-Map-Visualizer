@@ -8,9 +8,12 @@ public static class DebugOut
     /// </summary>
     /// <param name="caller"></param>
     /// <param name="message"></param>
-    public static void Log(object caller, string message)
+    /// <param name="disabled">True, logs the message, otherwise no log.</param>
+    /// 
+    public static void Log(object caller, string message, bool disabled)
     {
-        Debug.Log($"[{caller.GetType()}] {message}");
+        if (!disabled)
+            Debug.Log($"[{caller.GetType()}] {message}");
     }
 
 }
